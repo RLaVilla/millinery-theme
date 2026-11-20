@@ -1,0 +1,162 @@
+{% doc %}
+  The Millinery — edge-to-edge product grid on paper tiles.
+  On a collection page it shows that collection (with pagination and an optional
+  roman-numeral category index). Anywhere else it shows the picked collection.
+{% enddoc %}
+{%- liquid
+  assign source = collection
+  if template.name != 'collection' or source == blank
+    assign source = section.settings.collection | default: collections.all
+  endif
+  assign per_page = section.settings.per_page
+  assign columns = section.settings.columns
+  assign roman = 'I,II,III,IV,V,VI,VII,VIII,IX,X' | split: ','
+-%}
+<div class="mil-grid mil-section mil-wrap" style="--mil-cols: {{ columns }};">
+  {%- if template.name == 'collection' and section.settings.index_menu != blank -%}
+    <nav class="mil-grid__index mil-caps" aria-label="Categories">
+      <a class="mil-link" href="{{ routes.all_products_collection_url }}">Shop all</a>
+      {%- for group in section.settings.index_menu.links -%}
+        <div class="mil-grid__group">
+          <span class="mil-grid__numeral">{{ roman[forloop.index0] }}:</span>
+          <ul role="list">
+            <li><a href="{{ group.url }}" class="{% if group.active %}mil-link{% endif %}">{{ group.title }}</a></li>
+            {%- for child in group.links -%}
+              <li><a href="{{ child.url }}" class="{% if child.active %}mil-link{% endif %}">{{ child.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endfor -%}
+    </nav>
+  {%- endif -%}
+
+  {%- if source != blank -%}
+    {%- paginate source.products by per_page -%}
+      <p class="mil-label">
+        {%- if section.settings.heading != blank -%}
+          {{ section.settings.heading }}
+        {%- else -%}
+          {{ source.products_count }}
+          {% if source.products_count == 1 %}product{% else %}products{% endif %}
+        {%- endif -%}
+      </p>
+
+      <ul class="mil-grid__list" role="list">
+        {%- for product in source.products -%}
+          {%- liquid
+            assign lazy = true
+            if forloop.index <= columns
+              assign lazy = false
+            endif
+          -%}
+          <li>{% render 'mil-card', product: product, lazy: lazy %}</li>
+        {%- else -%}
+          <li class="mil-grid__empty mil-caps">Nothing here yet.</li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if paginate.pages > 1 and template.name == 'collection' -%}
+        <nav class="mil-grid__pages mil-caps" aria-label="Pages">
+          {%- if paginate.previous -%}<a class="mil-link" href="{{ paginate.previous.url }}">&larr; Prev</a>{%- endif -%}
+          <span>Page {{ paginate.current_page }} / {{ paginate.pages }}</span>
+          {%- if paginate.next -%}<a class="mil-link" href="{{ paginate.next.url }}">Next &rarr;</a>{%- endif -%}
+        </nav>
+      {%- elsif template.name != 'collection' and source.products_count > per_page -%}
+        <p class="mil-grid__more mil-caps"><a class="mil-link" href="{{ source.url }}">View all</a></p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  {%- else -%}
+    <p class="mil-label">{{ section.settings.heading | default: 'Current collection' }}</p>
+    <ul class="mil-grid__list" role="list">
+      {%- for i in (1..columns) -%}
+        <li>
+          <span class="mil-card">
+            <span class="mil-card__media mil-paper">{{ 'product-apparel-1' | placeholder_svg_tag: 'mil-card__img mil-card__placeholder' }}</span>
+            <span class="mil-card__meta mil-caps"><span>Hat name</span><span>$600.00</span></span>
+          </span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>
+
+<style>
+  .mil-grid { padding-block: {{ section.settings.pad_top }}px {{ section.settings.pad_bottom }}px; }
+  .mil-grid__index {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px;
+    margin-bottom: 120px;
+  }
+  .mil-grid__group { display: flex; gap: 14px; }
+  .mil-grid__numeral { min-width: 2.2em; text-align: right; }
+  .mil-grid__index ul { list-style: none; margin: 0; padding: 0; line-height: 1.35; }
+  .mil-grid__index a { color: inherit; text-decoration: none; }
+  .mil-grid__index a:hover { color: var(--mil-accent); }
+
+  .mil-grid__list {
+    display: grid;
+    grid-template-columns: repeat(var(--mil-cols), minmax(0, 1fr));
+    gap: 56px 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .mil-card { display: block; color: inherit; text-decoration: none; }
+  .mil-card__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 1 / 1.05;
+    overflow: hidden;
+  }
+  .mil-card__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8%;
+    transition: opacity 0.5s ease;
+  }
+  .mil-card__img--alt { opacity: 0; }
+  .mil-card:hover .mil-card__img--alt { opacity: 1; }
+  .mil-card:hover .mil-card__img:not(.mil-card__img--alt):has(+ .mil-card__img--alt) { opacity: 0; }
+  .mil-card__placeholder { fill: var(--mil-faint); opacity: 0.35; }
+  .mil-card__meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding-top: 16px;
+    text-align: center;
+  }
+  .mil-card:hover .mil-card__title { text-decoration: underline; text-underline-offset: 3px; }
+  .mil-grid__pages, .mil-grid__more {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 72px;
+  }
+  .mil-grid__empty { grid-column: 1 / -1; padding: 80px 0; text-align: center; }
+
+  @media (max-width: 899px) {
+    .mil-grid__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 4px; }
+    .mil-grid__index { grid-template-columns: 1fr 1fr; margin-bottom: 56px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Millinery product grid",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Label", "info": "Leave empty on collection pages to show the product count." },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Used everywhere except collection pages." },
+    { "type": "link_list", "id": "index_menu", "label": "Category index menu", "info": "Collection pages only. Top-level items become I, II, III…; their children are listed under them." },
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 5, "step": 1, "default": 4 },
+    { "type": "range", "id": "per_page", "label": "Products shown", "min": 4, "max": 48, "step": 4, "default": 24 },
+    { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 40 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 120 }
+  ],
+  "presets": [{ "name": "Millinery product grid" }]
+}
+{% endschema %}
