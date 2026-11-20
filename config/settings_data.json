@@ -77,11 +77,11 @@
     "palette_input_border": "{{ settings.color_palette.color3 }}",
     "palette_variant_border": "{{ settings.color_palette.color3 }}",
     "color_palette": {
-      "background": "#FBFAF6",
-      "foreground": "#2B2724",
-      "color1": "#8A3B2A",
-      "color2": "#E8E0D0",
-      "color3": "#D6CDBD"
+      "background": "#F6F1E7",
+      "foreground": "#1F2A33",
+      "color1": "#7A2E26",
+      "color2": "#EAE3D5",
+      "color3": "#D3C9B8"
     }
   },
   "presets": {
@@ -153,11 +153,11 @@
       "palette_input_border": "{{ settings.color_palette.color3 }}",
       "palette_variant_border": "{{ settings.color_palette.color3 }}",
       "color_palette": {
-        "background": "#FBFAF6",
-        "foreground": "#2B2724",
-        "color1": "#8A3B2A",
-        "color2": "#E8E0D0",
-        "color3": "#D6CDBD"
+        "background": "#F6F1E7",
+        "foreground": "#1F2A33",
+        "color1": "#7A2E26",
+        "color2": "#EAE3D5",
+        "color3": "#D3C9B8"
       }
     }
   }

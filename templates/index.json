@@ -9,25 +9,78 @@
  */
 {
   "sections": {
-    "chapters": {
+    "fitting": {
+      "type": "mil-fitting",
+      "blocks": {
+        "s1": {
+          "type": "spec",
+          "settings": {
+            "label": "Felt",
+            "value": "Beaver · rabbit · wool"
+          }
+        },
+        "s2": {
+          "type": "spec",
+          "settings": {
+            "label": "Crown",
+            "value": "Teardrop · pinch · flat"
+          }
+        },
+        "s3": {
+          "type": "spec",
+          "settings": {
+            "label": "Brim",
+            "value": "2½\" to 4\""
+          }
+        },
+        "s4": {
+          "type": "spec",
+          "settings": {
+            "label": "Band",
+            "value": "Grosgrain · leather · none"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {}
+    },
+    "shop": {
+      "type": "mil-grid",
+      "settings": {
+        "heading": "In the shop",
+        "columns": 3,
+        "per_page": 6,
+        "pad_top": 0,
+        "pad_bottom": 120
+      }
+    },
+    "process": {
       "type": "mil-chapters",
       "blocks": {
         "c1": {
           "type": "chapter",
           "settings": {
-            "title": "The fitting"
+            "title": "The fitting",
+            "text": "We measure your head and talk through how you’ll wear it."
           }
         },
         "c2": {
           "type": "chapter",
           "settings": {
-            "title": "Choosing the felt"
+            "title": "Choosing the felt",
+            "text": "Pick the felt, color and weight that suit you."
           }
         },
         "c3": {
           "type": "chapter",
           "settings": {
-            "title": "Shaping"
+            "title": "Shaping & finishing",
+            "text": "Steamed, shaped and banded by hand in the shop."
           }
         }
       },
@@ -37,34 +90,16 @@
         "c3"
       ],
       "settings": {
-        "faded": true,
+        "heading": "How a hat is made",
+        "kicker": "By hand, in Keansburg",
         "pad_top": 0,
-        "pad_bottom": 200
-      }
-    },
-    "current": {
-      "type": "mil-grid",
-      "settings": {
-        "heading": "Current collection",
-                "columns": 4,
-        "per_page": 8,
-        "pad_top": 0,
-        "pad_bottom": 200
-      }
-    },
-    "signature": {
-      "type": "mil-index",
-      "settings": {
-        "heading": "Signature hats",
-                "limit": 12,
-        "pad_top": 0,
-        "pad_bottom": 160
+        "pad_bottom": 140
       }
     }
   },
   "order": [
-    "chapters",
-    "current",
-    "signature"
+    "fitting",
+    "shop",
+    "process"
   ]
 }

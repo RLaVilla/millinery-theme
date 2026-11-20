@@ -1,106 +1,156 @@
 {% doc %}
-  The Millinery — global type, paper texture and shared "ledger" styles.
+  The Millinery — global type, linen texture and shared "hatbox label" styles.
   Rendered in layout/theme.liquid after Horizon's own variables so these win.
 {% enddoc %}
-<link rel="preload" href="{{ 'mil-courier-prime-400.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ 'mil-serif-500.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
 <style>
   @font-face {
-    font-family: 'Mil Typewriter';
+    font-family: 'Mil Serif';
+    src: url('{{ 'mil-serif-500.woff2' | asset_url }}') format('woff2');
+    font-weight: 400 500; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Mil Serif';
+    src: url('{{ 'mil-serif-500i.woff2' | asset_url }}') format('woff2');
+    font-weight: 400 500; font-style: italic; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Mil Serif';
+    src: url('{{ 'mil-serif-600.woff2' | asset_url }}') format('woff2');
+    font-weight: 600 700; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Mil Mono';
     src: url('{{ 'mil-courier-prime-400.woff2' | asset_url }}') format('woff2');
     font-weight: 400; font-style: normal; font-display: swap;
   }
   @font-face {
-    font-family: 'Mil Typewriter';
-    src: url('{{ 'mil-courier-prime-400i.woff2' | asset_url }}') format('woff2');
-    font-weight: 400; font-style: italic; font-display: swap;
-  }
-  @font-face {
-    font-family: 'Mil Typewriter';
+    font-family: 'Mil Mono';
     src: url('{{ 'mil-courier-prime-700.woff2' | asset_url }}') format('woff2');
     font-weight: 700; font-style: normal; font-display: swap;
   }
-  @font-face {
-    font-family: 'Mil Signature';
-    src: url('{{ 'mil-signature.woff2' | asset_url }}') format('woff2');
-    font-weight: 400; font-style: normal; font-display: swap;
-  }
 
   :root {
-    --mil-type: 'Mil Typewriter', 'Courier New', Courier, monospace;
-    --mil-sign: 'Mil Signature', 'Brush Script MT', cursive;
+    --mil-serif: 'Mil Serif', 'Cormorant Garamond', Garamond, 'Times New Roman', serif;
+    --mil-mono: 'Mil Mono', 'Courier New', Courier, monospace;
     --mil-ink: {{ settings.color_palette.foreground }};
     --mil-paper: {{ settings.color_palette.background }};
     --mil-accent: {{ settings.color_palette.color1 }};
     --mil-tile: {{ settings.color_palette.color2 }};
     --mil-rule: {{ settings.color_palette.color3 }};
-    --mil-faint: color-mix(in srgb, var(--mil-ink) 45%, transparent);
-    --mil-gutter: clamp(16px, 2vw, 32px);
-    --mil-text: 13px;
-    --mil-text-sm: 11px;
+    --mil-faint: color-mix(in srgb, var(--mil-ink) 55%, transparent);
+    --mil-gutter: clamp(18px, 3.5vw, 56px);
+    --mil-body: 17px;
+    --mil-small: 11px;
 
-    --font-body--family: var(--mil-type);
-    --font-subheading--family: var(--mil-type);
-    --font-heading--family: var(--mil-type);
-    --font-accent--family: var(--mil-type);
+    --font-body--family: var(--mil-serif);
+    --font-subheading--family: var(--mil-serif);
+    --font-heading--family: var(--mil-serif);
+    --font-accent--family: var(--mil-mono);
   }
 
-  /* Speckled paper — pure CSS noise, no image to load */
-  .mil-paper {
+  /* Woven linen — pure CSS, no image to load */
+  .mil-linen {
     background-color: var(--mil-tile);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .25 0 0 0 .55 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0 0 0 0 0 0 0 .5 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+    background-image:
+      repeating-linear-gradient(0deg, rgba(60, 45, 30, 0.035) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgba(60, 45, 30, 0.03) 0 1px, transparent 1px 4px),
+      radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.35), transparent 60%);
   }
-  /* Product shots on white melt into the paper */
-  .mil-paper img { mix-blend-mode: multiply; }
+  /* Product shots on white sit into the linen */
+  .mil-linen img { mix-blend-mode: multiply; }
 
   body {
-    font-family: var(--mil-type);
+    font-family: var(--mil-serif);
+    font-size: var(--mil-body);
     color: var(--mil-ink);
     background: var(--mil-paper);
     -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: var(--mil-type);
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
+    font-family: var(--mil-serif);
+    font-weight: 500;
+    letter-spacing: 0;
   }
 
-  /* Shared ledger pieces */
-  .mil-caps { text-transform: uppercase; letter-spacing: 0.02em; }
-  .mil-label {
-    font: 400 var(--mil-text) / 1.4 var(--mil-type);
+  /* Shared pieces */
+  .mil-section { font: 400 var(--mil-body) / 1.5 var(--mil-serif); }
+  .mil-wrap { padding-inline: var(--mil-gutter); }
+  .mil-meta {
+    font: 400 var(--mil-small) / 1.5 var(--mil-mono);
     text-transform: uppercase;
-    letter-spacing: 0.02em;
-    margin: 0 0 18px;
+    letter-spacing: 0.08em;
   }
-  .mil-label::before { content: '\2014\2014'; letter-spacing: -0.15em; margin-right: 0.15em; }
+  .mil-stamp {
+    font-family: var(--mil-serif);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+  }
+
+  /* Section heading: italic serif with a hairline running out to the edge */
+  .mil-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin: 0 0 32px;
+    font: italic 500 clamp(26px, 3vw, 38px) / 1.1 var(--mil-serif);
+  }
+  .mil-heading::after { content: ''; flex: 1; border-top: 1px solid var(--mil-rule); transform: translateY(-0.3em); }
+  .mil-heading small { font: 400 var(--mil-small) var(--mil-mono); font-style: normal; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mil-faint); }
+
+  /* Hang tag: rounded tag with a punched hole */
+  .mil-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 12px 5px 22px;
+    position: relative;
+    border: 1px solid currentColor;
+    border-radius: 3px 14px 14px 3px;
+    font: 400 var(--mil-small) / 1.4 var(--mil-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .mil-tag::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    margin-top: -2.5px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+  }
+
   .mil-link {
     color: inherit;
     text-decoration: underline;
-    text-underline-offset: 3px;
+    text-underline-offset: 4px;
     text-decoration-thickness: 1px;
   }
   .mil-link:hover { color: var(--mil-accent); }
-  .mil-wrap { padding-inline: var(--mil-gutter); }
-  .mil-section { font: 400 var(--mil-text) / 1.45 var(--mil-type); }
 
   .mil-btn {
     display: inline-flex; align-items: center; justify-content: center;
-    min-width: 220px; padding: 16px 28px;
-    background: var(--mil-tile); color: var(--mil-ink);
-    border: 0; border-radius: 0;
-    font: 400 var(--mil-text) var(--mil-type);
-    text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 15px 30px;
+    background: var(--mil-ink); color: var(--mil-paper);
+    border: 1px solid var(--mil-ink); border-radius: 0;
+    font: 400 var(--mil-small) var(--mil-mono);
+    text-transform: uppercase; letter-spacing: 0.12em;
     text-decoration: none; cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s, color 0.2s;
   }
-  .mil-btn:hover { background: color-mix(in srgb, var(--mil-tile) 80%, var(--mil-ink)); }
+  .mil-btn:hover { background: var(--mil-accent); border-color: var(--mil-accent); }
+  .mil-btn--ghost { background: transparent; color: var(--mil-ink); }
+  .mil-btn--ghost:hover { background: var(--mil-ink); color: var(--mil-paper); border-color: var(--mil-ink); }
 
-  /* Horizon buttons pick up the same flat look */
+  /* Horizon buttons pick up the same look */
   .button, button.button, .shopify-payment-button__button--unbranded {
     border-radius: 0 !important;
-    font-family: var(--mil-type) !important;
+    font-family: var(--mil-mono) !important;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.12em;
   }
 </style>

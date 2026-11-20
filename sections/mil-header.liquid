@@ -1,209 +1,241 @@
 {% doc %}
-  The Millinery — letterhead header.
-  Live local date/time + city on the left, hand-signed wordmark, typed nav with
-  radio-dot active state, shop address top right. Nav sticks on scroll.
+  The Millinery — "hatbox label" header.
+  Top strip with live open/closed status from the shop hours, a stamped label
+  wordmark in the center, and a banded nav row (thin rules above and below)
+  that sticks on scroll.
 {% enddoc %}
 {%- liquid
   assign menu = section.settings.menu
-  assign cart_label = section.settings.cart_label | default: 'Cart'
+  capture hours_json
+    echo '['
+    for d in (0..6)
+      assign key = 'hours_' | append: d
+      echo '"' | append: section.settings[key] | append: '"'
+      unless forloop.last
+        echo ','
+      endunless
+    endfor
+    echo ']'
+  endcapture
 -%}
-<header class="mil-header mil-section mil-wrap" data-mil-header>
-  <div class="mil-header__top">
-    <p class="mil-header__dateline mil-caps">
-      <span>{{ section.settings.city }}.</span>
-      <time data-mil-clock data-tz="{{ section.settings.timezone }}"></time>
-    </p>
-
-    <nav class="mil-header__bar" data-mil-bar aria-label="Primary">
-      <div class="mil-header__utils mil-caps">
-        <a class="mil-link" href="{{ routes.search_url }}">Search</a>
-        <a class="mil-link" href="{{ routes.cart_url }}">
-          {{- cart_label }} [<span data-mil-cart-count>{{ cart.item_count }}</span>]
-        </a>
-      </div>
-      <ul class="mil-header__menu mil-caps" role="list">
-        {%- for link in menu.links -%}
-          {%- liquid
-            assign is_active = false
-            if link.active or link.child_active
-              assign is_active = true
-            endif
-          -%}
-          <li>
-            <a
-              href="{{ link.url }}"
-              class="mil-header__navlink{% if is_active %} is-active{% endif %}"
-              {% if is_active %}
-                aria-current="page"
-              {% endif %}
-            >
-              <span class="mil-dot" aria-hidden="true"></span>
-              <span class="mil-link">{{ link.title }}</span>
-            </a>
-          </li>
-        {%- endfor -%}
-      </ul>
-    </nav>
-
-    <address class="mil-header__address mil-caps">
-      {{- section.settings.address | newline_to_br -}}
-      {%- if section.settings.phone != blank -%}
-        <br><a href="tel:{{ section.settings.phone | remove: ' ' | remove: '.' | remove: '-' | remove: '(' | remove: ')' }}">
-          {{- section.settings.phone -}}
-        </a>
-      {%- endif -%}
-    </address>
+<header class="mil-header mil-wrap" data-mil-header>
+  <div class="mil-header__strip mil-meta">
+    <span data-mil-status data-tz="{{ section.settings.timezone }}" data-hours='{{ hours_json | strip }}'>
+      {{- section.settings.city -}}
+    </span>
+    <span class="mil-header__note">{{ section.settings.note }}</span>
+    {%- if section.settings.phone != blank -%}
+      <a href="tel:{{ section.settings.phone | remove: ' ' | remove: '.' | remove: '-' | remove: '(' | remove: ')' }}">
+        {{- section.settings.phone -}}
+      </a>
+    {%- else -%}
+      <span></span>
+    {%- endif -%}
   </div>
 
   <a href="{{ routes.root_url }}" class="mil-header__logo" aria-label="{{ shop.name }}">
     {%- if section.settings.logo != blank -%}
       <span class="mil-header__logo-img" style="--mil-logo-h: {{ section.settings.logo_height }}px;">
-        {{- section.settings.logo | image_url: width: 600 | image_tag: alt: shop.name -}}
+        {{- section.settings.logo | image_url: width: 800 | image_tag: alt: shop.name -}}
       </span>
     {%- else -%}
-      <span class="mil-header__wordmark" style="font-size: {{ section.settings.logo_height }}px;">
-        {{- section.settings.wordmark | default: shop.name -}}
+      <span class="mil-label-mark">
+        <span class="mil-label-mark__name mil-stamp">{{ section.settings.wordmark | default: shop.name }}</span>
+        <span class="mil-label-mark__sub mil-meta">{{ section.settings.sub_mark }}</span>
       </span>
     {%- endif -%}
   </a>
+
+  <div class="mil-header__band-slot">
+    <nav class="mil-header__band" data-mil-band aria-label="Primary">
+      <ul class="mil-header__menu" role="list">
+        {%- for link in menu.links -%}
+          <li>
+            <a
+              href="{{ link.url }}"
+              class="mil-header__navlink{% if link.active or link.child_active %} is-active{% endif %}"
+              {% if link.active %}
+                aria-current="page"
+              {% endif %}
+            >
+              {{- link.title -}}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+      <div class="mil-header__utils mil-meta">
+        <a href="{{ routes.search_url }}">Search</a>
+        <a href="{{ routes.cart_url }}">Bag (<span data-mil-cart-count>{{ cart.item_count }}</span>)</a>
+      </div>
+    </nav>
+  </div>
 </header>
 
 <style>
-  .mil-header {
-    position: relative;
-    padding-block: 40px 56px;
-    color: var(--mil-ink);
-    background: var(--mil-paper);
-  }
-  .mil-header__top {
+  .mil-header { background: var(--mil-paper); color: var(--mil-ink); }
+  .mil-header__strip {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    align-items: start;
-    gap: 24px;
-  }
-  .mil-header__dateline,
-  .mil-header__address {
-    margin: 0;
-    font-size: var(--mil-text-sm);
-    font-style: normal;
-    line-height: 1.5;
+    gap: 16px;
+    padding-block: 12px;
     color: var(--mil-faint);
   }
-  .mil-header__address { justify-self: end; text-align: left; }
-  .mil-header__address a { color: inherit; text-decoration: none; }
-  .mil-header__dateline time { margin-left: 0.4em; }
+  .mil-header__strip > :last-child { justify-self: end; }
+  .mil-header__strip a { color: inherit; text-decoration: none; }
+  [data-mil-status].is-open::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: #5f7f5a;
+    vertical-align: 1px;
+  }
 
-  .mil-header__bar {
+  .mil-header__logo {
     display: flex;
+    justify-content: center;
+    padding-block: 28px 32px;
+    color: var(--mil-ink);
+    text-decoration: none;
+  }
+  .mil-header__logo-img img { display: block; height: var(--mil-logo-h); width: auto; }
+
+  /* Wordmark set like the stamp inside a sweatband */
+  .mil-label-mark {
+    display: inline-flex;
+    flex-direction: column;
     align-items: center;
-    gap: clamp(24px, 6vw, 120px);
-    padding: 12px 20px;
-    margin-top: -12px;
-    background: transparent;
-    transition: background 0.25s;
+    gap: 6px;
+    padding: 14px 34px 12px;
+    border: 3px double currentColor;
+    border-radius: 999px;
   }
-  .mil-header__bar.is-stuck {
+  .mil-label-mark__name { font-size: clamp(20px, 2.6vw, 30px); line-height: 1; padding-left: 0.22em; }
+  .mil-label-mark__sub { font-size: 10px; letter-spacing: 0.24em; color: var(--mil-faint); }
+
+  .mil-header__band-slot { min-height: var(--mil-band-h, 50px); }
+  .mil-header__band {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding-block: 13px;
+    border-top: 1px solid var(--mil-ink);
+    border-bottom: 1px solid var(--mil-ink);
+    background: var(--mil-paper);
+  }
+  .mil-header__band.is-stuck {
     position: fixed;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 50;
-    background: var(--mil-tile);
+    padding-inline: var(--mil-gutter);
+    border-top-color: transparent;
+    box-shadow: 0 1px 0 var(--mil-ink);
   }
-  .mil-header__utils { display: flex; gap: 16px; white-space: nowrap; }
   .mil-header__menu {
+    grid-column: 2;
     display: flex;
-    gap: 32px;
+    gap: clamp(20px, 3vw, 44px);
     margin: 0;
     padding: 0;
     list-style: none;
   }
   .mil-header__navlink {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    font: 500 15px / 1 var(--mil-serif);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: inherit;
     text-decoration: none;
-    white-space: nowrap;
+    padding-bottom: 3px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
   }
-  .mil-dot {
-    width: 7px;
-    height: 7px;
-    border: 1px solid currentColor;
-    border-radius: 50%;
-    flex: none;
-  }
-  .mil-header__navlink.is-active .mil-dot { background: currentColor; box-shadow: inset 0 0 0 1.5px var(--mil-paper); }
   .mil-header__navlink:hover { color: var(--mil-accent); }
-
-  .mil-header__logo {
-    display: inline-block;
-    margin-top: 28px;
-    margin-left: clamp(0px, 9vw, 150px);
-    color: var(--mil-accent);
-    text-decoration: none;
-    line-height: 1;
-  }
-  .mil-header__logo-img img { display: block; height: var(--mil-logo-h); width: auto; }
-  .mil-header__wordmark {
-    font-family: var(--mil-sign);
-    font-weight: 400;
-    white-space: nowrap;
-  }
+  .mil-header__navlink.is-active { border-bottom-color: currentColor; }
+  .mil-header__utils { grid-column: 3; justify-self: end; display: flex; gap: 20px; }
+  .mil-header__utils a { color: inherit; text-decoration: none; }
+  .mil-header__utils a:hover { color: var(--mil-accent); }
 
   @media (max-width: 899px) {
-    .mil-header { padding-block: 20px 32px; }
-    .mil-header__top { grid-template-columns: 1fr; gap: 14px; }
-    .mil-header__address { display: none; }
-    .mil-header__bar { flex-wrap: wrap; gap: 12px 24px; padding: 0; margin: 0; }
-    .mil-header__bar.is-stuck {
-      top: 0;
-      left: 0;
-      right: 0;
-      transform: none;
-      padding: 12px var(--mil-gutter);
-    }
-    .mil-header__menu { gap: 18px; flex-wrap: wrap; }
-    .mil-header__logo { margin: 20px 0 0; }
+    .mil-header__strip { grid-template-columns: 1fr auto; }
+    .mil-header__note { display: none; }
+    .mil-header__logo { padding-block: 18px 22px; }
+    .mil-header__band { grid-template-columns: 1fr auto; gap: 12px; }
+    .mil-header__menu { grid-column: 1; gap: 18px; overflow-x: auto; scrollbar-width: none; }
+    .mil-header__navlink { font-size: 13px; letter-spacing: 0.1em; white-space: nowrap; }
+    .mil-header__utils { grid-column: 2; gap: 14px; }
   }
 </style>
 
 <script>
   (() => {
     const root = document.currentScript.previousElementSibling.previousElementSibling;
-    if (!root || root.dataset.milReady) return;
+    if (!root?.matches('[data-mil-header]') || root.dataset.milReady) return;
     root.dataset.milReady = '1';
 
-    // Live dateline: THU 19 NOV. 7:05PM in the shop's own time zone
-    const clock = root.querySelector('[data-mil-clock]');
-    const tz = clock?.dataset.tz || 'America/New_York';
-    const tick = () => {
-      const d = new Date();
-      const part = (o) => new Intl.DateTimeFormat('en-US', { timeZone: tz, ...o }).format(d);
-      clock.textContent =
-        `${part({ weekday: 'short' })} ${part({ day: 'numeric' })} ${part({ month: 'short' })}. ` +
-        part({ hour: 'numeric', minute: '2-digit' }).replace(' ', '');
+    // Live open/closed line from the hours set in the editor (index 0 = Sunday)
+    const status = root.querySelector('[data-mil-status]');
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const parse = (s) => {
+      const m = String(s || '').replace(/\s/g, '').match(/^(\d{1,2})(?::(\d{2}))?-(\d{1,2})(?::(\d{2}))?$/);
+      return m ? [+m[1] * 60 + +(m[2] || 0), +m[3] * 60 + +(m[4] || 0)] : null;
     };
-    if (clock) { tick(); setInterval(tick, 15000); }
-
-    // Nav pins to the top once you scroll past it
-    const bar = root.querySelector('[data-mil-bar]');
-    if (bar) {
-      const spacer = document.createElement('div');
-      bar.after(spacer);
-      spacer.style.display = 'none';
-      new IntersectionObserver(([e]) => {
-        const stuck = !e.isIntersecting && e.boundingClientRect.top < 0;
-        if (stuck && !bar.classList.contains('is-stuck')) {
-          spacer.style.cssText = `width:${bar.offsetWidth}px;height:${bar.offsetHeight}px`;
+    const fmt = (mins) => {
+      const h = Math.floor(mins / 60), m = mins % 60;
+      return `${h % 12 || 12}${m ? ':' + String(m).padStart(2, '0') : ''}${h < 12 ? 'AM' : 'PM'}`;
+    };
+    const update = () => {
+      let hours;
+      try { hours = JSON.parse(status.dataset.hours).map(parse); } catch { return; }
+      if (!hours.some(Boolean)) return;
+      const parts = Object.fromEntries(
+        new Intl.DateTimeFormat('en-US', {
+          timeZone: status.dataset.tz, weekday: 'short', hour: 'numeric', minute: 'numeric', hourCycle: 'h23',
+        }).formatToParts(new Date()).map((p) => [p.type, p.value])
+      );
+      const day = days.indexOf(parts.weekday);
+      const now = +parts.hour * 60 + +parts.minute;
+      const city = status.dataset.city || '';
+      const today = hours[day];
+      status.classList.remove('is-open');
+      if (today && now >= today[0] && now < today[1]) {
+        status.classList.add('is-open');
+        status.textContent = `Open today until ${fmt(today[1])} · ${city}`;
+        return;
+      }
+      if (today && now < today[0]) {
+        status.textContent = `Opens today at ${fmt(today[0])} · ${city}`;
+        return;
+      }
+      for (let i = 1; i <= 7; i++) {
+        const d = (day + i) % 7;
+        if (hours[d]) {
+          status.textContent = `Closed · Opens ${i === 1 ? 'tomorrow' : days[d]} ${fmt(hours[d][0])} · ${city}`;
+          return;
         }
-        bar.classList.toggle('is-stuck', stuck);
-        spacer.style.display = stuck ? 'block' : 'none';
-      }, { rootMargin: '-40px 0px 0px 0px' }).observe(root.querySelector('.mil-header__top'));
+      }
+    };
+    if (status) {
+      status.dataset.city = status.textContent.trim();
+      update();
+      setInterval(update, 60000);
     }
 
-    // Keep CART [n] in sync after any add/change, whatever triggered it
+    // Banded nav sticks to the top once it reaches it
+    const band = root.querySelector('[data-mil-band]');
+    const slot = band?.parentElement;
+    if (band && slot) {
+      slot.style.setProperty('--mil-band-h', `${band.offsetHeight}px`);
+      new IntersectionObserver(([e]) => {
+        band.classList.toggle('is-stuck', !e.isIntersecting && e.boundingClientRect.top < 0);
+      }).observe(slot);
+    }
+
+    // Keep BAG (n) in sync after any add/change, whatever triggered it
     const count = root.querySelector('[data-mil-cart-count]');
     const refresh = () =>
       fetch(`${window.Shopify?.routes?.root || '/'}cart.js`)
@@ -224,17 +256,19 @@
   "name": "Millinery header",
   "class": "mil-header-section",
   "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Logo / signature image", "info": "Leave empty to use the hand-signed wordmark below." },
-    { "type": "text", "id": "wordmark", "label": "Wordmark text", "default": "The Millinery" },
-    { "type": "range", "id": "logo_height", "label": "Logo size", "min": 24, "max": 120, "step": 2, "unit": "px", "default": 56 },
+    { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "Leave empty to use the stamped label wordmark." },
+    { "type": "range", "id": "logo_height", "label": "Logo image height", "min": 30, "max": 140, "step": 2, "unit": "px", "default": 72 },
+    { "type": "text", "id": "wordmark", "label": "Wordmark", "default": "The Millinery" },
+    { "type": "text", "id": "sub_mark", "label": "Line under wordmark", "default": "Hat Co. · Keansburg, NJ" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
-    { "type": "text", "id": "cart_label", "label": "Cart label", "default": "Cart" },
-    { "type": "header", "content": "Letterhead" },
-    { "type": "text", "id": "city", "label": "City line", "default": "Keansburg, NJ" },
+    { "type": "header", "content": "Top strip" },
+    { "type": "text", "id": "city", "label": "Location", "default": "Keansburg, NJ" },
+    { "type": "text", "id": "note", "label": "Center note", "default": "Custom fittings by appointment" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "732.000.0000" },
     {
       "type": "select",
       "id": "timezone",
-      "label": "Clock time zone",
+      "label": "Shop time zone",
       "default": "America/New_York",
       "options": [
         { "value": "America/New_York", "label": "Eastern" },
@@ -243,8 +277,14 @@
         { "value": "America/Los_Angeles", "label": "Pacific" }
       ]
     },
-    { "type": "textarea", "id": "address", "label": "Shop address", "default": "The Millinery\n123 Main St\nKeansburg, NJ 07734" },
-    { "type": "text", "id": "phone", "label": "Phone", "default": "732.000.0000" }
+    { "type": "paragraph", "content": "Shop hours power the live open/closed line. Use 24-hour times like 11-18 or 10:30-17. Leave a day empty if closed." },
+    { "type": "text", "id": "hours_0", "label": "Sunday", "default": "12-17" },
+    { "type": "text", "id": "hours_1", "label": "Monday" },
+    { "type": "text", "id": "hours_2", "label": "Tuesday" },
+    { "type": "text", "id": "hours_3", "label": "Wednesday", "default": "11-18" },
+    { "type": "text", "id": "hours_4", "label": "Thursday", "default": "11-18" },
+    { "type": "text", "id": "hours_5", "label": "Friday", "default": "11-18" },
+    { "type": "text", "id": "hours_6", "label": "Saturday", "default": "10-18" }
   ]
 }
 {% endschema %}

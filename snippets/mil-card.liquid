@@ -1,5 +1,5 @@
 {% doc %}
-  The Millinery — product tile on speckled paper, caps name + price beneath.
+  The Millinery — product tile on linen, serif name with typed price beside it.
 
   @param {object} product - The product to show
   @param {string} [sizes] - Image sizes attribute
@@ -15,7 +15,7 @@
   assign sizes = sizes | default: '(min-width: 900px) 25vw, 50vw'
 -%}
 <a class="mil-card" href="{{ product.url }}">
-  <span class="mil-card__media mil-paper">
+  <span class="mil-card__media mil-linen">
     {%- if img -%}
       {{
         img
@@ -43,9 +43,9 @@
       {{ 'product-apparel-1' | placeholder_svg_tag: 'mil-card__img mil-card__placeholder' }}
     {%- endif -%}
   </span>
-  <span class="mil-card__meta mil-caps">
+  <span class="mil-card__meta">
     <span class="mil-card__title">{{ product.title }}</span>
-    <span class="mil-card__price">
+    <span class="mil-card__price mil-meta">
       {%- if product.available -%}
         {%- if product.price_varies -%}From {% endif -%}
         {{- product.price | money -}}

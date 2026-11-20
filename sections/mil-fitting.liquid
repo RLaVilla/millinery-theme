@@ -1,0 +1,171 @@
+{% doc %}
+  The Millinery — "fitting room". Large photo beside the pitch for custom work:
+  serif headline, short copy, a spec card of options set like a hatbox label
+  (dotted leaders), and booking / custom-order buttons.
+{% enddoc %}
+<div class="mil-fit mil-section mil-wrap{% if section.settings.flip %} is-flipped{% endif %}">
+  <div class="mil-fit__media mil-linen">
+    {%- if section.settings.video != blank -%}
+      {{
+        section.settings.video
+        | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, image_size: '1400x'
+      }}
+    {%- elsif section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 1800
+        | image_tag: widths: '600, 900, 1200, 1500, 1800', sizes: '(min-width: 900px) 55vw, 100vw', loading: 'eager', fetchpriority: 'high'
+      }}
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'mil-fit__ph' }}
+    {%- endif -%}
+  </div>
+
+  <div class="mil-fit__copy">
+    {%- if section.settings.tag != blank -%}
+      <span class="mil-tag mil-fit__tag">{{ section.settings.tag }}</span>
+    {%- endif -%}
+    <h1 class="mil-fit__title">{{ section.settings.title }}</h1>
+    {%- if section.settings.text != blank -%}
+      <div class="mil-fit__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <dl class="mil-fit__card">
+        {%- if section.settings.card_title != blank -%}
+          <p class="mil-fit__card-title mil-stamp">{{ section.settings.card_title }}</p>
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          <div class="mil-fit__row" {{ block.shopify_attributes }}>
+            <dt>{{ block.settings.label }}</dt>
+            <dd>{{ block.settings.value }}</dd>
+          </div>
+        {%- endfor -%}
+      </dl>
+    {%- endif -%}
+
+    <div class="mil-fit__ctas">
+      {%- if section.settings.cta1_label != blank -%}
+        <a class="mil-btn" href="{{ section.settings.cta1_link | default: '#' }}">{{ section.settings.cta1_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.cta2_label != blank -%}
+        <a class="mil-btn mil-btn--ghost" href="{{ section.settings.cta2_link | default: '#' }}">{{ section.settings.cta2_label }}</a>
+      {%- endif -%}
+    </div>
+    {%- if section.settings.note != blank -%}
+      <p class="mil-fit__note mil-meta">{{ section.settings.note }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .mil-fit {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 88px);
+    align-items: center;
+    padding-block: {{ section.settings.pad_top }}px {{ section.settings.pad_bottom }}px;
+  }
+  .mil-fit.is-flipped .mil-fit__media { order: 2; }
+  .mil-fit__media { aspect-ratio: 4 / 5; overflow: hidden; }
+  .mil-fit__media img,
+  .mil-fit__media video,
+  .mil-fit__ph { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mil-fit__ph { fill: var(--mil-faint); opacity: 0.25; }
+  .mil-fit__media img { mix-blend-mode: normal; }
+
+  .mil-fit__copy { max-width: 480px; }
+  .mil-fit__tag { color: var(--mil-accent); }
+  .mil-fit__title { margin: 20px 0 16px; font: 500 clamp(40px, 5vw, 68px) / 1 var(--mil-serif); letter-spacing: -0.01em; }
+  .mil-fit__text { font-size: 18px; line-height: 1.55; color: color-mix(in srgb, var(--mil-ink) 82%, transparent); }
+  .mil-fit__text p { margin: 0 0 12px; }
+
+  .mil-fit__card {
+    margin: 28px 0 0;
+    padding: 18px 22px 14px;
+    border: 3px double var(--mil-ink);
+    background: var(--mil-paper);
+  }
+  .mil-fit__card-title { margin: 0 0 12px; font-size: 13px; text-align: center; }
+  .mil-fit__row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 5px 0;
+    font-size: 16px;
+  }
+  .mil-fit__row dt { font-style: italic; white-space: nowrap; }
+  .mil-fit__row dd {
+    margin: 0;
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    justify-content: flex-end;
+    text-align: right;
+    font: 400 12px / 1.4 var(--mil-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .mil-fit__row dd::before {
+    content: '';
+    flex: 1;
+    min-width: 24px;
+    border-bottom: 1px dotted var(--mil-faint);
+    transform: translateY(-3px);
+  }
+
+  .mil-fit__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .mil-fit__note { margin: 14px 0 0; color: var(--mil-faint); }
+
+  @media (max-width: 899px) {
+    .mil-fit { grid-template-columns: 1fr; }
+    .mil-fit.is-flipped .mil-fit__media { order: 0; }
+    .mil-fit__media { aspect-ratio: 4 / 4.4; }
+    .mil-fit__ctas .mil-btn { flex: 1; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Millinery fitting room",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "video", "id": "video", "label": "Video (plays silently on loop)", "info": "Overrides the image." },
+    { "type": "checkbox", "id": "flip", "label": "Image on the right", "default": false },
+    { "type": "text", "id": "tag", "label": "Tag", "default": "Custom & made to measure" },
+    { "type": "text", "id": "title", "label": "Headline", "default": "Made to your head." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Every hat starts with a fitting in our Keansburg shop. We measure, pick the felt and shape it by hand — so it fits like it was always yours.</p>" },
+    { "type": "text", "id": "card_title", "label": "Spec card title", "default": "Your hat" },
+    { "type": "text", "id": "cta1_label", "label": "Primary button", "default": "Book a fitting" },
+    { "type": "url", "id": "cta1_link", "label": "Primary button link" },
+    { "type": "text", "id": "cta2_label", "label": "Secondary button", "default": "Shop ready-to-wear" },
+    { "type": "url", "id": "cta2_link", "label": "Secondary button link", "default": "/collections/all" },
+    { "type": "text", "id": "note", "label": "Small note", "default": "Custom hats from $600 · Ready in 4–6 weeks" },
+    { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 24 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 120 }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Spec row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Felt" },
+        { "type": "text", "id": "value", "label": "Value", "default": "Beaver · rabbit · wool" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Millinery fitting room",
+      "blocks": [
+        { "type": "spec", "settings": { "label": "Felt", "value": "Beaver · rabbit · wool" } },
+        { "type": "spec", "settings": { "label": "Crown", "value": "Teardrop · pinch · flat" } },
+        { "type": "spec", "settings": { "label": "Brim", "value": "2½\" to 4\"" } },
+        { "type": "spec", "settings": { "label": "Band", "value": "Grosgrain · leather · none" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
