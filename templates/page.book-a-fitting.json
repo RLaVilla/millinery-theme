@@ -1,0 +1,142 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "booking": {
+      "type": "mil-booking",
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "text": "About 30 minutes, one on one"
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "text": "No pressure — come try things on"
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "text": "Custom hats from $600"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/IMG_2154.jpg"
+      }
+    },
+    "process": {
+      "type": "mil-chapters",
+      "blocks": {
+        "c1": {
+          "type": "chapter",
+          "settings": {
+            "title": "Try on shapes",
+            "text": "Find the crown and brim that suit your face.",
+            "image": "shopify://shop_images/580A3703.jpg"
+          }
+        },
+        "c2": {
+          "type": "chapter",
+          "settings": {
+            "title": "Pick your felt",
+            "text": "Choose color, felt and band.",
+            "image": "shopify://shop_images/IMG_5412.jpg"
+          }
+        },
+        "c3": {
+          "type": "chapter",
+          "settings": {
+            "title": "Get measured",
+            "text": "We take your size so it’s made to fit.",
+            "image": "shopify://shop_images/580A3932.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "heading": "What happens at your fitting",
+        "kicker": "About 30 minutes",
+        "pad_top": 0,
+        "pad_bottom": 120
+      }
+    },
+    "proof": {
+      "type": "mil-proof",
+      "settings": {}
+    },
+    "visit": {
+      "type": "mil-visit",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "Is there a charge for a fitting?",
+            "answer": "<p>Answer to confirm with Carly.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does a custom hat take?",
+            "answer": "<p>Answer to confirm with Carly.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "What does a custom hat cost?",
+            "answer": "<p>Answer to confirm with Carly.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I walk in without an appointment?",
+            "answer": "<p>Answer to confirm with Carly.</p>"
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I book a fitting as a gift?",
+            "answer": "<p>Answer to confirm with Carly.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "booking",
+    "process",
+    "proof",
+    "visit"
+  ]
+}

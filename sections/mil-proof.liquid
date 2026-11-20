@@ -1,0 +1,75 @@
+{% doc %}
+  The Millinery — "as seen" video. A Shopify-hosted video (e.g. the Jersey Girl
+  Guide visit) shown portrait with a caption and link to the creator.
+{% enddoc %}
+<div class="mil-proof mil-section mil-wrap">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="mil-heading">
+      {{- section.settings.heading -}}
+      {%- if section.settings.kicker != blank -%}<small>{{ section.settings.kicker }}</small>{%- endif -%}
+    </h2>
+  {%- endif -%}
+  <div class="mil-proof__layout">
+    <div class="mil-proof__video mil-linen">
+      {%- if section.settings.video != blank -%}
+        {{
+          section.settings.video
+          | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: true, image_size: '800x'
+        }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'mil-proof__ph' }}
+      {%- endif -%}
+    </div>
+    <div class="mil-proof__copy">
+      {%- if section.settings.quote != blank -%}
+        <blockquote class="mil-proof__quote">{{ section.settings.quote }}</blockquote>
+      {%- endif -%}
+      {%- if section.settings.credit != blank -%}
+        <p class="mil-proof__credit mil-meta">
+          {%- if section.settings.credit_link != blank -%}
+            <a class="mil-link" href="{{ section.settings.credit_link }}" target="_blank" rel="noopener">{{ section.settings.credit }}</a>
+          {%- else -%}
+            {{ section.settings.credit }}
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+      {%- if section.settings.cta_label != blank -%}
+        <a class="mil-btn" href="{{ section.settings.cta_link | default: '#book-form' }}">{{ section.settings.cta_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .mil-proof { padding-block: {{ section.settings.pad_top }}px {{ section.settings.pad_bottom }}px; }
+  .mil-proof__layout { display: grid; grid-template-columns: minmax(240px, 380px) minmax(0, 1fr); gap: clamp(24px, 5vw, 80px); align-items: center; }
+  .mil-proof__video { aspect-ratio: 9 / 16; overflow: hidden; border: 3px double var(--mil-ink); }
+  .mil-proof__video video,
+  .mil-proof__ph { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mil-proof__ph { fill: var(--mil-faint); opacity: 0.25; }
+  .mil-proof__quote { margin: 0 0 14px; font: italic 500 clamp(26px, 3vw, 40px) / 1.2 var(--mil-serif); max-width: 22ch; }
+  .mil-proof__credit { margin: 0 0 26px; color: var(--mil-faint); }
+  @media (max-width: 899px) {
+    .mil-proof__layout { grid-template-columns: 1fr; }
+    .mil-proof__video { max-width: 360px; width: 100%; margin-inline: auto; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Millinery as-seen video",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "As seen on Jersey Girl Guide" },
+    { "type": "text", "id": "kicker", "label": "Small note beside heading" },
+    { "type": "video", "id": "video", "label": "Video", "info": "Upload the vertical video in Content → Files, then pick it here." },
+    { "type": "text", "id": "quote", "label": "Pull quote", "info": "Use a real line from the video or a real customer. Leave empty if none." },
+    { "type": "text", "id": "credit", "label": "Credit", "default": "Jersey Girl Guide" },
+    { "type": "url", "id": "credit_link", "label": "Credit link" },
+    { "type": "text", "id": "cta_label", "label": "Button", "default": "Book your fitting" },
+    { "type": "url", "id": "cta_link", "label": "Button link", "info": "Leave empty to jump to the booking form on this page." },
+    { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 120 }
+  ],
+  "presets": [{ "name": "Millinery as-seen video" }]
+}
+{% endschema %}

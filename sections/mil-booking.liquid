@@ -1,0 +1,309 @@
+{% doc %}
+  The Millinery — "Book a fitting" landing hero for paid traffic.
+  Headline, three quick reassurances, photo, and a request form that emails
+  the shop (Shopify contact form). Optional: paste a booking embed (Calendly,
+  Square, Acuity…) to replace the form. Adds a sticky Book / Call bar on mobile
+  and fires a "fitting_request" event (+ Meta "Schedule" if fbq is on the page).
+{% enddoc %}
+{%- liquid
+  assign phone_digits = section.settings.phone | remove: ' ' | remove: '.' | remove: '-' | remove: '(' | remove: ')'
+  assign form_id = 'MilBooking-' | append: section.id
+-%}
+<div class="mil-book mil-section mil-wrap" id="book">
+  <div class="mil-book__intro">
+    {%- if section.settings.tag != blank -%}
+      <span class="mil-tag mil-book__tag">{{ section.settings.tag }}</span>
+    {%- endif -%}
+    <h1 class="mil-book__title">{{ section.settings.title }}</h1>
+    {%- if section.settings.text != blank -%}
+      <div class="mil-book__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      <ul class="mil-book__points" role="list">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+    <div class="mil-book__media mil-linen">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1400
+          | image_tag: widths: '500, 800, 1100, 1400', sizes: '(min-width: 900px) 45vw, 100vw', loading: 'eager', fetchpriority: 'high'
+        }}
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'mil-book__ph' }}
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="mil-book__card" id="book-form">
+    {%- if section.settings.embed != blank -%}
+      <p class="mil-book__card-title mil-stamp">{{ section.settings.form_title }}</p>
+      <div class="mil-book__embed">{{ section.settings.embed }}</div>
+    {%- else -%}
+      {%- form 'contact', id: form_id, class: 'mil-book__form' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="mil-book__done" data-mil-booked>
+            <p class="mil-book__card-title mil-stamp">Request received</p>
+            <p class="mil-book__done-title">{{ section.settings.success_title }}</p>
+            <p>{{ section.settings.success_text }}</p>
+            {%- if section.settings.phone != blank -%}
+              <a class="mil-btn mil-btn--ghost" href="tel:{{ phone_digits }}">Call {{ section.settings.phone }}</a>
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          <p class="mil-book__card-title mil-stamp">{{ section.settings.form_title }}</p>
+          {%- if form.errors -%}
+            <div class="mil-book__errors mil-meta" role="alert">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+          <input type="hidden" name="contact[tags]" value="fitting-request">
+          <input type="hidden" name="contact[Request]" value="Hat fitting">
+          <input type="hidden" name="contact[Source]" value="" data-mil-source>
+
+          <div class="mil-book__grid">
+            <label class="mil-field mil-field--full">
+              <span>Name</span>
+              <input type="text" name="contact[name]" autocomplete="name" required value="{{ form.name }}">
+            </label>
+            <label class="mil-field">
+              <span>Phone</span>
+              <input type="tel" name="contact[phone]" autocomplete="tel" required value="{{ form.phone }}">
+            </label>
+            <label class="mil-field">
+              <span>Email</span>
+              <input type="email" name="contact[email]" autocomplete="email" required value="{{ form.email }}">
+            </label>
+            <label class="mil-field">
+              <span>Preferred day</span>
+              <input type="date" name="contact[Preferred day]" data-mil-date>
+            </label>
+            <label class="mil-field">
+              <span>Time of day</span>
+              <select name="contact[Preferred time]">
+                <option value="Any time">Any time</option>
+                <option value="Morning">Morning</option>
+                <option value="Afternoon">Afternoon</option>
+                <option value="Evening">Evening</option>
+              </select>
+            </label>
+            <label class="mil-field mil-field--full">
+              <span>I'm interested in</span>
+              <select name="contact[Interested in]">
+                {%- assign options = section.settings.interests | newline_to_br | split: '<br />' -%}
+                {%- for opt in options -%}
+                  {%- assign o = opt | strip -%}
+                  {%- if o != blank -%}<option value="{{ o | escape }}">{{ o }}</option>{%- endif -%}
+                {%- endfor -%}
+              </select>
+            </label>
+            <label class="mil-field mil-field--full">
+              <span>Anything we should know? <em>(optional)</em></span>
+              <textarea name="contact[body]" rows="3" placeholder="An occasion, a style you love, your hat size if you know it…">{{ form.body }}</textarea>
+            </label>
+          </div>
+
+          <button type="submit" class="mil-btn mil-book__submit">{{ section.settings.button }}</button>
+          {%- if section.settings.fine_print != blank -%}
+            <p class="mil-book__fine mil-meta">{{ section.settings.fine_print }}</p>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endform -%}
+    {%- endif -%}
+
+    {%- if section.settings.phone != blank -%}
+      <p class="mil-book__alt">
+        Rather talk? <a class="mil-link" href="tel:{{ phone_digits }}">Call</a> or
+        <a class="mil-link" href="sms:{{ phone_digits }}">text</a> {{ section.settings.phone }}
+      </p>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- if section.settings.sticky_bar -%}
+  <div class="mil-book__bar" data-mil-bar hidden>
+    <a class="mil-btn" href="#book-form">{{ section.settings.button }}</a>
+    {%- if section.settings.phone != blank -%}
+      <a class="mil-btn mil-btn--ghost" href="tel:{{ phone_digits }}">Call</a>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+<style>
+  .mil-book {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(28px, 5vw, 80px);
+    align-items: start;
+    padding-block: {{ section.settings.pad_top }}px {{ section.settings.pad_bottom }}px;
+    scroll-margin-top: 80px;
+  }
+  .mil-book__tag { color: var(--mil-accent); }
+  .mil-book__title { margin: 18px 0 14px; font: 500 clamp(40px, 5.2vw, 72px) / 1 var(--mil-serif); letter-spacing: -0.01em; }
+  .mil-book__text { max-width: 44ch; font-size: 18px; line-height: 1.55; }
+  .mil-book__text p { margin: 0 0 10px; }
+  .mil-book__points { margin: 18px 0 28px; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .mil-book__points li { display: flex; gap: 10px; font-size: 17px; }
+  .mil-book__points li::before { content: '\2715'; color: var(--mil-accent); font-size: 12px; transform: translateY(4px); }
+  .mil-book__media { aspect-ratio: 5 / 4; overflow: hidden; }
+  .mil-book__media img,
+  .mil-book__ph { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mil-book__media img { mix-blend-mode: normal; }
+  .mil-book__ph { fill: var(--mil-faint); opacity: 0.25; }
+
+  .mil-book__card {
+    position: sticky;
+    top: 84px;
+    padding: 26px clamp(18px, 2.4vw, 32px) 22px;
+    border: 3px double var(--mil-ink);
+    background: var(--mil-paper);
+    scroll-margin-top: 80px;
+  }
+  .mil-book__card-title { margin: 0 0 18px; font-size: 13px; text-align: center; }
+  .mil-book__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 14px; }
+  .mil-field { display: flex; flex-direction: column; gap: 6px; }
+  .mil-field--full { grid-column: 1 / -1; }
+  .mil-field > span { font: 400 var(--mil-small) / 1.3 var(--mil-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+  .mil-field em { font-style: normal; color: var(--mil-faint); text-transform: none; letter-spacing: 0; }
+  .mil-field input,
+  .mil-field select,
+  .mil-field textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid var(--mil-rule);
+    border-radius: 0;
+    background: #fff;
+    color: var(--mil-ink);
+    font: 400 16px / 1.3 var(--mil-serif);
+    appearance: none;
+  }
+  .mil-field select {
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: calc(100% - 17px) 50%, calc(100% - 12px) 50%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 32px;
+  }
+  .mil-field input:focus,
+  .mil-field select:focus,
+  .mil-field textarea:focus { outline: 1px solid var(--mil-ink); outline-offset: 0; border-color: var(--mil-ink); }
+  .mil-book__submit { width: 100%; margin-top: 18px; padding-block: 17px; }
+  .mil-book__fine { margin: 10px 0 0; text-align: center; color: var(--mil-faint); }
+  .mil-book__errors { margin-bottom: 14px; padding: 10px 12px; border: 1px solid var(--mil-accent); color: var(--mil-accent); }
+  .mil-book__errors ul { margin: 0; padding-left: 16px; }
+  .mil-book__alt { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--mil-rule); text-align: center; font-size: 16px; }
+  .mil-book__done { text-align: center; }
+  .mil-book__done-title { margin: 0 0 8px; font: 500 30px / 1.1 var(--mil-serif); }
+  .mil-book__done p { margin: 0 0 16px; }
+  .mil-book__embed iframe { width: 100%; min-height: 640px; border: 0; }
+
+  .mil-book__bar { display: none; }
+
+  @media (max-width: 899px) {
+    .mil-book { grid-template-columns: 1fr; }
+    .mil-book__card { position: static; }
+    .mil-book__media { aspect-ratio: 4 / 3; order: 3; margin-top: 8px; }
+    .mil-book__grid { grid-template-columns: 1fr; }
+    .mil-book__bar:not([hidden]) {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 60;
+      display: flex;
+      gap: 8px;
+      padding: 10px var(--mil-gutter) calc(10px + env(safe-area-inset-bottom));
+      background: var(--mil-paper);
+      border-top: 1px solid var(--mil-ink);
+    }
+    .mil-book__bar .mil-btn { flex: 1; }
+    .mil-book__bar .mil-btn--ghost { flex: 0 0 34%; }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById('book');
+    if (!root || root.dataset.milReady) return;
+    root.dataset.milReady = '1';
+
+    // Earliest bookable day is tomorrow
+    const date = root.querySelector('[data-mil-date]');
+    if (date) {
+      const t = new Date();
+      t.setDate(t.getDate() + 1);
+      date.min = t.toISOString().slice(0, 10);
+    }
+
+    // Record where the visit came from (utm_source / utm_campaign or fbclid) in the email
+    const src = root.querySelector('[data-mil-source]');
+    if (src) {
+      const q = new URLSearchParams(location.search);
+      try {
+        const saved = sessionStorage.getItem('mil_src');
+        const now = [q.get('utm_source'), q.get('utm_campaign')].filter(Boolean).join(' / ') || (q.get('fbclid') ? 'facebook' : '');
+        if (now) sessionStorage.setItem('mil_src', now);
+        src.value = now || saved || document.referrer || 'direct';
+      } catch {
+        src.value = document.referrer || 'direct';
+      }
+    }
+
+    // Conversion: fire once when the thank-you state shows
+    if (root.querySelector('[data-mil-booked]')) {
+      try { window.Shopify?.analytics?.publish?.('fitting_request', { page: location.pathname }); } catch {}
+      if (typeof window.fbq === 'function') window.fbq('track', 'Schedule');
+      root.scrollIntoView({ block: 'start' });
+    }
+
+    // Mobile Book / Call bar appears once the form is off screen
+    const bar = document.querySelector('[data-mil-bar]');
+    const card = document.getElementById('book-form');
+    if (bar && card && !root.querySelector('[data-mil-booked]')) {
+      new IntersectionObserver(([e]) => { bar.hidden = e.isIntersecting; }).observe(card);
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Millinery book a fitting",
+  "max_blocks": 5,
+  "settings": [
+    { "type": "text", "id": "tag", "label": "Tag", "default": "Keansburg, NJ · By appointment" },
+    { "type": "text", "id": "title", "label": "Headline", "default": "Book your hat fitting." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Come into the shop, try on shapes and felts, and get measured for a hat made to your head.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "header", "content": "Form" },
+    { "type": "text", "id": "form_title", "label": "Form title", "default": "Request a fitting" },
+    { "type": "textarea", "id": "interests", "label": "\"Interested in\" options", "info": "One per line.", "default": "A custom hat\nA ready-to-wear hat\nA gift\nJust browsing / not sure yet" },
+    { "type": "text", "id": "button", "label": "Button", "default": "Request my fitting" },
+    { "type": "text", "id": "fine_print", "label": "Fine print", "default": "We'll text or call within one business day to confirm a time." },
+    { "type": "text", "id": "success_title", "label": "Thank-you headline", "default": "Thank you — we'll be in touch." },
+    { "type": "text", "id": "success_text", "label": "Thank-you text", "default": "We'll reach out within one business day to set your fitting time." },
+    { "type": "html", "id": "embed", "label": "Booking embed (optional)", "info": "Paste a Calendly / Square / Acuity embed to replace the form." },
+    { "type": "text", "id": "phone", "label": "Phone (call & text)", "default": "732.000.0000" },
+    { "type": "checkbox", "id": "sticky_bar", "label": "Sticky Book / Call bar on mobile", "default": true },
+    { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 24 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 120 }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Reassurance",
+      "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "About 30 minutes, one on one" }]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Millinery book a fitting",
+      "blocks": [
+        { "type": "point", "settings": { "text": "About 30 minutes, one on one" } },
+        { "type": "point", "settings": { "text": "No pressure — come try things on" } },
+        { "type": "point", "settings": { "text": "Custom hats from $600" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

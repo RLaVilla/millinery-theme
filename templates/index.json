@@ -48,7 +48,8 @@
         "s4"
       ],
       "settings": {
-        "image": "shopify://shop_images/580A3932.jpg"
+        "image": "shopify://shop_images/580A3932.jpg",
+        "cta1_link": "/pages/book-a-fitting"
       }
     },
     "shop": {
