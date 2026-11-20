@@ -1,0 +1,223 @@
+{% doc %}
+  The Millinery — footer. Booking prompt, newsletter, link columns (from menus),
+  the shop card (address, hours, phone), socials, and a stamped sign-off.
+{% enddoc %}
+{%- liquid
+  assign phone_digits = section.settings.phone | remove: ' ' | remove: '.' | remove: '-' | remove: '(' | remove: ')'
+  assign form_id = 'MilFooterSignup-' | append: section.id
+-%}
+<footer class="mil-footer mil-section">
+  {%- if section.settings.cta_title != blank -%}
+    <div class="mil-footer__cta mil-wrap">
+      <p class="mil-footer__cta-title">{{ section.settings.cta_title }}</p>
+      {%- if section.settings.cta_label != blank -%}
+        <a class="mil-btn" href="{{ section.settings.cta_link | default: '/pages/book-a-fitting' }}">{{ section.settings.cta_label }}</a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="mil-footer__main mil-wrap">
+    <div class="mil-footer__signup">
+      <p class="mil-stamp mil-footer__title">{{ section.settings.signup_title }}</p>
+      {%- if section.settings.signup_text != blank -%}
+        <p class="mil-footer__signup-text">{{ section.settings.signup_text }}</p>
+      {%- endif -%}
+      {%- form 'customer', id: form_id, class: 'mil-footer__form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        {%- if form.posted_successfully? -%}
+          <p class="mil-meta mil-footer__ok">Thanks — you're on the list.</p>
+        {%- else -%}
+          <label class="mil-visually-hidden" for="{{ form_id }}-email">Email</label>
+          <input
+            id="{{ form_id }}-email"
+            type="email"
+            name="contact[email]"
+            placeholder="Your email"
+            autocomplete="email"
+            required
+          >
+          <button type="submit" class="mil-meta">Join</button>
+          {%- if form.errors -%}
+            <p class="mil-meta mil-footer__err">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+
+    {%- for i in (1..2) -%}
+      {%- liquid
+        assign menu_key = 'menu_' | append: i
+        assign title_key = 'menu_title_' | append: i
+        assign col_menu = section.settings[menu_key]
+      -%}
+      {%- if col_menu != blank and col_menu.links.size > 0 -%}
+        <nav class="mil-footer__col" aria-label="{{ section.settings[title_key] | default: col_menu.title | escape }}">
+          <p class="mil-stamp mil-footer__title">{{ section.settings[title_key] | default: col_menu.title }}</p>
+          <ul role="list">
+            {%- for link in col_menu.links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <div class="mil-footer__shop">
+      <p class="mil-stamp mil-footer__title">The shop</p>
+      <address>{{ section.settings.address | newline_to_br }}</address>
+      {%- if section.settings.hours != blank -%}
+        <p class="mil-footer__hours">{{ section.settings.hours | newline_to_br }}</p>
+      {%- endif -%}
+      <p class="mil-footer__contact">
+        {%- if section.settings.phone != blank -%}
+          <a href="tel:{{ phone_digits }}">{{ section.settings.phone }}</a><br>
+        {%- endif -%}
+        {%- if section.settings.email != blank -%}
+          <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+        {%- endif -%}
+      </p>
+      <ul class="mil-footer__social mil-meta" role="list">
+        {%- if section.settings.instagram != blank -%}<li><a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram</a></li>{%- endif -%}
+        {%- if section.settings.tiktok != blank -%}<li><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">TikTok</a></li>{%- endif -%}
+        {%- if section.settings.facebook != blank -%}<li><a href="{{ section.settings.facebook }}" target="_blank" rel="noopener">Facebook</a></li>{%- endif -%}
+      </ul>
+    </div>
+  </div>
+
+  <div class="mil-footer__sign mil-wrap">
+    <span class="mil-footer__mark">
+      <span class="mil-stamp">{{ section.settings.sign_name | default: shop.name }}</span>
+      <span class="mil-meta">{{ section.settings.sign_line }}</span>
+    </span>
+  </div>
+
+  <div class="mil-footer__base mil-wrap mil-meta">
+    <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+    <ul role="list">
+      {%- for policy in shop.policies -%}
+        <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .mil-footer { margin-top: {{ section.settings.margin_top }}px; border-top: 1px solid var(--mil-ink); background: var(--mil-paper); color: var(--mil-ink); }
+  .mil-visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .mil-footer__cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 40px;
+    border-bottom: 1px solid var(--mil-rule);
+  }
+  .mil-footer__cta-title { margin: 0; font: italic 500 clamp(28px, 3.4vw, 46px) / 1.1 var(--mil-serif); }
+
+  .mil-footer__main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+    gap: clamp(24px, 4vw, 64px);
+    padding-block: 56px;
+  }
+  .mil-footer__title { margin: 0 0 16px; font-size: 12px; }
+  .mil-footer__signup-text { margin: 0 0 16px; max-width: 34ch; color: color-mix(in srgb, var(--mil-ink) 80%, transparent); }
+  .mil-footer__form { display: flex; flex-wrap: wrap; max-width: 380px; border-bottom: 1px solid var(--mil-ink); }
+  .mil-footer__form input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: 400 17px var(--mil-serif);
+  }
+  .mil-footer__form input:focus { outline: none; }
+  .mil-footer__form button { padding: 10px 0 10px 16px; border: 0; background: none; color: inherit; cursor: pointer; }
+  .mil-footer__form button:hover { color: var(--mil-accent); }
+  .mil-footer__ok, .mil-footer__err { flex-basis: 100%; margin: 8px 0; }
+  .mil-footer__err { color: var(--mil-accent); }
+
+  .mil-footer__col ul,
+  .mil-footer__social,
+  .mil-footer__base ul { margin: 0; padding: 0; list-style: none; }
+  .mil-footer__col li { padding: 3px 0; }
+  .mil-footer a { color: inherit; text-decoration: none; }
+  .mil-footer__col a:hover,
+  .mil-footer__shop a:hover,
+  .mil-footer__base a:hover { color: var(--mil-accent); }
+  .mil-footer__shop address { font-style: normal; line-height: 1.45; }
+  .mil-footer__hours,
+  .mil-footer__contact { margin: 12px 0 0; line-height: 1.45; }
+  .mil-footer__hours { color: var(--mil-faint); font-size: 15px; }
+  .mil-footer__social { display: flex; gap: 16px; margin-top: 16px; }
+  .mil-footer__social a { text-decoration: underline; text-underline-offset: 3px; }
+
+  .mil-footer__sign { display: flex; justify-content: center; padding-block: 12px 40px; }
+  .mil-footer__mark {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 40px 14px;
+    border: 3px double currentColor;
+    border-radius: 999px;
+  }
+  .mil-footer__mark .mil-stamp { font-size: clamp(18px, 2.2vw, 24px); padding-left: 0.22em; }
+  .mil-footer__mark .mil-meta { font-size: 10px; letter-spacing: 0.24em; color: var(--mil-faint); }
+
+  .mil-footer__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding-block: 16px 24px;
+    border-top: 1px solid var(--mil-rule);
+    color: var(--mil-faint);
+  }
+  .mil-footer__base ul { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+
+  @media (max-width: 899px) {
+    .mil-footer__cta { flex-direction: column; align-items: flex-start; }
+    .mil-footer__cta .mil-btn { width: 100%; }
+    .mil-footer__main { grid-template-columns: 1fr 1fr; padding-block: 40px; }
+    .mil-footer__signup,
+    .mil-footer__shop { grid-column: 1 / -1; }
+  }
+  /* Room for the landing page's sticky mobile bar */
+  @media (max-width: 899px) { body:has([data-mil-bar]:not([hidden])) .mil-footer__base { padding-bottom: 90px; } }
+</style>
+
+{% schema %}
+{
+  "name": "Millinery footer",
+  "class": "mil-footer-section",
+  "settings": [
+    { "type": "header", "content": "Booking prompt" },
+    { "type": "text", "id": "cta_title", "label": "Line", "default": "Come in for a fitting." },
+    { "type": "text", "id": "cta_label", "label": "Button", "default": "Book a fitting" },
+    { "type": "url", "id": "cta_link", "label": "Button link", "default": "/pages/book-a-fitting" },
+    { "type": "header", "content": "Newsletter" },
+    { "type": "text", "id": "signup_title", "label": "Title", "default": "Letters from the shop" },
+    { "type": "text", "id": "signup_text", "label": "Text", "default": "New hats, trunk shows and open fitting days. A few emails a season." },
+    { "type": "header", "content": "Link columns" },
+    { "type": "text", "id": "menu_title_1", "label": "Column 1 title", "default": "Shop" },
+    { "type": "link_list", "id": "menu_1", "label": "Column 1 menu", "default": "main-menu" },
+    { "type": "text", "id": "menu_title_2", "label": "Column 2 title", "default": "Help" },
+    { "type": "link_list", "id": "menu_2", "label": "Column 2 menu", "default": "footer" },
+    { "type": "header", "content": "The shop" },
+    { "type": "textarea", "id": "address", "label": "Address", "default": "123 Main St\nKeansburg, NJ 07734" },
+    { "type": "textarea", "id": "hours", "label": "Hours", "default": "Wed – Fri 11–6 · Sat 10–6 · Sun 12–5\nMon – Tue by appointment" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "732.000.0000" },
+    { "type": "text", "id": "email", "label": "Email" },
+    { "type": "url", "id": "instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "tiktok", "label": "TikTok URL" },
+    { "type": "url", "id": "facebook", "label": "Facebook URL" },
+    { "type": "header", "content": "Sign-off" },
+    { "type": "text", "id": "sign_name", "label": "Stamp name", "default": "The Millinery" },
+    { "type": "text", "id": "sign_line", "label": "Stamp line", "default": "Made by hand · Keansburg, NJ" },
+    { "type": "range", "id": "margin_top", "label": "Space above footer", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 0 }
+  ]
+}
+{% endschema %}
