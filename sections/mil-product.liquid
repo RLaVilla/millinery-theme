@@ -1,0 +1,348 @@
+{% doc %}
+  The Millinery — product page. Stacked photos on linen (thumbnail rail on
+  desktop, swipe strip on mobile), serif title, typed price, option buttons,
+  add to bag + dynamic checkout, details accordions, and a custom-fitting nudge.
+{% enddoc %}
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign form_id = 'MilProduct-' | append: section.id
+  assign phone_digits = section.settings.phone | remove: ' ' | remove: '.' | remove: '-' | remove: '(' | remove: ')'
+-%}
+<div class="mil-pdp mil-section mil-wrap" data-mil-pdp>
+  <div class="mil-pdp__gallery">
+    {%- if product.media.size > 1 -%}
+      <ol class="mil-pdp__rail" role="list">
+        {%- for media in product.media -%}
+          <li>
+            <a href="#Media-{{ section.id }}-{{ media.id }}" class="mil-pdp__thumb mil-linen" aria-label="View image {{ forloop.index }}">
+              {{ media.preview_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+    <ol class="mil-pdp__media" role="list" data-mil-media>
+      {%- for media in product.media -%}
+        <li id="Media-{{ section.id }}-{{ media.id }}" class="mil-pdp__slide mil-linen" data-media-id="{{ media.id }}">
+          {%- case media.media_type -%}
+            {%- when 'video' -%}
+              {{ media | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: true }}
+            {%- when 'external_video' -%}
+              {{ media | external_video_tag }}
+            {%- else -%}
+              {%- liquid
+                assign load = 'lazy'
+                if forloop.first
+                  assign load = 'eager'
+                endif
+              -%}
+              {{
+                media.preview_image
+                | image_url: width: 1800
+                | image_tag:
+                  widths: '600, 900, 1200, 1500, 1800',
+                  sizes: '(min-width: 900px) 55vw, 100vw',
+                  loading: load,
+                  alt: media.alt | default: product.title
+              }}
+          {%- endcase -%}
+        </li>
+      {%- else -%}
+        <li class="mil-pdp__slide mil-linen">{{ 'product-apparel-1' | placeholder_svg_tag: 'mil-pdp__ph' }}</li>
+      {%- endfor -%}
+    </ol>
+  </div>
+
+  <div class="mil-pdp__info">
+    <div class="mil-pdp__sticky">
+      {%- if product.vendor != blank and section.settings.show_vendor -%}
+        <p class="mil-meta mil-pdp__vendor">{{ product.vendor }}</p>
+      {%- endif -%}
+      <h1 class="mil-pdp__title">{{ product.title }}</h1>
+      <p class="mil-pdp__price mil-meta" data-mil-price>
+        {%- if current.compare_at_price > current.price -%}
+          <s>{{ current.compare_at_price | money }}</s>
+        {%- endif -%}
+        <span>{{ current.price | money }}</span>
+      </p>
+
+      {%- form 'product', product, id: form_id, class: 'mil-pdp__form' -%}
+        <input type="hidden" name="id" value="{{ current.id }}" data-mil-variant-id>
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <fieldset class="mil-pdp__option">
+              <legend class="mil-meta">
+                {{ option.name }}
+                {%- if section.settings.size_guide_label != blank and option.name contains 'ize' -%}
+                  <a href="#SizeGuide-{{ section.id }}" class="mil-link mil-pdp__guide" data-mil-open-guide>{{ section.settings.size_guide_label }}</a>
+                {%- endif -%}
+              </legend>
+              <div class="mil-pdp__values">
+                {%- for value in option.values -%}
+                  <label class="mil-pdp__value">
+                    <input
+                      type="radio"
+                      name="mil-option-{{ forloop.parentloop.index0 }}"
+                      value="{{ value | escape }}"
+                      data-mil-option="{{ forloop.parentloop.index0 }}"
+                      {% if option.selected_value == value %}
+                        checked
+                      {% endif %}
+                    >
+                    <span>{{ value }}</span>
+                  </label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <div class="mil-pdp__buy">
+          <button
+            type="submit"
+            name="add"
+            class="mil-btn mil-pdp__add"
+            data-mil-add
+            {% unless current.available %}
+              disabled
+            {% endunless %}
+          >
+            {%- if current.available -%}Add to bag{%- else -%}Sold out{%- endif -%}
+          </button>
+          {%- if section.settings.show_dynamic_checkout -%}
+            {{ form | payment_button }}
+          {%- endif -%}
+        </div>
+      {%- endform -%}
+
+      {%- if section.settings.custom_title != blank -%}
+        <div class="mil-pdp__custom">
+          <span class="mil-tag">{{ section.settings.custom_tag }}</span>
+          <p class="mil-pdp__custom-title">{{ section.settings.custom_title }}</p>
+          <p class="mil-pdp__custom-text">{{ section.settings.custom_text }}</p>
+          <p class="mil-pdp__custom-links">
+            <a class="mil-link" href="{{ section.settings.custom_link | default: '/pages/book-a-fitting' }}">Reserve a fitting</a>
+            {%- if section.settings.phone != blank %} · <a class="mil-link" href="tel:{{ phone_digits }}">Call {{ section.settings.phone }}</a>{%- endif -%}
+          </p>
+        </div>
+      {%- endif -%}
+
+      <div class="mil-pdp__details">
+        {%- if product.description != blank -%}
+          <details class="mil-faq" open>
+            <summary>{{ section.settings.description_label }}</summary>
+            <div class="mil-faq__a rte">{{ product.description }}</div>
+          </details>
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          <details class="mil-faq" {{ block.shopify_attributes }} {% if block.settings.is_size_guide %}id="SizeGuide-{{ section.id }}" data-mil-guide{% endif %}>
+            <summary>{{ block.settings.title }}</summary>
+            <div class="mil-faq__a rte">{{ block.settings.content }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" data-mil-variants>
+    {{ product.variants | json }}
+  </script>
+</div>
+
+<style>
+  .mil-pdp {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 80px);
+    align-items: start;
+    padding-block: {{ section.settings.pad_top }}px {{ section.settings.pad_bottom }}px;
+  }
+  .mil-pdp ol { list-style: none; margin: 0; padding: 0; }
+  .mil-pdp__gallery { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 14px; align-items: start; }
+  .mil-pdp__gallery:not(:has(.mil-pdp__rail)) { grid-template-columns: 1fr; }
+  .mil-pdp__rail { position: sticky; top: 90px; display: grid; gap: 8px; }
+  .mil-pdp__thumb { display: block; aspect-ratio: 4 / 5; overflow: hidden; outline: 1px solid var(--mil-rule); outline-offset: -1px; }
+  .mil-pdp__thumb img { width: 100%; height: 100%; object-fit: contain; padding: 8%; }
+  .mil-pdp__thumb.is-on { outline-color: var(--mil-ink); }
+  .mil-pdp__media { display: grid; gap: 10px; }
+  .mil-pdp__slide { aspect-ratio: 4 / 5; overflow: hidden; scroll-margin-top: 90px; }
+  .mil-pdp__slide img,
+  .mil-pdp__slide video,
+  .mil-pdp__slide iframe,
+  .mil-pdp__ph { width: 100%; height: 100%; object-fit: contain; display: block; border: 0; }
+  .mil-pdp__slide img { padding: 6%; }
+  .mil-pdp__ph { fill: var(--mil-faint); opacity: 0.25; }
+
+  .mil-pdp__sticky { position: sticky; top: 90px; }
+  .mil-pdp__vendor { margin: 0 0 8px; color: var(--mil-faint); }
+  .mil-pdp__title { margin: 0 0 10px; font: 500 clamp(34px, 4vw, 54px) / 1.05 var(--mil-serif); text-transform: none; letter-spacing: -0.01em; }
+  .mil-pdp__price { margin: 0 0 26px; font-size: 14px; }
+  .mil-pdp__price s { margin-right: 10px; color: var(--mil-faint); }
+
+  .mil-pdp__option { margin: 0 0 20px; padding: 0; border: 0; }
+  .mil-pdp__option legend { display: flex; justify-content: space-between; width: 100%; margin-bottom: 10px; }
+  .mil-pdp__guide { text-transform: none; letter-spacing: 0; font: italic 15px var(--mil-serif); }
+  .mil-pdp__values { display: flex; flex-wrap: wrap; gap: 8px; }
+  .mil-pdp__value { position: relative; cursor: pointer; }
+  .mil-pdp__value input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .mil-pdp__value span {
+    display: inline-block;
+    min-width: 52px;
+    padding: 10px 14px;
+    border: 1px solid var(--mil-rule);
+    text-align: center;
+    font: 400 16px / 1 var(--mil-serif);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .mil-pdp__value input:checked + span { border-color: var(--mil-ink); background: var(--mil-tile); }
+  .mil-pdp__value input:focus-visible + span { outline: 1px solid var(--mil-ink); outline-offset: 2px; }
+  .mil-pdp__value.is-unavailable span { color: var(--mil-faint); text-decoration: line-through; }
+
+  .mil-pdp__buy { display: grid; gap: 10px; margin-top: 8px; }
+  .mil-pdp__add { width: 100%; padding-block: 17px; }
+  .mil-pdp__add[disabled] { opacity: 0.45; cursor: not-allowed; }
+  .mil-pdp__buy .shopify-payment-button__button { min-height: 52px; }
+
+  .mil-pdp__custom { margin: 28px 0; padding: 18px 20px; border: 3px double var(--mil-ink); }
+  .mil-pdp__custom .mil-tag { color: var(--mil-accent); }
+  .mil-pdp__custom-title { margin: 12px 0 4px; font: 500 22px / 1.2 var(--mil-serif); }
+  .mil-pdp__custom-text { margin: 0 0 10px; color: var(--mil-faint); font-size: 16px; }
+  .mil-pdp__custom-links { margin: 0; font-size: 16px; }
+
+  .mil-pdp__details { margin-top: 8px; }
+  .mil-pdp .mil-faq { border-top: 1px solid var(--mil-rule); }
+  .mil-pdp .mil-faq:last-child { border-bottom: 1px solid var(--mil-rule); }
+  .mil-pdp .mil-faq summary { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; cursor: pointer; list-style: none; font: 500 19px / 1.25 var(--mil-serif); }
+  .mil-pdp .mil-faq summary::-webkit-details-marker { display: none; }
+  .mil-pdp .mil-faq summary::after { content: '+'; font: 400 18px var(--mil-mono); color: var(--mil-accent); }
+  .mil-pdp .mil-faq[open] summary::after { content: '\2013'; }
+  .mil-pdp .mil-faq__a { padding: 0 0 16px; font-size: 17px; line-height: 1.55; }
+  .mil-pdp .mil-faq__a table { width: 100%; border-collapse: collapse; font: 400 13px var(--mil-mono); }
+  .mil-pdp .mil-faq__a td,
+  .mil-pdp .mil-faq__a th { padding: 6px 4px; border-bottom: 1px solid var(--mil-rule); text-align: left; }
+
+  @media (max-width: 899px) {
+    .mil-pdp { grid-template-columns: 1fr; padding-top: 0; }
+    .mil-pdp__gallery { display: block; margin-inline: calc(var(--mil-gutter) * -1); }
+    .mil-pdp__rail { display: none; }
+    .mil-pdp__media { display: flex; gap: 4px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .mil-pdp__slide { flex: 0 0 88%; scroll-snap-align: center; }
+    .mil-pdp__slide:only-child { flex-basis: 100%; }
+    .mil-pdp__sticky { position: static; }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.currentScript.previousElementSibling.previousElementSibling;
+    if (!root?.matches('[data-mil-pdp]') || root.dataset.milReady) return;
+    root.dataset.milReady = '1';
+
+    let variants = [];
+    try { variants = JSON.parse(root.querySelector('[data-mil-variants]').textContent); } catch {}
+    const idInput = root.querySelector('[data-mil-variant-id]');
+    const add = root.querySelector('[data-mil-add]');
+    const price = root.querySelector('[data-mil-price]');
+    const radios = [...root.querySelectorAll('[data-mil-option]')];
+    const money = (cents) =>
+      new Intl.NumberFormat(document.documentElement.lang || 'en-US', {
+        style: 'currency',
+        currency: window.Shopify?.currency?.active || 'USD',
+      }).format(cents / 100);
+
+    const selected = () => {
+      const picks = [];
+      radios.filter((r) => r.checked).forEach((r) => (picks[+r.dataset.milOption] = r.value));
+      return picks;
+    };
+
+    const markAvailability = (picks) => {
+      // Grey out values that don't exist / are sold out with the other current picks
+      radios.forEach((r) => {
+        const i = +r.dataset.milOption;
+        const trial = [...picks];
+        trial[i] = r.value;
+        const v = variants.find((v) => v.options.every((o, k) => o === trial[k]));
+        r.closest('.mil-pdp__value').classList.toggle('is-unavailable', !v || !v.available);
+      });
+    };
+
+    const update = () => {
+      const picks = selected();
+      const v = variants.find((v) => v.options.every((o, i) => o === picks[i]));
+      markAvailability(picks);
+      if (!v) {
+        add.disabled = true;
+        add.textContent = 'Unavailable';
+        return;
+      }
+      idInput.value = v.id;
+      add.disabled = !v.available;
+      add.textContent = v.available ? 'Add to bag' : 'Sold out';
+      price.innerHTML =
+        (v.compare_at_price > v.price ? `<s>${money(v.compare_at_price)}</s>` : '') + `<span>${money(v.price)}</span>`;
+      const url = new URL(location.href);
+      url.searchParams.set('variant', v.id);
+      history.replaceState(null, '', url);
+      if (v.featured_media) {
+        const slide = root.querySelector(`[data-media-id="${v.featured_media.id}"]`);
+        slide?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    };
+    radios.forEach((r) => r.addEventListener('change', update));
+    if (radios.length) markAvailability(selected());
+
+    // Highlight the thumbnail of the photo in view
+    const thumbs = [...root.querySelectorAll('.mil-pdp__thumb')];
+    if (thumbs.length) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          thumbs.forEach((t) => t.classList.toggle('is-on', t.hash === `#${e.target.id}`));
+        });
+      }, { rootMargin: '-45% 0px -45% 0px' });
+      root.querySelectorAll('.mil-pdp__slide').forEach((s) => io.observe(s));
+    }
+
+    // "Size guide" link opens and scrolls to the size-guide accordion
+    root.querySelector('[data-mil-open-guide]')?.addEventListener('click', (e) => {
+      const guide = root.querySelector('[data-mil-guide]');
+      if (!guide) return;
+      e.preventDefault();
+      guide.open = true;
+      guide.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Millinery product",
+  "settings": [
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": false },
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show Buy it now / Shop Pay button", "default": true },
+    { "type": "text", "id": "description_label", "label": "Description heading", "default": "The story" },
+    { "type": "text", "id": "size_guide_label", "label": "Size guide link text", "default": "Size guide", "info": "Shows next to a Size option and opens the accordion marked as size guide." },
+    { "type": "header", "content": "Custom nudge" },
+    { "type": "text", "id": "custom_tag", "label": "Tag", "default": "Made to measure" },
+    { "type": "text", "id": "custom_title", "label": "Title", "default": "Want it made for your head?" },
+    { "type": "text", "id": "custom_text", "label": "Text", "default": "Reserve a private fitting at the Keansburg studio and we'll make one to your size." },
+    { "type": "url", "id": "custom_link", "label": "Link", "default": "/pages/book-a-fitting" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "(732) 757-7567" },
+    { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 16 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 120 }
+  ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Details accordion",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Sizing & fit" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Add details here.</p>" },
+        { "type": "checkbox", "id": "is_size_guide", "label": "This is the size guide", "default": false }
+      ]
+    }
+  ]
+}
+{% endschema %}

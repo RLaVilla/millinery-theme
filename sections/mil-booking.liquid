@@ -62,6 +62,34 @@
           <input type="hidden" name="contact[Request]" value="Hat fitting">
           <input type="hidden" name="contact[Source]" value="" data-mil-source>
 
+          <div
+            class="mil-cal"
+            data-mil-cal
+            data-days="{{ section.settings.avail_days | escape }}"
+            data-slots="{{ section.settings.slot_times | escape }}"
+            data-lead="{{ section.settings.lead_days }}"
+            data-weeks="{{ section.settings.weeks_ahead }}"
+            data-blackout="{{ section.settings.blackout | strip_newlines | escape }}"
+          >
+            <div class="mil-cal__head">
+              <button type="button" class="mil-cal__nav" data-mil-prev aria-label="Previous month">&larr;</button>
+              <p class="mil-cal__month" data-mil-month aria-live="polite"></p>
+              <button type="button" class="mil-cal__nav" data-mil-next aria-label="Next month">&rarr;</button>
+            </div>
+            <div class="mil-cal__dow mil-meta" aria-hidden="true">
+              <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+            </div>
+            <div class="mil-cal__grid" role="grid" data-mil-grid></div>
+            <div class="mil-cal__slots" data-mil-slots hidden>
+              <p class="mil-meta mil-cal__slots-title" data-mil-slots-title></p>
+              <div class="mil-cal__slot-list" role="radiogroup" data-mil-slot-list></div>
+            </div>
+            <p class="mil-cal__picked" data-mil-picked hidden></p>
+            <p class="mil-cal__error mil-meta" data-mil-cal-error role="alert" hidden>Pick a day and time for your fitting.</p>
+            <input type="hidden" name="contact[Requested date]" data-mil-in-date>
+            <input type="hidden" name="contact[Requested time]" data-mil-in-time>
+          </div>
+
           <div class="mil-book__grid">
             <label class="mil-field mil-field--full">
               <span>Name</span>
@@ -74,19 +102,6 @@
             <label class="mil-field">
               <span>Email</span>
               <input type="email" name="contact[email]" autocomplete="email" required value="{{ form.email }}">
-            </label>
-            <label class="mil-field">
-              <span>Preferred day</span>
-              <input type="date" name="contact[Preferred day]" data-mil-date>
-            </label>
-            <label class="mil-field">
-              <span>Time of day</span>
-              <select name="contact[Preferred time]">
-                <option value="Any time">Any time</option>
-                <option value="Morning">Morning</option>
-                <option value="Afternoon">Afternoon</option>
-                <option value="Evening">Evening</option>
-              </select>
             </label>
             <label class="mil-field mil-field--full">
               <span>I'm interested in</span>
@@ -113,10 +128,9 @@
     {%- endif -%}
 
     {%- if section.settings.phone != blank -%}
-      <p class="mil-book__alt">
-        Rather talk? <a class="mil-link" href="tel:{{ phone_digits }}">Call</a> or
-        <a class="mil-link" href="sms:{{ phone_digits }}">text</a> {{ section.settings.phone }}
-      </p>
+      <p class="mil-book__or mil-meta">or</p>
+      <a class="mil-btn mil-btn--ghost mil-book__call" href="tel:{{ phone_digits }}">Call {{ section.settings.phone }}</a>
+      <p class="mil-book__alt">Prefer to text? <a class="mil-link" href="sms:{{ phone_digits }}">Send a text</a></p>
     {%- endif -%}
   </div>
 </div>
@@ -198,6 +212,54 @@
   .mil-book__done p { margin: 0 0 16px; }
   .mil-book__embed iframe { width: 100%; min-height: 640px; border: 0; }
 
+  .mil-cal { margin-bottom: 22px; padding-bottom: 20px; border-bottom: 1px solid var(--mil-rule); }
+  .mil-cal__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .mil-cal__month { margin: 0; font: italic 500 22px var(--mil-serif); }
+  .mil-cal__nav { width: 36px; height: 36px; border: 1px solid var(--mil-rule); background: none; color: inherit; cursor: pointer; font: 400 16px var(--mil-mono); }
+  .mil-cal__nav:hover:not([disabled]) { border-color: var(--mil-ink); }
+  .mil-cal__nav[disabled] { opacity: 0.3; cursor: default; }
+  .mil-cal__dow, .mil-cal__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; text-align: center; }
+  .mil-cal__dow { margin-bottom: 4px; color: var(--mil-faint); }
+  .mil-cal__day {
+    aspect-ratio: 1;
+    border: 1px solid transparent;
+    background: none;
+    color: var(--mil-faint);
+    font: 400 16px var(--mil-serif);
+    opacity: 0.45;
+  }
+  .mil-cal__day.is-open { opacity: 1; color: var(--mil-ink); border-color: var(--mil-rule); background: #fff; cursor: pointer; }
+  .mil-cal__day.is-open:hover { border-color: var(--mil-ink); }
+  .mil-cal__day.is-on { background: var(--mil-ink); border-color: var(--mil-ink); color: var(--mil-paper); }
+  .mil-cal__day.is-today { text-decoration: underline; text-underline-offset: 3px; }
+  .mil-cal__slots { margin-top: 16px; }
+  .mil-cal__slots-title { margin: 0 0 8px; }
+  .mil-cal__slot-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .mil-cal__slot {
+    padding: 9px 12px;
+    border: 1px solid var(--mil-rule);
+    background: #fff;
+    color: inherit;
+    font: 400 12px var(--mil-mono);
+    letter-spacing: 0.04em;
+    cursor: pointer;
+  }
+  .mil-cal__slot:hover { border-color: var(--mil-ink); }
+  .mil-cal__slot[aria-checked='true'] { background: var(--mil-ink); border-color: var(--mil-ink); color: var(--mil-paper); }
+  .mil-cal__picked { margin: 14px 0 0; padding: 10px 12px; background: var(--mil-tile); font-size: 16px; }
+  .mil-cal__picked strong { font-weight: 600; }
+  .mil-cal__error { margin: 10px 0 0; color: var(--mil-accent); }
+  .mil-book__call {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 14px;
+  }
+  .mil-book__or { display: flex; align-items: center; gap: 12px; margin: 18px 0 0; color: var(--mil-faint); }
+  .mil-book__or::before, .mil-book__or::after { content: ''; flex: 1; border-top: 1px solid var(--mil-rule); }
+
   .mil-book__bar { display: none; }
 
   @media (max-width: 899px) {
@@ -228,12 +290,111 @@
     if (!root || root.dataset.milReady) return;
     root.dataset.milReady = '1';
 
-    // Earliest bookable day is tomorrow
-    const date = root.querySelector('[data-mil-date]');
-    if (date) {
-      const t = new Date();
-      t.setDate(t.getDate() + 1);
-      date.min = t.toISOString().slice(0, 10);
+    // Slot calendar: open weekdays + times from section settings
+    const cal = root.querySelector('[data-mil-cal]');
+    if (cal) {
+      const DOW = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+      const openDays = new Set(
+        cal.dataset.days.toLowerCase().split(/[\s,]+/).map((d) => DOW.indexOf(d.slice(0, 3))).filter((i) => i >= 0)
+      );
+      const slots = cal.dataset.slots.split(',').map((t) => t.trim()).filter(Boolean);
+      const blackout = new Set((cal.dataset.blackout.match(/\d{4}-\d{2}-\d{2}/g) || []));
+      const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      const first = new Date(today); first.setDate(first.getDate() + (+cal.dataset.lead || 0));
+      const last = new Date(today); last.setDate(last.getDate() + 7 * (+cal.dataset.weeks || 6));
+      const isOpen = (d) => d >= first && d <= last && openDays.has(d.getDay()) && !blackout.has(iso(d));
+
+      const grid = cal.querySelector('[data-mil-grid]');
+      const monthEl = cal.querySelector('[data-mil-month]');
+      const prev = cal.querySelector('[data-mil-prev]');
+      const next = cal.querySelector('[data-mil-next]');
+      const slotWrap = cal.querySelector('[data-mil-slots]');
+      const slotList = cal.querySelector('[data-mil-slot-list]');
+      const slotTitle = cal.querySelector('[data-mil-slots-title]');
+      const picked = cal.querySelector('[data-mil-picked]');
+      const err = cal.querySelector('[data-mil-cal-error]');
+      const inDate = cal.querySelector('[data-mil-in-date]');
+      const inTime = cal.querySelector('[data-mil-in-time]');
+      const long = (d) => d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+
+      let view = new Date(first.getFullYear(), first.getMonth(), 1);
+      let day = null;
+      let time = '';
+
+      const showPicked = () => {
+        inDate.value = day ? `${long(day)} (${iso(day)})` : '';
+        inTime.value = time;
+        picked.hidden = !(day && time);
+        if (day && time) {
+          picked.innerHTML = `Your request: <strong>${long(day)} at ${time}</strong>`;
+          err.hidden = true;
+        }
+      };
+
+      const renderSlots = () => {
+        slotWrap.hidden = !day;
+        if (!day) return;
+        slotTitle.textContent = `Times on ${long(day)}`;
+        slotList.innerHTML = '';
+        slots.forEach((t) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'mil-cal__slot';
+          b.setAttribute('role', 'radio');
+          b.setAttribute('aria-checked', String(t === time));
+          b.textContent = t;
+          b.addEventListener('click', () => { time = t; renderSlots(); showPicked(); });
+          slotList.append(b);
+        });
+      };
+
+      const render = () => {
+        monthEl.textContent = view.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        prev.disabled = view <= new Date(first.getFullYear(), first.getMonth(), 1);
+        next.disabled = new Date(view.getFullYear(), view.getMonth() + 1, 1) > last;
+        grid.innerHTML = '';
+        const lead = view.getDay();
+        for (let i = 0; i < lead; i++) grid.append(document.createElement('span'));
+        const days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+        for (let n = 1; n <= days; n++) {
+          const d = new Date(view.getFullYear(), view.getMonth(), n);
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'mil-cal__day';
+          b.textContent = n;
+          b.setAttribute('aria-label', long(d));
+          if (+d === +today) b.classList.add('is-today');
+          if (isOpen(d)) {
+            b.classList.add('is-open');
+            if (day && +d === +day) { b.classList.add('is-on'); b.setAttribute('aria-pressed', 'true'); }
+            b.addEventListener('click', () => { day = d; time = ''; render(); renderSlots(); showPicked(); });
+          } else {
+            b.disabled = true;
+          }
+          grid.append(b);
+        }
+      };
+      prev.addEventListener('click', () => { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); render(); });
+      next.addEventListener('click', () => { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); render(); });
+
+      // Jump to the first month that has an open day
+      for (let i = 0; i < 3; i++) {
+        const end = new Date(view.getFullYear(), view.getMonth() + 1, 0);
+        let any = false;
+        for (let d = new Date(view); d <= end; d.setDate(d.getDate() + 1)) if (isOpen(d)) { any = true; break; }
+        if (any) break;
+        view = new Date(view.getFullYear(), view.getMonth() + 1, 1);
+      }
+      render();
+
+      cal.closest('form')?.addEventListener('submit', (e) => {
+        if (!inDate.value || !inTime.value) {
+          e.preventDefault();
+          err.hidden = false;
+          cal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
     }
 
     // Record where the visit came from (utm_source / utm_campaign or fbclid) in the email
@@ -272,18 +433,24 @@
   "max_blocks": 5,
   "settings": [
     { "type": "text", "id": "tag", "label": "Tag", "default": "Keansburg, NJ · By appointment" },
-    { "type": "text", "id": "title", "label": "Headline", "default": "Book your hat fitting." },
+    { "type": "text", "id": "title", "label": "Headline", "default": "Reserve your fitting." },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Come into the shop, try on shapes and felts, and get measured for a hat made to your head.</p>" },
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "header", "content": "Form" },
-    { "type": "text", "id": "form_title", "label": "Form title", "default": "Request a fitting" },
+    { "type": "text", "id": "form_title", "label": "Form title", "default": "Reserve a slot" },
     { "type": "textarea", "id": "interests", "label": "\"Interested in\" options", "info": "One per line.", "default": "A custom hat\nA ready-to-wear hat\nA gift\nJust browsing / not sure yet" },
-    { "type": "text", "id": "button", "label": "Button", "default": "Request my fitting" },
-    { "type": "text", "id": "fine_print", "label": "Fine print", "default": "We'll text or call within one business day to confirm a time." },
-    { "type": "text", "id": "success_title", "label": "Thank-you headline", "default": "Thank you — we'll be in touch." },
-    { "type": "text", "id": "success_text", "label": "Thank-you text", "default": "We'll reach out within one business day to set your fitting time." },
+    { "type": "text", "id": "button", "label": "Button", "default": "Reserve my slot" },
+    { "type": "text", "id": "fine_print", "label": "Fine print", "default": "Slots are confirmed by text or call within one business day." },
+    { "type": "text", "id": "success_title", "label": "Thank-you headline", "default": "Your slot is requested." },
+    { "type": "text", "id": "success_text", "label": "Thank-you text", "default": "We'll confirm by text or call within one business day, and send the studio address." },
+    { "type": "header", "content": "Slot calendar" },
+    { "type": "text", "id": "avail_days", "label": "Fitting days", "default": "Tue, Wed, Thu, Fri, Sat", "info": "Days that can be picked, e.g. Tue, Thu, Sat" },
+    { "type": "text", "id": "slot_times", "label": "Time slots", "default": "11:00 AM, 12:30 PM, 2:00 PM, 3:30 PM, 5:00 PM", "info": "Comma separated." },
+    { "type": "range", "id": "lead_days", "label": "Earliest day (days from today)", "min": 0, "max": 14, "step": 1, "default": 2 },
+    { "type": "range", "id": "weeks_ahead", "label": "Bookable weeks ahead", "min": 1, "max": 16, "step": 1, "default": 8 },
+    { "type": "textarea", "id": "blackout", "label": "Days off", "info": "Dates she's unavailable, one per line as YYYY-MM-DD (e.g. 2026-12-25)." },
     { "type": "html", "id": "embed", "label": "Booking embed (optional)", "info": "Paste a Calendly / Square / Acuity embed to replace the form." },
-    { "type": "text", "id": "phone", "label": "Phone (call & text)", "default": "732.000.0000" },
+    { "type": "text", "id": "phone", "label": "Phone (call & text)", "default": "(732) 757-7567" },
     { "type": "checkbox", "id": "sticky_bar", "label": "Sticky Book / Call bar on mobile", "default": true },
     { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 24 },
     { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 120 }

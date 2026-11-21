@@ -1,0 +1,72 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "story": {
+      "type": "mil-fitting",
+      "settings": {
+        "flip": true,
+        "image": "shopify://shop_images/580A3703.jpg",
+        "tag": "Our story",
+        "title": "Made by hand in Keansburg.",
+        "text": "<p>Carly’s story goes here — how she started making hats, and what goes into every one.</p>",
+        "card_title": "",
+        "cta1_label": "Reserve a fitting",
+        "cta1_link": "/pages/book-a-fitting",
+        "cta2_label": "Shop hats",
+        "cta2_link": "/collections/all",
+        "note": ""
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "process": {
+      "type": "mil-chapters",
+      "blocks": {
+        "c1": {
+          "type": "chapter",
+          "settings": {
+            "title": "The fitting",
+            "image": "shopify://shop_images/IMG_2154.jpg"
+          }
+        },
+        "c2": {
+          "type": "chapter",
+          "settings": {
+            "title": "Choosing the felt",
+            "image": "shopify://shop_images/IMG_5412.jpg"
+          }
+        },
+        "c3": {
+          "type": "chapter",
+          "settings": {
+            "title": "Shaping & finishing",
+            "image": "shopify://shop_images/580A3932.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "heading": "How a hat is made",
+        "kicker": "By hand, in Keansburg",
+        "pad_top": 0,
+        "pad_bottom": 140
+      }
+    }
+  },
+  "order": [
+    "story",
+    "process"
+  ]
+}
