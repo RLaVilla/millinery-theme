@@ -49,7 +49,8 @@
       ],
       "settings": {
         "image": "shopify://shop_images/580A3932.jpg",
-        "cta1_link": "/pages/book-a-fitting"
+        "cta1_link": "/pages/book-a-fitting",
+        "text": "<p>Every hat starts with a private fitting at our Keansburg studio, by appointment. We measure, pick the felt and shape it by hand — so it fits like it was always yours.</p>"
       }
     },
     "shop": {

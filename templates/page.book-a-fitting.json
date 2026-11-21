@@ -21,7 +21,7 @@
         "p2": {
           "type": "point",
           "settings": {
-            "text": "No pressure — come try things on"
+            "text": "Private, by appointment — no pressure"
           }
         },
         "p3": {
@@ -108,13 +108,6 @@
             "answer": "<p>Answer to confirm with Carly.</p>"
           }
         },
-        "q4": {
-          "type": "faq",
-          "settings": {
-            "question": "Can I walk in without an appointment?",
-            "answer": "<p>Answer to confirm with Carly.</p>"
-          }
-        },
         "q5": {
           "type": "faq",
           "settings": {
@@ -127,10 +120,16 @@
         "q1",
         "q2",
         "q3",
-        "q4",
         "q5"
       ],
-      "settings": {}
+      "settings": {
+        "heading": "The studio",
+        "address": "Keansburg, NJ\nThe studio address is sent when your fitting is confirmed.",
+        "hours": "Fittings | By appointment only",
+        "map_query": "Keansburg, NJ",
+        "show_map": true,
+        "show_directions": false
+      }
     }
   },
   "order": [

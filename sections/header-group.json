@@ -15,7 +15,16 @@
       "type": "mil-header",
       "settings": {
         "logo": "shopify://shop_images/THEMILLINERY_NEW_BEIGE.jpg",
-        "logo_height": 96
+        "logo_height": 96,
+        "city": "Fittings by appointment · Keansburg, NJ",
+        "note": "Custom hats, made by hand",
+        "hours_0": "",
+        "hours_1": "",
+        "hours_2": "",
+        "hours_3": "",
+        "hours_4": "",
+        "hours_5": "",
+        "hours_6": ""
       }
     }
   },

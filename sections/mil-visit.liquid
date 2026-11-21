@@ -4,7 +4,7 @@
 {% enddoc %}
 {%- liquid
   assign phone_digits = section.settings.phone | remove: ' ' | remove: '.' | remove: '-' | remove: '(' | remove: ')'
-  assign map_q = section.settings.address | newline_to_br | strip_newlines | replace: '<br />', ', ' | url_encode
+  assign map_q = section.settings.map_query | url_encode
 -%}
 <div class="mil-visit mil-section mil-wrap">
   {%- if section.settings.heading != blank -%}
@@ -13,7 +13,7 @@
 
   <div class="mil-visit__layout">
     <div class="mil-visit__map mil-linen">
-      {%- if section.settings.address != blank -%}
+      {%- if section.settings.show_map and section.settings.map_query != blank -%}
         <iframe
           title="Map to {{ shop.name | escape }}"
           src="https://www.google.com/maps?q={{ map_q }}&output=embed"
@@ -39,7 +39,7 @@
           </div>
         {%- endif -%}
         <div class="mil-visit__ctas">
-          {%- if section.settings.address != blank -%}
+          {%- if section.settings.show_directions and section.settings.map_query != blank -%}
             <a class="mil-btn mil-btn--ghost" href="https://www.google.com/maps/dir/?api=1&destination={{ map_q }}" target="_blank" rel="noopener">Directions</a>
           {%- endif -%}
           {%- if section.settings.phone != blank -%}
@@ -111,6 +111,9 @@
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Visit the shop" },
     { "type": "textarea", "id": "address", "label": "Address", "default": "The Millinery\n123 Main St\nKeansburg, NJ 07734" },
+    { "type": "text", "id": "map_query", "label": "Map location", "default": "Keansburg, NJ", "info": "Town only keeps the exact studio address private." },
+    { "type": "checkbox", "id": "show_map", "label": "Show map", "default": true },
+    { "type": "checkbox", "id": "show_directions", "label": "Show Directions button", "default": false },
     { "type": "textarea", "id": "hours", "label": "Hours", "info": "One line per row, label | time. e.g. Wed – Fri | 11am – 6pm", "default": "Wed – Fri | 11am – 6pm\nSaturday | 10am – 6pm\nSunday | 12 – 5pm\nMon – Tue | By appointment" },
     { "type": "text", "id": "phone", "label": "Phone", "default": "732.000.0000" },
     { "type": "text", "id": "faq_heading", "label": "FAQ title", "default": "Good to know" },

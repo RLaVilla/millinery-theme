@@ -13,7 +13,12 @@
   "sections": {
     "mil_footer": {
       "type": "mil-footer",
-      "settings": {}
+      "settings": {
+        "address": "Keansburg, NJ\nStudio address shared when your fitting is confirmed",
+        "hours": "By appointment only",
+        "instagram": "https://www.instagram.com/themillinery",
+        "facebook": "https://www.facebook.com/share/1BroAGiXV6/"
+      }
     }
   },
   "order": [
