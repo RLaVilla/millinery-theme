@@ -7,7 +7,17 @@
   assign form_id = 'MilFooterSignup-' | append: section.id
 -%}
 <footer class="mil-footer mil-section">
-  {%- if section.settings.cta_title != blank -%}
+  {%- liquid
+    assign show_cta = true
+    if section.settings.cta_title == blank
+      assign show_cta = false
+    elsif template.name == 'cart' or template.suffix == 'book-a-fitting'
+      assign show_cta = false
+    elsif template.name == 'product' and section.settings.cta_hide_product
+      assign show_cta = false
+    endif
+  -%}
+  {%- if show_cta -%}
     <div class="mil-footer__cta mil-wrap">
       <p class="mil-footer__cta-title">{{ section.settings.cta_title }}</p>
       {%- if section.settings.cta_label != blank -%}
@@ -233,6 +243,7 @@
   "settings": [
     { "type": "header", "content": "Booking prompt" },
     { "type": "text", "id": "cta_title", "label": "Line", "default": "Come in for a fitting." },
+    { "type": "checkbox", "id": "cta_hide_product", "label": "Hide on product pages", "default": true, "info": "Always hidden on the bag and the Book a fitting page." },
     { "type": "text", "id": "cta_label", "label": "Button", "default": "Book a fitting" },
     { "type": "url", "id": "cta_link", "label": "Button link", "info": "Leave empty to use /pages/book-a-fitting" },
     { "type": "header", "content": "Newsletter" },
