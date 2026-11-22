@@ -121,7 +121,9 @@
       </ul>
 
       <div class="mil-header__utils mil-meta">
+        {%- if section.settings.show_search -%}
         <a href="{{ routes.search_url }}" class="mil-header__search" aria-label="Search"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></a>
+        {%- endif -%}
         <a href="{{ routes.cart_url }}">Bag (<span data-mil-cart-count>{{ cart.item_count }}</span>)</a>
       </div>
     </nav>
@@ -513,6 +515,7 @@
     { "type": "text", "id": "wordmark", "label": "Wordmark", "default": "The Millinery" },
     { "type": "text", "id": "sub_mark", "label": "Line under wordmark", "default": "Hat Co. · Keansburg, NJ" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu", "info": "Items with nested links get a dropdown." },
+    { "type": "checkbox", "id": "show_search", "label": "Show search icon in nav", "default": false },
     { "type": "text", "id": "extra_label", "label": "Extra nav link", "default": "Chopper Corner", "info": "Shown at the end of the menu in rugged style. Leave empty to hide." },
     { "type": "url", "id": "extra_link", "label": "Extra nav link URL", "info": "Leave empty for /pages/chopper-corner" },
     { "type": "text", "id": "book_label", "label": "Booking button", "default": "Book a fitting" },
