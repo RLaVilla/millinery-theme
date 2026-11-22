@@ -1,0 +1,102 @@
+{% comment %}
+  The Millinery — shop hero. Two photos edge to edge, then a caption band:
+  big serif headline on the left, short line + Shop / secondary button on the right.
+{% endcomment %}
+<div class="mil-hero mil-section">
+  <div class="mil-hero__media{% if section.settings.image_2 == blank %} is-single{% endif %}">
+    {%- for i in (1..2) -%}
+      {%- assign key = 'image_' | append: i -%}
+      {%- assign img = section.settings[key] -%}
+      {%- if img != blank -%}
+        <div class="mil-hero__img mil-linen">
+          {{
+            img
+            | image_url: width: 2000
+            | image_tag:
+              widths: '600, 900, 1200, 1600, 2000',
+              sizes: '(min-width: 900px) 50vw, 100vw',
+              loading: 'eager',
+              fetchpriority: 'high',
+              alt: img.alt | default: shop.name
+          }}
+        </div>
+      {%- elsif i == 1 -%}
+        <div class="mil-hero__img mil-linen">{{ 'lifestyle-2' | placeholder_svg_tag: 'mil-hero__ph' }}</div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="mil-hero__band mil-wrap">
+    <div>
+      {%- if section.settings.tag != blank -%}
+        <span class="mil-tag mil-hero__tag">{{ section.settings.tag }}</span>
+      {%- endif -%}
+      <h1 class="mil-hero__title">{{ section.settings.title }}</h1>
+    </div>
+    <div class="mil-hero__side">
+      {%- if section.settings.text != blank -%}
+        <div class="mil-hero__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+      <div class="mil-hero__ctas">
+        {%- if section.settings.btn1_label != blank -%}
+          <a class="mil-btn" href="{{ section.settings.btn1_link | default: routes.all_products_collection_url }}">{{ section.settings.btn1_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.btn2_label != blank -%}
+          <a class="mil-btn mil-btn--ghost" href="{{ section.settings.btn2_link | default: '/pages/book-a-fitting' }}">{{ section.settings.btn2_label }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mil-hero { padding-bottom: {{ section.settings.pad_bottom }}px; }
+  .mil-hero__media { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .mil-hero__media.is-single { grid-template-columns: 1fr; }
+  .mil-hero__img { aspect-ratio: 4 / 5; max-height: 86vh; width: 100%; overflow: hidden; }
+  .mil-hero__media.is-single .mil-hero__img { aspect-ratio: 16 / 9; }
+  .mil-hero__img img,
+  .mil-hero__ph { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mil-hero__img img { mix-blend-mode: normal; }
+  .mil-hero__ph { fill: var(--mil-faint); opacity: 0.25; }
+
+  .mil-hero__band {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: clamp(20px, 5vw, 80px);
+    align-items: end;
+    padding-block: 36px 0;
+  }
+  .mil-hero__tag { color: var(--mil-accent); }
+  .mil-hero__title { margin: 16px 0 0; font: 500 clamp(44px, 6vw, 92px) / 0.98 var(--mil-serif); letter-spacing: -0.015em; }
+  .mil-hero__text { font-size: 18px; line-height: 1.55; max-width: 42ch; }
+  .mil-hero__text p { margin: 0 0 18px; }
+  .mil-hero__ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  @media (max-width: 899px) {
+    .mil-hero__media { grid-template-columns: 1fr; }
+    .mil-hero__media .mil-hero__img:nth-child(2) { display: none; }
+    .mil-hero__img { aspect-ratio: 4 / 4.6; }
+    .mil-hero__band { grid-template-columns: 1fr; padding-top: 24px; gap: 16px; }
+    .mil-hero__ctas .mil-btn { flex: 1; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Millinery shop hero",
+  "settings": [
+    { "type": "image_picker", "id": "image_1", "label": "Image (left)" },
+    { "type": "image_picker", "id": "image_2", "label": "Image (right)", "info": "Optional. Leave empty for one wide image. Hidden on mobile." },
+    { "type": "text", "id": "tag", "label": "Tag", "default": "Made by hand · Keansburg, NJ" },
+    { "type": "text", "id": "title", "label": "Headline", "default": "Hats, made by hand." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Felt hats shaped, banded and finished in our studio, made to be worn for years.</p>" },
+    { "type": "text", "id": "btn1_label", "label": "Main button", "default": "Shop all hats" },
+    { "type": "url", "id": "btn1_link", "label": "Main button link", "info": "Leave empty for all products." },
+    { "type": "text", "id": "btn2_label", "label": "Second button", "default": "Book a fitting" },
+    { "type": "url", "id": "btn2_link", "label": "Second button link", "info": "Leave empty for /pages/book-a-fitting." },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 96 }
+  ],
+  "presets": [{ "name": "Millinery shop hero" }]
+}
+{% endschema %}

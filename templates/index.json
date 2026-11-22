@@ -9,6 +9,33 @@
  */
 {
   "sections": {
+    "hero": {
+      "type": "mil-hero",
+      "settings": {
+        "image_1": "shopify://shop_images/IMG_2154.jpg",
+        "image_2": "shopify://shop_images/580A3932.jpg"
+      }
+    },
+    "shop": {
+      "type": "mil-grid",
+      "settings": {
+        "heading": "In the shop",
+        "columns": 4,
+        "per_page": 12,
+        "pad_top": 0,
+        "pad_bottom": 112
+      }
+    },
+    "collections": {
+      "type": "mil-collections",
+      "settings": {
+        "heading": "Shop by collection",
+        "columns": 3,
+        "limit": 3,
+        "pad_top": 0,
+        "pad_bottom": 120
+      }
+    },
     "fitting": {
       "type": "mil-fitting",
       "blocks": {
@@ -48,16 +75,12 @@
         "s4"
       ],
       "settings": {
-        "image": "shopify://shop_images/580A3932.jpg",
-        "text": "<p>Every hat starts with a private fitting at our Keansburg studio, by appointment. We measure, pick the felt and shape it by hand — so it fits like it was always yours.</p>"
-      }
-    },
-    "shop": {
-      "type": "mil-grid",
-      "settings": {
-        "heading": "In the shop",
-        "columns": 3,
-        "per_page": 6,
+        "image": "shopify://shop_images/580A3703.jpg",
+        "text": "<p>Every hat starts with a private fitting at our Keansburg studio, by appointment. We measure, pick the felt and shape it by hand — so it fits like it was always yours.</p>",
+        "flip": true,
+        "tag": "Local · By appointment",
+        "title": "Made to your head.",
+        "cta2_label": "",
         "pad_top": 0,
         "pad_bottom": 120
       }
@@ -104,8 +127,10 @@
     }
   },
   "order": [
-    "fitting",
+    "hero",
     "shop",
+    "collections",
+    "fitting",
     "process"
   ]
 }

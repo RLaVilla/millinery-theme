@@ -1,0 +1,86 @@
+{% comment %}
+  The Millinery — shop by collection. Linen tiles with the collection image and
+  a serif name. Uses the collections you add as blocks; with none added it shows
+  the store's first collections automatically.
+{% endcomment %}
+{%- liquid
+  assign limit = section.settings.limit
+-%}
+<div class="mil-cols mil-section mil-wrap" style="--mil-cc: {{ section.settings.columns }};">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="mil-heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+  <ul class="mil-cols__list" role="list">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- assign c = block.settings.collection -%}
+        {%- if c != blank -%}
+          <li {{ block.shopify_attributes }}>
+            {%- render 'mil-collection-tile', c: c, image: block.settings.image, label: block.settings.label -%}
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- assign shown = 0 -%}
+      {%- for c in collections -%}
+        {%- if c.handle == 'all' or c.handle == 'frontpage' or c.products_count == 0 -%}{%- continue -%}{%- endif -%}
+        {%- if shown >= limit -%}{%- break -%}{%- endif -%}
+        {%- assign shown = shown | plus: 1 -%}
+        <li>{%- render 'mil-collection-tile', c: c -%}</li>
+      {%- endfor -%}
+    {%- endif -%}
+  </ul>
+</div>
+
+<style>
+  .mil-cols { padding-block: {{ section.settings.pad_top }}px {{ section.settings.pad_bottom }}px; }
+  .mil-cols__list {
+    display: grid;
+    grid-template-columns: repeat(var(--mil-cc), minmax(0, 1fr));
+    gap: clamp(16px, 2vw, 28px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .mil-ctile { display: block; color: inherit; text-decoration: none; }
+  .mil-ctile__media { display: block; aspect-ratio: 1 / 1; overflow: hidden; outline: 1px solid var(--mil-rule); outline-offset: -1px; }
+  .mil-ctile__media img,
+  .mil-ctile__ph { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s ease; }
+  .mil-ctile__ph { fill: var(--mil-faint); opacity: 0.25; }
+  .mil-ctile:hover .mil-ctile__media img { transform: scale(1.03); }
+  .mil-ctile__meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 14px 0 10px; border-bottom: 1px solid var(--mil-rule); }
+  .mil-ctile__name { font: 500 22px / 1.2 var(--mil-serif); }
+  .mil-ctile__go { color: var(--mil-faint); white-space: nowrap; }
+  .mil-ctile:hover .mil-ctile__name { color: var(--mil-accent); }
+  @media (max-width: 899px) {
+    .mil-cols__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 12px; }
+    .mil-ctile__meta { flex-direction: column; gap: 2px; }
+    .mil-ctile__name { font-size: 18px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Millinery collections",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by collection" },
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "range", "id": "limit", "label": "Collections shown when none are picked", "min": 2, "max": 8, "step": 1, "default": 3 },
+    { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 120 }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Optional. Defaults to the collection image." },
+        { "type": "text", "id": "label", "label": "Name override" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Millinery collections" }]
+}
+{% endschema %}
