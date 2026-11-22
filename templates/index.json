@@ -131,11 +131,24 @@
         "pad_top": 0,
         "pad_bottom": 120
       }
+    },
+    "current": {
+      "type": "mil-grid",
+      "settings": {
+        "heading": "Current collection",
+        "kicker": "Fall / Winter",
+        "fallback_all": false,
+        "columns": 3,
+        "per_page": 6,
+        "pad_top": 0,
+        "pad_bottom": 112
+      }
     }
   },
   "order": [
     "hero",
     "process",
+    "current",
     "shop",
     "collections",
     "fitting"
