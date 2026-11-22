@@ -61,12 +61,13 @@
 </div>
 
 <style>
+  #shopify-section-{{ section.id }} { --mil-pt: calc({{ section.settings.pad_top }}px * var(--mil-space, 1)); --mil-pb: calc({{ section.settings.pad_bottom }}px * var(--mil-space, 1)); }
   .mil-fit {
     display: grid;
     grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
     gap: clamp(28px, 5vw, 88px);
     align-items: center;
-    padding-block: {{ section.settings.pad_top }}px {{ section.settings.pad_bottom }}px;
+    padding-block: var(--mil-pt) var(--mil-pb);
   }
   .mil-fit.is-flipped .mil-fit__media { order: 2; }
   .mil-fit__media { aspect-ratio: 4 / 5; overflow: hidden; }

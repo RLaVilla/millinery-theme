@@ -135,7 +135,8 @@
 </footer>
 
 <style>
-  .mil-footer { margin-top: {{ section.settings.margin_top }}px; border-top: 1px solid var(--mil-ink); background: var(--mil-paper); color: var(--mil-ink); }
+  #shopify-section-{{ section.id }} { --mil-mt: calc({{ section.settings.margin_top }}px * var(--mil-space, 1)); }
+  .mil-footer { margin-top: var(--mil-mt); border-top: 1px solid var(--mil-ink); background: var(--mil-paper); color: var(--mil-ink); }
   .mil-visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   .mil-footer__cta {

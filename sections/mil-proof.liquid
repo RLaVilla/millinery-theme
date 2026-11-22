@@ -41,7 +41,8 @@
 </div>
 
 <style>
-  .mil-proof { padding-block: {{ section.settings.pad_top }}px {{ section.settings.pad_bottom }}px; }
+  #shopify-section-{{ section.id }} { --mil-pt: calc({{ section.settings.pad_top }}px * var(--mil-space, 1)); --mil-pb: calc({{ section.settings.pad_bottom }}px * var(--mil-space, 1)); }
+  .mil-proof { padding-block: var(--mil-pt) var(--mil-pb); }
   .mil-proof__layout { display: grid; grid-template-columns: minmax(240px, 380px) minmax(0, 1fr); gap: clamp(24px, 5vw, 80px); align-items: center; }
   .mil-proof__video { aspect-ratio: 9 / 16; overflow: hidden; border: 3px double var(--mil-ink); }
   .mil-proof__video video,

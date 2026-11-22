@@ -47,6 +47,7 @@
     --mil-faint: color-mix(in srgb, var(--mil-ink) 55%, transparent);
     --mil-gutter: clamp(18px, 3.5vw, 56px);
     --mil-body: 17px;
+    --mil-space: 1;
     --mil-small: 11px;
 
     --font-body--family: var(--mil-serif);
@@ -54,6 +55,8 @@
     --font-heading--family: var(--mil-serif);
     --font-accent--family: var(--mil-mono);
   }
+
+  @media (max-width: 899px) { :root { --mil-space: 0.6; } }
 
   /* Woven linen — pure CSS, no image to load */
   .mil-linen {

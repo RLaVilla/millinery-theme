@@ -3,7 +3,7 @@
   condensed headline, kicker, line of text and buttons. "Banner" size for the
   homepage, "Full" for the Chopper Corner page.
 {% endcomment %}
-<div class="mil-rgh mil-rg mil-rgh--{{ section.settings.size }}" style="margin-top: {{ section.settings.margin_top }}px; margin-bottom: {{ section.settings.margin_bottom }}px;">
+<div class="mil-rgh mil-rg mil-rgh--{{ section.settings.size }}" style="margin-top: var(--mil-mt); margin-bottom: var(--mil-mb);">
   <div class="mil-rgh__media" style="--rg-focus: {{ section.settings.focus }};">
     {%- if section.settings.image != blank -%}
       {{
@@ -51,6 +51,7 @@
 </div>
 
 <style>
+  #shopify-section-{{ section.id }} { --mil-mt: calc({{ section.settings.margin_top }}px * var(--mil-space, 1)); --mil-mb: calc({{ section.settings.margin_bottom }}px * var(--mil-space, 1)); }
   .mil-rgh { position: relative; display: grid; overflow: hidden; isolation: isolate; }
   .mil-rgh--full { min-height: min(92vh, 900px); }
   .mil-rgh--banner { min-height: min(70vh, 640px); }

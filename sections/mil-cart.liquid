@@ -78,7 +78,8 @@
 </div>
 
 <style>
-  .mil-cart { padding-block: {{ section.settings.pad_top }}px {{ section.settings.pad_bottom }}px; }
+  #shopify-section-{{ section.id }} { --mil-pt: calc({{ section.settings.pad_top }}px * var(--mil-space, 1)); --mil-pb: calc({{ section.settings.pad_bottom }}px * var(--mil-space, 1)); }
+  .mil-cart { padding-block: var(--mil-pt) var(--mil-pb); }
   .mil-cart__layout { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); gap: clamp(28px, 5vw, 72px); align-items: start; }
   .mil-cart__lines { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--mil-rule); }
   .mil-cart__line {

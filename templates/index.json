@@ -22,7 +22,7 @@
         "btn1_link": "/collections/all",
         "btn2_label": "Book a fitting",
         "btn2_link": "",
-        "pad_bottom": 96
+        "pad_bottom": 80
       }
     },
     "process": {
@@ -67,7 +67,7 @@
         "autoplay": true,
         "kicker": "By hand, in Keansburg",
         "pad_top": 0,
-        "pad_bottom": 120
+        "pad_bottom": 96
       }
     },
     "current": {
@@ -82,7 +82,7 @@
         "button": "Shop now",
         "align": "left",
         "pad_top": 0,
-        "pad_bottom": 120
+        "pad_bottom": 96
       }
     },
     "chopper": {
@@ -100,7 +100,7 @@
         "btn2_label": "",
         "btn2_link": "",
         "margin_top": 0,
-        "margin_bottom": 120
+        "margin_bottom": 96
       }
     },
     "collections": {
@@ -111,7 +111,7 @@
         "columns": 3,
         "limit": 3,
         "pad_top": 0,
-        "pad_bottom": 120
+        "pad_bottom": 96
       }
     },
     "fitting": {
@@ -166,7 +166,7 @@
         "cta2_link": "shopify://collections/all",
         "note": "Custom hats from $600 · Ready in 4–6 weeks",
         "pad_top": 0,
-        "pad_bottom": 120
+        "pad_bottom": 96
       }
     }
   },

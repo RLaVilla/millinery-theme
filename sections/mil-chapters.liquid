@@ -116,7 +116,8 @@
 </div>
 
 <style>
-  .mil-steps { padding-block: {{ section.settings.pad_top }}px {{ section.settings.pad_bottom }}px; }
+  #shopify-section-{{ section.id }} { --mil-pt: calc({{ section.settings.pad_top }}px * var(--mil-space, 1)); --mil-pb: calc({{ section.settings.pad_bottom }}px * var(--mil-space, 1)); }
+  .mil-steps { padding-block: var(--mil-pt) var(--mil-pb); }
   .mil-steps__list {
     display: grid;
     grid-template-columns: repeat(var(--mil-st-cols), minmax(0, 1fr));
