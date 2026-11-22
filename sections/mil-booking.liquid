@@ -39,7 +39,23 @@
   </div>
 
   <div class="mil-book__card" id="book-form">
-    {%- if section.settings.embed != blank -%}
+    {%- if section.settings.calendly_url != blank -%}
+      {%- liquid
+        assign cal_base = section.settings.calendly_url | split: '?' | first
+        assign cal_colors = 'hide_gdpr_banner=1&hide_event_type_details=1&background_color=' | append: section.settings.cal_bg | append: '&text_color=' | append: section.settings.cal_text | append: '&primary_color=' | append: section.settings.cal_accent
+        assign cal_colors = cal_colors | remove: '#'
+      -%}
+      <p class="mil-book__card-title mil-stamp">{{ section.settings.form_title }}</p>
+      <div
+        class="mil-book__calendly"
+        data-mil-calendly
+        data-base="{{ cal_base | escape }}"
+        data-colors="{{ cal_colors | escape }}"
+      >
+        <noscript><a class="mil-btn" href="{{ cal_base }}" target="_blank" rel="noopener">Choose a time</a></noscript>
+      </div>
+      <p class="mil-book__fine mil-meta mil-book__cal-done" data-mil-cal-done hidden>Booked. Check your email for the confirmation.</p>
+    {%- elsif section.settings.embed != blank -%}
       <p class="mil-book__card-title mil-stamp">{{ section.settings.form_title }}</p>
       <div class="mil-book__embed">{{ section.settings.embed }}</div>
     {%- else -%}
@@ -261,6 +277,9 @@
   .mil-book__or { display: flex; align-items: center; gap: 12px; margin: 18px 0 0; color: var(--mil-faint); }
   .mil-book__or::before, .mil-book__or::after { content: ''; flex: 1; border-top: 1px solid var(--mil-rule); }
 
+  .mil-book__calendly { min-height: 700px; margin: 0 -8px; }
+  .mil-book__calendly iframe { width: 100%; min-height: 700px; border: 0; }
+  .mil-book__cal-done { margin-top: 12px; color: var(--mil-ink); }
   .mil-book__bar { display: none; }
 
   @media (max-width: 899px) {
@@ -412,6 +431,39 @@
       }
     }
 
+    // Calendly: inline embed, UTMs passed through, conversion on a completed booking
+    const calWrap = root.querySelector('[data-mil-calendly]');
+    if (calWrap) {
+      const q = new URLSearchParams(location.search);
+      const keep = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+      const params = new URLSearchParams(calWrap.dataset.colors);
+      keep.forEach((k) => { if (q.get(k)) params.set(k, q.get(k)); });
+      if (!q.get('utm_source') && q.get('fbclid')) params.set('utm_source', 'facebook');
+      const url = `${calWrap.dataset.base}?${params.toString()}`;
+      const iframe = document.createElement('iframe');
+      iframe.src = `${url}${url.includes('?') ? '&' : '?'}embed_domain=${location.hostname}&embed_type=Inline`;
+      iframe.title = 'Choose a fitting time';
+      iframe.loading = 'lazy';
+      calWrap.append(iframe);
+
+      let fired = false;
+      window.addEventListener('message', (e) => {
+        let host = '';
+        try { host = new URL(e.origin).hostname; } catch { return; }
+        if (!/(^|\.)calendly\.com$/.test(host)) return;
+        const ev = e.data && e.data.event;
+        if (ev === 'calendly.page_height' && e.data.payload?.height) {
+          iframe.style.height = e.data.payload.height;
+        }
+        if (ev === 'calendly.event_scheduled' && !fired) {
+          fired = true;
+          try { window.Shopify?.analytics?.publish?.('fitting_request', { page: location.pathname, via: 'calendly' }); } catch {}
+          if (typeof window.fbq === 'function') window.fbq('track', 'Schedule');
+          root.querySelector('[data-mil-cal-done]')?.removeAttribute('hidden');
+        }
+      });
+    }
+
     // Conversion: fire once when the thank-you state shows
     if (root.querySelector('[data-mil-booked]')) {
       try { window.Shopify?.analytics?.publish?.('fitting_request', { page: location.pathname }); } catch {}
@@ -450,6 +502,11 @@
     { "type": "range", "id": "lead_days", "label": "Earliest day (days from today)", "min": 0, "max": 14, "step": 1, "default": 2 },
     { "type": "range", "id": "weeks_ahead", "label": "Bookable weeks ahead", "min": 1, "max": 16, "step": 1, "default": 8 },
     { "type": "textarea", "id": "blackout", "label": "Days off", "info": "Dates she's unavailable, one per line as YYYY-MM-DD (e.g. 2026-12-25)." },
+    { "type": "header", "content": "Calendly" },
+    { "type": "text", "id": "calendly_url", "label": "Calendly event link", "info": "Paste the event link (e.g. https://calendly.com/themillinery/private-hat-fitting). Replaces the calendar and form below." },
+    { "type": "color", "id": "cal_bg", "label": "Calendly background", "default": "#F6F1E7" },
+    { "type": "color", "id": "cal_text", "label": "Calendly text", "default": "#1F2A33" },
+    { "type": "color", "id": "cal_accent", "label": "Calendly accent", "default": "#7A2E26" },
     { "type": "html", "id": "embed", "label": "Booking embed (optional)", "info": "Paste a Calendly / Square / Acuity embed to replace the form." },
     { "type": "text", "id": "phone", "label": "Phone (call & text)", "default": "(732) 757-7567" },
     { "type": "checkbox", "id": "sticky_bar", "label": "Sticky Book / Call bar on mobile", "default": true },
