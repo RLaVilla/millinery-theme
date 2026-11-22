@@ -18,16 +18,10 @@
     {%- if section.settings.text != blank -%}
       <div class="mil-book__text">{{ section.settings.text }}</div>
     {%- endif -%}
-    {%- liquid
-      assign app_blocks = section.blocks | where: 'type', '@app'
-      assign point_blocks = section.blocks | where: 'type', 'point'
-    -%}
-    {%- if point_blocks.size > 0 -%}
+    {%- if section.blocks.size > 0 -%}
       <ul class="mil-book__points" role="list">
         {%- for block in section.blocks -%}
-          {%- if block.type == 'point' -%}
-            <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
-          {%- endif -%}
+          <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
         {%- endfor -%}
       </ul>
     {%- endif -%}
@@ -45,14 +39,7 @@
   </div>
 
   <div class="mil-book__card" id="book-form">
-    {%- if app_blocks.size > 0 -%}
-      <p class="mil-book__card-title mil-stamp">{{ section.settings.form_title }}</p>
-      <div class="mil-book__app">
-        {%- for block in app_blocks -%}
-          {% render block %}
-        {%- endfor -%}
-      </div>
-    {%- elsif section.settings.embed != blank -%}
+    {%- if section.settings.embed != blank -%}
       <p class="mil-book__card-title mil-stamp">{{ section.settings.form_title }}</p>
       <div class="mil-book__embed">{{ section.settings.embed }}</div>
     {%- else -%}
@@ -224,14 +211,6 @@
   .mil-book__done-title { margin: 0 0 8px; font: 500 30px / 1.1 var(--mil-serif); }
   .mil-book__done p { margin: 0 0 16px; }
   .mil-book__embed iframe { width: 100%; min-height: 640px; border: 0; }
-  .mil-book__app { min-height: 200px; }
-  .mil-book__app, .mil-book__app * { font-family: var(--mil-serif); }
-  .mil-book__app button, .mil-book__app [class*='btn'], .mil-book__app [class*='button'] {
-    border-radius: 0 !important;
-    font-family: var(--mil-mono) !important;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
 
   .mil-cal { margin-bottom: 22px; padding-bottom: 20px; border-bottom: 1px solid var(--mil-rule); }
   .mil-cal__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
@@ -451,7 +430,7 @@
 {% schema %}
 {
   "name": "Millinery book a fitting",
-  "max_blocks": 6,
+  "max_blocks": 5,
   "settings": [
     { "type": "text", "id": "tag", "label": "Tag", "default": "Keansburg, NJ · By appointment" },
     { "type": "text", "id": "title", "label": "Headline", "default": "Reserve your fitting." },
@@ -477,7 +456,6 @@
     { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 120 }
   ],
   "blocks": [
-    { "type": "@app" },
     {
       "type": "point",
       "name": "Reassurance",
