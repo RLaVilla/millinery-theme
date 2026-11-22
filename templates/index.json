@@ -33,7 +33,7 @@
           "settings": {
             "title": "The fitting",
             "text": "We measure your head and talk through how you’ll wear it.",
-            "image": "shopify://shop_images/580A3932.jpg",
+            "image": "shopify://shop_images/8C016386-FEAD-4D99-8F4D-D276B83A30C0.jpg",
             "link": ""
           }
         },
@@ -42,7 +42,7 @@
           "settings": {
             "title": "Choosing the felt",
             "text": "Pick the felt, color and weight that suit you.",
-            "image": "shopify://shop_images/IMG_2154.jpg",
+            "image": "shopify://shop_images/A0443053-1584-48A0-9A87-15A8EF3B9DB6.jpg",
             "link": ""
           }
         },
@@ -51,7 +51,7 @@
           "settings": {
             "title": "Shaping & finishing",
             "text": "Steamed, shaped and banded by hand in the shop.",
-            "image": "shopify://shop_images/IMG_5412.jpg",
+            "image": "shopify://shop_images/B0FD548B-C426-4E49-B981-C1468AD627E0.jpg",
             "link": ""
           }
         }
@@ -73,12 +73,16 @@
     "current": {
       "type": "mil-feature-collection",
       "settings": {
+        "heading": "",
+        "collection": "western-romance-fall-winter-2026",
+        "image": "shopify://shop_images/IMG_9797.jpg",
         "kicker": "Fall / Winter",
+        "title": "",
+        "text": "Warm felts and deeper colors for the colder months.",
+        "button": "Shop now",
         "align": "left",
         "pad_top": 0,
-        "pad_bottom": 120,
-        "collection": "western-romance-fall-winter-2026",
-        "button": "Shop now"
+        "pad_bottom": 120
       }
     },
     "collections": {
@@ -131,7 +135,7 @@
         "s4"
       ],
       "settings": {
-        "image": "shopify://shop_images/IMG_9797.jpg",
+        "image": "shopify://shop_images/BF61F5CE-8EC9-49EF-B68B-53B2C6B74912.jpg",
         "flip": true,
         "tag": "Local · By appointment",
         "title": "Made to your head.",
