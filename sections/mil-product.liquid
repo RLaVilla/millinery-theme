@@ -1,8 +1,8 @@
-{% doc %}
+{% comment %}
   The Millinery — product page. Stacked photos on linen (thumbnail rail on
   desktop, swipe strip on mobile), serif title, typed price, option buttons,
   add to bag + dynamic checkout, details accordions, and a custom-fitting nudge.
-{% enddoc %}
+{% endcomment %}
 {%- liquid
   assign current = product.selected_or_first_available_variant
   assign form_id = 'MilProduct-' | append: section.id
@@ -328,7 +328,7 @@
     { "type": "text", "id": "custom_tag", "label": "Tag", "default": "Made to measure" },
     { "type": "text", "id": "custom_title", "label": "Title", "default": "Want it made for your head?" },
     { "type": "text", "id": "custom_text", "label": "Text", "default": "Reserve a private fitting at the Keansburg studio and we'll make one to your size." },
-    { "type": "url", "id": "custom_link", "label": "Link", "default": "/pages/book-a-fitting" },
+    { "type": "url", "id": "custom_link", "label": "Link", "info": "Leave empty to use /pages/book-a-fitting" },
     { "type": "text", "id": "phone", "label": "Phone", "default": "(732) 757-7567" },
     { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 16 },
     { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 120 }

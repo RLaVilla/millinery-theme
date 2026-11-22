@@ -19,7 +19,6 @@
         "text": "<p>Carly’s story goes here — how she started making hats, and what goes into every one.</p>",
         "card_title": "",
         "cta1_label": "Reserve a fitting",
-        "cta1_link": "/pages/book-a-fitting",
         "cta2_label": "Shop hats",
         "cta2_link": "/collections/all",
         "note": ""
@@ -61,7 +60,7 @@
         "heading": "How a hat is made",
         "kicker": "By hand, in Keansburg",
         "pad_top": 0,
-        "pad_bottom": 140
+        "pad_bottom": 144
       }
     }
   },

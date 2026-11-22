@@ -1,7 +1,7 @@
-{% doc %}
+{% comment %}
   The Millinery — visit the shop: map, address, hours, call/text, and FAQ
   (as blocks). Built for the fitting landing page but works anywhere.
-{% enddoc %}
+{% endcomment %}
 {%- liquid
   assign phone_digits = section.settings.phone | remove: ' ' | remove: '.' | remove: '-' | remove: '(' | remove: ')'
   assign map_q = section.settings.map_query | url_encode

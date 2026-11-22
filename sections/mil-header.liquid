@@ -1,9 +1,9 @@
-{% doc %}
+{% comment %}
   The Millinery — "hatbox label" header.
   Top strip with live open/closed status from the shop hours, a stamped label
   wordmark in the center, and a banded nav row (thin rules above and below)
   that sticks on scroll.
-{% enddoc %}
+{% endcomment %}
 {%- liquid
   assign menu = section.settings.menu
   capture hours_json
@@ -436,7 +436,7 @@
     { "type": "text", "id": "sub_mark", "label": "Line under wordmark", "default": "Hat Co. · Keansburg, NJ" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu", "info": "Items with nested links get a dropdown." },
     { "type": "text", "id": "book_label", "label": "Booking button", "default": "Book a fitting" },
-    { "type": "url", "id": "book_link", "label": "Booking button link", "default": "/pages/book-a-fitting" },
+    { "type": "url", "id": "book_link", "label": "Booking button link", "info": "Leave empty to use /pages/book-a-fitting" },
     { "type": "header", "content": "Top strip" },
     { "type": "text", "id": "city", "label": "Location", "default": "Keansburg, NJ" },
     { "type": "text", "id": "note", "label": "Center note", "default": "Custom hats, made by hand" },

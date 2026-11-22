@@ -1,10 +1,10 @@
-{% doc %}
+{% comment %}
   The Millinery — "Book a fitting" landing hero for paid traffic.
   Headline, three quick reassurances, photo, and a request form that emails
   the shop (Shopify contact form). Optional: paste a booking embed (Calendly,
   Square, Acuity…) to replace the form. Adds a sticky Book / Call bar on mobile
   and fires a "fitting_request" event (+ Meta "Schedule" if fbq is on the page).
-{% enddoc %}
+{% endcomment %}
 {%- liquid
   assign phone_digits = section.settings.phone | remove: ' ' | remove: '.' | remove: '-' | remove: '(' | remove: ')'
   assign form_id = 'MilBooking-' | append: section.id

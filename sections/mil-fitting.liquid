@@ -1,8 +1,8 @@
-{% doc %}
+{% comment %}
   The Millinery — "fitting room". Large photo beside the pitch for custom work:
   serif headline, short copy, a spec card of options set like a hatbox label
   (dotted leaders), and booking / custom-order buttons.
-{% enddoc %}
+{% endcomment %}
 <div class="mil-fit mil-section mil-wrap{% if section.settings.flip %} is-flipped{% endif %}">
   <div class="mil-fit__media mil-linen">
     {%- if section.settings.video != blank -%}
@@ -46,7 +46,7 @@
 
     <div class="mil-fit__ctas">
       {%- if section.settings.cta1_label != blank -%}
-        <a class="mil-btn" href="{{ section.settings.cta1_link | default: '#' }}">{{ section.settings.cta1_label }}</a>
+        <a class="mil-btn" href="{{ section.settings.cta1_link | default: '/pages/book-a-fitting' }}">{{ section.settings.cta1_label }}</a>
       {%- endif -%}
       {%- if section.settings.cta2_label != blank -%}
         <a class="mil-btn mil-btn--ghost" href="{{ section.settings.cta2_link | default: '#' }}">{{ section.settings.cta2_label }}</a>

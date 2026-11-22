@@ -1,8 +1,8 @@
-{% doc %}
+{% comment %}
   The Millinery — product grid on linen tiles.
   On a collection page it shows that collection (with pagination and an optional
   row of hang-tag category links). Anywhere else it shows the picked collection.
-{% enddoc %}
+{% endcomment %}
 {%- liquid
   assign source = collection
   if template.name != 'collection' or source == blank

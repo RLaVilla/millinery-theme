@@ -1,7 +1,7 @@
-{% doc %}
+{% comment %}
   The Millinery — footer. Booking prompt, newsletter, link columns (from menus),
   the shop card (address, hours, phone), socials, and a stamped sign-off.
-{% enddoc %}
+{% endcomment %}
 {%- liquid
   assign phone_digits = section.settings.phone | remove: ' ' | remove: '.' | remove: '-' | remove: '(' | remove: ')'
   assign form_id = 'MilFooterSignup-' | append: section.id
@@ -224,7 +224,7 @@
     { "type": "header", "content": "Booking prompt" },
     { "type": "text", "id": "cta_title", "label": "Line", "default": "Come in for a fitting." },
     { "type": "text", "id": "cta_label", "label": "Button", "default": "Book a fitting" },
-    { "type": "url", "id": "cta_link", "label": "Button link", "default": "/pages/book-a-fitting" },
+    { "type": "url", "id": "cta_link", "label": "Button link", "info": "Leave empty to use /pages/book-a-fitting" },
     { "type": "header", "content": "Newsletter" },
     { "type": "text", "id": "signup_title", "label": "Title", "default": "Letters from the shop" },
     { "type": "text", "id": "signup_text", "label": "Text", "default": "New hats, trunk shows and open fitting days. A few emails a season." },

@@ -1,7 +1,7 @@
-{% doc %}
+{% comment %}
   The Millinery — cart page ("Your bag"). Plain form-based cart: line items on
   linen, quantity update, remove, order note, subtotal and checkout. No JS needed.
-{% enddoc %}
+{% endcomment %}
 <div class="mil-cart mil-section mil-wrap">
   <h1 class="mil-heading">
     Your bag
@@ -131,7 +131,7 @@
   "settings": [
     { "type": "checkbox", "id": "show_note", "label": "Show order note", "default": true },
     { "type": "checkbox", "id": "show_express", "label": "Show express checkout buttons", "default": true },
-    { "type": "url", "id": "fitting_link", "label": "Fitting page link (empty bag)", "default": "/pages/book-a-fitting" },
+    { "type": "url", "id": "fitting_link", "label": "Fitting page link (empty bag)", "info": "Leave empty to use /pages/book-a-fitting" },
     { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 24 },
     { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 120 }
   ]
