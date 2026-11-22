@@ -12,11 +12,12 @@
     "main": {
       "type": "mil-collections",
       "settings": {
-        "heading": "All collections",
+        "heading": "Collections",
         "columns": 3,
         "limit": 8,
-        "pad_top": 24,
-        "pad_bottom": 120
+        "pad_top": 32,
+        "pad_bottom": 120,
+        "intro": "<p>Every hat is shaped, banded and finished by hand in our Keansburg studio. Browse by collection.</p>"
       }
     }
   },
