@@ -103,10 +103,15 @@
   </div>
 
   <div class="mil-footer__sign mil-wrap">
-    <span class="mil-footer__mark">
-      <span class="mil-stamp">{{ section.settings.sign_name | default: shop.name }}</span>
-      <span class="mil-meta">{{ section.settings.sign_line }}</span>
-    </span>
+    {%- if section.settings.brand_logo != 'none' -%}
+      {%- assign logo_file = 'mil-logo-' | append: section.settings.brand_logo | append: '.png' -%}
+      <img class="mil-footer__logo" src="{{ logo_file | asset_url }}" alt="{{ shop.name | escape }}" width="860" height="624" loading="lazy">
+    {%- else -%}
+      <span class="mil-footer__mark">
+        <span class="mil-stamp">{{ section.settings.sign_name | default: shop.name }}</span>
+        <span class="mil-meta">{{ section.settings.sign_line }}</span>
+      </span>
+    {%- endif -%}
   </div>
 
   <div class="mil-footer__base mil-wrap mil-meta">
@@ -182,6 +187,7 @@
   .mil-footer__social a:hover { background: var(--mil-accent); border-color: var(--mil-accent); color: var(--mil-paper); }
 
   .mil-footer__sign { display: flex; justify-content: center; padding-block: 12px 40px; }
+  .mil-footer__logo { width: clamp(160px, 18vw, 240px); height: auto; }
   .mil-footer__mark {
     display: inline-flex;
     flex-direction: column;
@@ -242,6 +248,17 @@
     { "type": "url", "id": "tiktok", "label": "TikTok URL" },
     { "type": "url", "id": "facebook", "label": "Facebook URL", "info": "Full link to the Facebook page" },
     { "type": "header", "content": "Sign-off" },
+    {
+      "type": "select",
+      "id": "brand_logo",
+      "label": "Logo",
+      "default": "ink",
+      "options": [
+        { "value": "gold", "label": "The Millinery seal — gold" },
+        { "value": "ink", "label": "The Millinery seal — ink" },
+        { "value": "none", "label": "Stamped text instead" }
+      ]
+    },
     { "type": "text", "id": "sign_name", "label": "Stamp name", "default": "The Millinery" },
     { "type": "text", "id": "sign_line", "label": "Stamp line", "default": "Made by hand · Keansburg, NJ" },
     { "type": "range", "id": "margin_top", "label": "Space above footer", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 0 }

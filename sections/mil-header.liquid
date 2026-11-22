@@ -38,6 +38,11 @@
       <span class="mil-header__logo-img" style="--mil-logo-h: {{ section.settings.logo_height }}px;">
         {{- section.settings.logo | image_url: width: 800 | image_tag: alt: shop.name -}}
       </span>
+    {%- elsif section.settings.brand_logo != 'none' -%}
+      {%- assign logo_file = 'mil-logo-' | append: section.settings.brand_logo | append: '.png' -%}
+      <span class="mil-header__logo-img" style="--mil-logo-h: {{ section.settings.logo_height }}px;">
+        <img src="{{ logo_file | asset_url }}" alt="{{ shop.name | escape }}" width="860" height="624" fetchpriority="high">
+      </span>
     {%- else -%}
       <span class="mil-label-mark">
         <span class="mil-label-mark__name mil-stamp">{{ section.settings.wordmark | default: shop.name }}</span>
@@ -165,7 +170,7 @@
     color: var(--mil-ink);
     text-decoration: none;
   }
-  .mil-header__logo-img img { display: block; height: var(--mil-logo-h); width: auto; mix-blend-mode: multiply; }
+  .mil-header__logo-img img { display: block; height: var(--mil-logo-h); width: auto; }
 
   /* Wordmark set like the stamp inside a sweatband */
   .mil-label-mark {
@@ -430,7 +435,18 @@
   "name": "Millinery header",
   "class": "mil-header-section",
   "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "Leave empty to use the stamped label wordmark." },
+    { "type": "image_picker", "id": "logo", "label": "Custom logo image", "info": "Optional. Overrides the built-in logo below." },
+    {
+      "type": "select",
+      "id": "brand_logo",
+      "label": "Built-in logo",
+      "default": "gold",
+      "options": [
+        { "value": "gold", "label": "The Millinery seal — gold" },
+        { "value": "ink", "label": "The Millinery seal — ink" },
+        { "value": "none", "label": "None (stamped text wordmark)" }
+      ]
+    },
     { "type": "range", "id": "logo_height", "label": "Logo image height", "min": 30, "max": 140, "step": 2, "unit": "px", "default": 72 },
     { "type": "text", "id": "wordmark", "label": "Wordmark", "default": "The Millinery" },
     { "type": "text", "id": "sub_mark", "label": "Line under wordmark", "default": "Hat Co. · Keansburg, NJ" },
