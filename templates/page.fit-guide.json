@@ -122,7 +122,9 @@
         "sz8",
         "sz9"
       ],
-      "settings": {}
+      "settings": {
+        "show_page_content": true
+      }
     }
   },
   "order": [
