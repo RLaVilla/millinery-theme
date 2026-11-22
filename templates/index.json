@@ -20,13 +20,78 @@
         "text": "<p>Felt hats shaped, banded and finished in our studio, made to be worn for years.</p>",
         "btn1_label": "Shop all hats",
         "btn1_link": "/collections/all",
-        "btn2_label": "Book a fitting"
+        "btn2_label": "Book a fitting",
+        "btn2_link": "",
+        "pad_bottom": 96
+      }
+    },
+    "process": {
+      "type": "mil-chapters",
+      "blocks": {
+        "c1": {
+          "type": "chapter",
+          "settings": {
+            "title": "The fitting",
+            "text": "We measure your head and talk through how you’ll wear it.",
+            "image": "shopify://shop_images/580A3932.jpg",
+            "link": ""
+          }
+        },
+        "c2": {
+          "type": "chapter",
+          "settings": {
+            "title": "Choosing the felt",
+            "text": "Pick the felt, color and weight that suit you.",
+            "image": "shopify://shop_images/IMG_2154.jpg",
+            "link": ""
+          }
+        },
+        "c3": {
+          "type": "chapter",
+          "settings": {
+            "title": "Shaping & finishing",
+            "text": "Steamed, shaped and banded by hand in the shop.",
+            "image": "shopify://shop_images/IMG_5412.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "heading": "How a hat is made",
+        "layout": "feature",
+        "autoplay": true,
+        "kicker": "By hand, in Keansburg",
+        "pad_top": 0,
+        "pad_bottom": 120
+      }
+    },
+    "current": {
+      "type": "mil-grid",
+      "settings": {
+        "heading": "Current collection",
+        "kicker": "Fall / Winter",
+        "collection": "western-romance-fall-winter-2026",
+        "fallback_all": false,
+        "index_menu": "",
+        "columns": 3,
+        "per_page": 6,
+        "pad_top": 0,
+        "pad_bottom": 112
       }
     },
     "shop": {
       "type": "mil-grid",
       "settings": {
         "heading": "In the shop",
+        "kicker": "",
+        "collection": "",
+        "fallback_all": true,
+        "index_menu": "",
         "columns": 4,
         "per_page": 12,
         "pad_top": 0,
@@ -37,6 +102,7 @@
       "type": "mil-collections",
       "settings": {
         "heading": "Shop by collection",
+        "intro": "",
         "columns": 3,
         "limit": 3,
         "pad_top": 0,
@@ -83,65 +149,19 @@
       ],
       "settings": {
         "image": "shopify://shop_images/IMG_9797.jpg",
-        "text": "<p>Every hat starts with a private fitting at our Keansburg studio, by appointment. We measure, pick the felt and shape it by hand — so it fits like it was always yours.</p>",
         "flip": true,
         "tag": "Local · By appointment",
         "title": "Made to your head.",
+        "use_page_content": false,
+        "text": "<p>Every hat starts with a private fitting at our Keansburg studio, by appointment. We measure, pick the felt and shape it by hand — so it fits like it was always yours.</p>",
+        "card_title": "Your hat",
+        "cta1_label": "Book a fitting",
+        "cta1_link": "",
         "cta2_label": "",
+        "cta2_link": "shopify://collections/all",
+        "note": "Custom hats from $600 · Ready in 4–6 weeks",
         "pad_top": 0,
         "pad_bottom": 120
-      }
-    },
-    "process": {
-      "type": "mil-chapters",
-      "blocks": {
-        "c1": {
-          "type": "chapter",
-          "settings": {
-            "title": "The fitting",
-            "text": "We measure your head and talk through how you’ll wear it.",
-            "image": "shopify://shop_images/580A3932.jpg"
-          }
-        },
-        "c2": {
-          "type": "chapter",
-          "settings": {
-            "title": "Choosing the felt",
-            "text": "Pick the felt, color and weight that suit you.",
-            "image": "shopify://shop_images/IMG_2154.jpg"
-          }
-        },
-        "c3": {
-          "type": "chapter",
-          "settings": {
-            "title": "Shaping & finishing",
-            "text": "Steamed, shaped and banded by hand in the shop.",
-            "image": "shopify://shop_images/IMG_5412.jpg"
-          }
-        }
-      },
-      "block_order": [
-        "c1",
-        "c2",
-        "c3"
-      ],
-      "settings": {
-        "heading": "How a hat is made",
-        "kicker": "By hand, in Keansburg",
-        "pad_top": 0,
-        "pad_bottom": 120
-      }
-    },
-    "current": {
-      "type": "mil-grid",
-      "settings": {
-        "heading": "Current collection",
-        "kicker": "Fall / Winter",
-        "fallback_all": false,
-        "columns": 3,
-        "per_page": 6,
-        "pad_top": 0,
-        "pad_bottom": 112
       }
     }
   },
