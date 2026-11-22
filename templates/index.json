@@ -12,8 +12,15 @@
     "hero": {
       "type": "mil-hero",
       "settings": {
-        "image_1": "shopify://shop_images/IMG_2154.jpg",
-        "image_2": "shopify://shop_images/580A3932.jpg"
+        "layout": "split",
+        "image_1": "shopify://shop_images/580A3703.jpg",
+        "focus": "center",
+        "tag": "Made by hand",
+        "title": "Hats, made by hand.",
+        "text": "<p>Felt hats shaped, banded and finished in our studio, made to be worn for years.</p>",
+        "btn1_label": "Shop all hats",
+        "btn1_link": "/collections/all",
+        "btn2_label": "Book a fitting"
       }
     },
     "shop": {
@@ -75,7 +82,7 @@
         "s4"
       ],
       "settings": {
-        "image": "shopify://shop_images/580A3703.jpg",
+        "image": "shopify://shop_images/IMG_9797.jpg",
         "text": "<p>Every hat starts with a private fitting at our Keansburg studio, by appointment. We measure, pick the felt and shape it by hand — so it fits like it was always yours.</p>",
         "flip": true,
         "tag": "Local · By appointment",
@@ -93,7 +100,7 @@
           "settings": {
             "title": "The fitting",
             "text": "We measure your head and talk through how you’ll wear it.",
-            "image": "shopify://shop_images/580A3703.jpg"
+            "image": "shopify://shop_images/580A3932.jpg"
           }
         },
         "c2": {

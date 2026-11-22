@@ -2,7 +2,7 @@
   The Millinery — shop hero. Two photos edge to edge, then a caption band:
   big serif headline on the left, short line + Shop / secondary button on the right.
 {% endcomment %}
-<div class="mil-hero mil-section">
+<div class="mil-hero mil-section mil-hero--{{ section.settings.layout }}">
   <div class="mil-hero__media{% if section.settings.image_2 == blank %} is-single{% endif %}">
     {%- for i in (1..2) -%}
       {%- assign key = 'image_' | append: i -%}
@@ -80,14 +80,56 @@
     .mil-hero__band { grid-template-columns: 1fr; padding-top: 24px; gap: 16px; }
     .mil-hero__ctas .mil-btn { flex: 1; }
   }
+  /* Split: photo left, copy right */
+  .mil-hero--split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 88px);
+    align-items: center;
+    padding: 8px var(--mil-gutter) {{ section.settings.pad_bottom }}px;
+  }
+  .mil-hero--split .mil-hero__media { grid-template-columns: 1fr; }
+  .mil-hero--split .mil-hero__media .mil-hero__img:nth-child(2) { display: none; }
+  .mil-hero--split .mil-hero__img { aspect-ratio: 3 / 2; max-height: none; }
+  .mil-hero--split .mil-hero__img img { object-position: {{ section.settings.focus }}; }
+  .mil-hero--split .mil-hero__band { display: block; padding: 0; }
+  .mil-hero--split .mil-hero__title { margin: 18px 0 18px; font-size: clamp(42px, 5vw, 80px); }
+  .mil-hero--split .mil-hero__text { margin-bottom: 4px; }
+
+  @media (max-width: 899px) {
+    .mil-hero--split { grid-template-columns: 1fr; padding-top: 0; gap: 22px; }
+    .mil-hero--split .mil-hero__media { margin-inline: calc(var(--mil-gutter) * -1); }
+    .mil-hero--split .mil-hero__img { aspect-ratio: 4 / 3.4; }
+  }
 </style>
 
 {% schema %}
 {
   "name": "Millinery shop hero",
   "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "split",
+      "options": [
+        { "value": "split", "label": "Photo left, text right" },
+        { "value": "wide", "label": "Photos across, text below" }
+      ]
+    },
     { "type": "image_picker", "id": "image_1", "label": "Image (left)" },
-    { "type": "image_picker", "id": "image_2", "label": "Image (right)", "info": "Optional. Leave empty for one wide image. Hidden on mobile." },
+    {
+      "type": "select",
+      "id": "focus",
+      "label": "Photo focus (split layout)",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    { "type": "image_picker", "id": "image_2", "label": "Image (right)", "info": "Wide layout only. Optional; hidden on mobile." },
     { "type": "text", "id": "tag", "label": "Tag", "default": "Made by hand · Keansburg, NJ" },
     { "type": "text", "id": "title", "label": "Headline", "default": "Hats, made by hand." },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Felt hats shaped, banded and finished in our studio, made to be worn for years.</p>" },
