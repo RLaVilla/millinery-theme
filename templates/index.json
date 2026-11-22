@@ -71,31 +71,13 @@
       }
     },
     "current": {
-      "type": "mil-grid",
+      "type": "mil-feature-collection",
       "settings": {
-        "heading": "Current collection",
         "kicker": "Fall / Winter",
-        "collection": "western-romance-fall-winter-2026",
-        "fallback_all": false,
-        "index_menu": "",
-        "columns": 3,
-        "per_page": 6,
+        "align": "left",
         "pad_top": 0,
-        "pad_bottom": 112
-      }
-    },
-    "shop": {
-      "type": "mil-grid",
-      "settings": {
-        "heading": "In the shop",
-        "kicker": "",
-        "collection": "",
-        "fallback_all": true,
-        "index_menu": "",
-        "columns": 4,
-        "per_page": 12,
-        "pad_top": 0,
-        "pad_bottom": 112
+        "pad_bottom": 120,
+        "collection": "western-romance-fall-winter-2026"
       }
     },
     "collections": {
@@ -169,7 +151,6 @@
     "hero",
     "process",
     "current",
-    "shop",
     "collections",
     "fitting"
   ]
