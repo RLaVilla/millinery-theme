@@ -1,0 +1,142 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "mil-product",
+      "blocks": {
+        "what": {
+          "type": "accordion",
+          "settings": {
+            "title": "What to expect",
+            "content": "<p>Try on shapes and felts, talk through how you’ll wear it, and get measured for a hat made to your head.</p>"
+          }
+        },
+        "where": {
+          "type": "accordion",
+          "settings": {
+            "title": "Where",
+            "content": "<p>Our studio in Keansburg, NJ. The address is sent with your booking confirmation.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "what",
+        "where"
+      ],
+      "settings": {
+        "show_dynamic_checkout": false,
+        "description_label": "About your fitting",
+        "custom_title": "",
+        "subtitle": "Private, one on one, by appointment at the Keansburg studio.",
+        "free_label": "Complimentary",
+        "size_guide_label": ""
+      }
+    },
+    "process": {
+      "type": "mil-chapters",
+      "blocks": {
+        "c1": {
+          "type": "chapter",
+          "settings": {
+            "title": "Try on shapes",
+            "text": "Find the crown and brim that suit your face.",
+            "image": "shopify://shop_images/580A3703.jpg"
+          }
+        },
+        "c2": {
+          "type": "chapter",
+          "settings": {
+            "title": "Pick your felt",
+            "text": "Choose color, felt and band.",
+            "image": "shopify://shop_images/IMG_5412.jpg"
+          }
+        },
+        "c3": {
+          "type": "chapter",
+          "settings": {
+            "title": "Get measured",
+            "text": "We take your size so it’s made to fit.",
+            "image": "shopify://shop_images/580A3932.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "heading": "What happens at your fitting",
+        "kicker": "About 30 minutes",
+        "pad_top": 0,
+        "pad_bottom": 120
+      }
+    },
+    "proof": {
+      "type": "mil-proof",
+      "settings": {}
+    },
+    "visit": {
+      "type": "mil-visit",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "Is there a charge for a fitting?",
+            "answer": "<p>Answer to confirm with Carly.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does a custom hat take?",
+            "answer": "<p>Answer to confirm with Carly.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "What does a custom hat cost?",
+            "answer": "<p>Answer to confirm with Carly.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I book a fitting as a gift?",
+            "answer": "<p>Answer to confirm with Carly.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "settings": {
+        "heading": "The studio",
+        "address": "Keansburg, NJ\nThe studio address is sent when your fitting is confirmed.",
+        "hours": "Fittings | By appointment only",
+        "map_query": "Keansburg, NJ",
+        "show_map": true,
+        "show_directions": false,
+        "cta_label": "Schedule my fitting"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "process",
+    "proof",
+    "visit"
+  ]
+}

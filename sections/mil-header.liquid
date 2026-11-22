@@ -65,7 +65,7 @@
       </button>
 
       {%- if section.settings.book_label != blank -%}
-        <a class="mil-header__book mil-meta" href="{{ section.settings.book_link | default: '/pages/book-a-fitting' }}">
+        <a class="mil-header__book mil-meta" href="{{ section.settings.book_link | default: '/products/private-hat-fitting' }}">
           {{- section.settings.book_label -}}
         </a>
       {%- endif -%}
@@ -97,7 +97,7 @@
           </li>
         {%- else -%}
           <li class="mil-header__item"><a class="mil-header__navlink" href="{{ routes.all_products_collection_url }}">Shop</a></li>
-          <li class="mil-header__item"><a class="mil-header__navlink" href="/pages/book-a-fitting">Custom</a></li>
+          <li class="mil-header__item"><a class="mil-header__navlink" href="/products/private-hat-fitting">Custom</a></li>
         {%- endfor -%}
       </ul>
 
@@ -123,12 +123,12 @@
         </li>
       {%- else -%}
         <li><a class="mil-header__panel-link" href="{{ routes.all_products_collection_url }}">Shop</a></li>
-        <li><a class="mil-header__panel-link" href="/pages/book-a-fitting">Custom</a></li>
+        <li><a class="mil-header__panel-link" href="/products/private-hat-fitting">Custom</a></li>
       {%- endfor -%}
       <li><a class="mil-header__panel-link" href="{{ routes.search_url }}">Search</a></li>
     </ul>
     {%- if section.settings.book_label != blank -%}
-      <a class="mil-btn mil-header__panel-book" href="{{ section.settings.book_link | default: '/pages/book-a-fitting' }}">
+      <a class="mil-btn mil-header__panel-book" href="{{ section.settings.book_link | default: '/products/private-hat-fitting' }}">
         {{- section.settings.book_label -}}
       </a>
     {%- endif -%}
@@ -452,7 +452,7 @@
     { "type": "text", "id": "sub_mark", "label": "Line under wordmark", "default": "Hat Co. · Keansburg, NJ" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu", "info": "Items with nested links get a dropdown." },
     { "type": "text", "id": "book_label", "label": "Booking button", "default": "Book a fitting" },
-    { "type": "url", "id": "book_link", "label": "Booking button link", "info": "Leave empty to use /pages/book-a-fitting" },
+    { "type": "url", "id": "book_link", "label": "Booking button link", "info": "Leave empty to use /products/private-hat-fitting" },
     { "type": "header", "content": "Top strip" },
     { "type": "text", "id": "city", "label": "Location", "default": "Keansburg, NJ" },
     { "type": "text", "id": "note", "label": "Center note", "default": "Custom hats, made by hand" },

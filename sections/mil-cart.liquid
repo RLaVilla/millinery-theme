@@ -13,7 +13,7 @@
       <p class="mil-cart__empty-title">Nothing in your bag yet.</p>
       <div class="mil-cart__empty-ctas">
         <a class="mil-btn" href="{{ routes.all_products_collection_url }}">Shop hats</a>
-        <a class="mil-btn mil-btn--ghost" href="{{ section.settings.fitting_link | default: '/pages/book-a-fitting' }}">Reserve a fitting</a>
+        <a class="mil-btn mil-btn--ghost" href="{{ section.settings.fitting_link | default: '/products/private-hat-fitting' }}">Reserve a fitting</a>
       </div>
     </div>
   {%- else -%}
@@ -131,7 +131,7 @@
   "settings": [
     { "type": "checkbox", "id": "show_note", "label": "Show order note", "default": true },
     { "type": "checkbox", "id": "show_express", "label": "Show express checkout buttons", "default": true },
-    { "type": "url", "id": "fitting_link", "label": "Fitting page link (empty bag)", "info": "Leave empty to use /pages/book-a-fitting" },
+    { "type": "url", "id": "fitting_link", "label": "Fitting page link (empty bag)", "info": "Leave empty to use /products/private-hat-fitting" },
     { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 24 },
     { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 120 }
   ]
