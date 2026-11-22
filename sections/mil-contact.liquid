@@ -1,0 +1,182 @@
+{% comment %}
+  The Millinery — contact page. Message form (Shopify contact form) beside a
+  studio card: email, phone, socials, appointment note, plus quick links.
+{% endcomment %}
+{%- liquid
+  assign phone_digits = section.settings.phone | remove: ' ' | remove: '.' | remove: '-' | remove: '(' | remove: ')'
+  assign form_id = 'MilContact-' | append: section.id
+-%}
+<div class="mil-ct mil-section mil-wrap">
+  <header class="mil-ct__head">
+    {%- if section.settings.tag != blank -%}<span class="mil-tag mil-ct__tag">{{ section.settings.tag }}</span>{%- endif -%}
+    <h1 class="mil-ct__title">{{ section.settings.title | default: page.title }}</h1>
+    {%- if section.settings.intro != blank -%}<div class="mil-ct__intro">{{ section.settings.intro }}</div>{%- endif -%}
+  </header>
+
+  <div class="mil-ct__layout">
+    <div class="mil-ct__formwrap">
+      {%- form 'contact', id: form_id, class: 'mil-ct__form' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="mil-ct__done" role="status">
+            <p class="mil-ct__done-title">{{ section.settings.success_title }}</p>
+            <p>{{ section.settings.success_text }}</p>
+          </div>
+        {%- else -%}
+          {%- if form.errors -%}
+            <div class="mil-ct__errors mil-meta" role="alert">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+          <div class="mil-ct__grid">
+            <label class="mil-field">
+              <span>Name</span>
+              <input type="text" name="contact[name]" autocomplete="name" required value="{{ form.name }}">
+            </label>
+            <label class="mil-field">
+              <span>Email</span>
+              <input type="email" name="contact[email]" autocomplete="email" required value="{{ form.email }}">
+            </label>
+            <label class="mil-field mil-field--full">
+              <span>Phone <em>(optional)</em></span>
+              <input type="tel" name="contact[phone]" autocomplete="tel" value="{{ form.phone }}">
+            </label>
+            <label class="mil-field mil-field--full">
+              <span>Message</span>
+              <textarea name="contact[body]" rows="6" required placeholder="A question about a hat, an order, sizing, or anything else.">{{ form.body }}</textarea>
+            </label>
+          </div>
+          <button type="submit" class="mil-btn mil-ct__submit">{{ section.settings.button }}</button>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+
+    <aside class="mil-ct__side">
+      <div class="mil-ct__card">
+        <p class="mil-stamp mil-ct__card-title">The studio</p>
+        <dl class="mil-ct__rows">
+          {%- if section.settings.email != blank -%}
+            <div><dt>Email</dt><dd><a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a></dd></div>
+          {%- endif -%}
+          {%- if section.settings.phone != blank -%}
+            <div><dt>Call or text</dt><dd><a href="tel:{{ phone_digits }}">{{ section.settings.phone }}</a></dd></div>
+          {%- endif -%}
+          {%- if section.settings.location != blank -%}
+            <div><dt>Visits</dt><dd>{{ section.settings.location }}</dd></div>
+          {%- endif -%}
+        </dl>
+        <div class="mil-ct__social">
+          {%- if section.settings.instagram != blank -%}
+            <a href="{{ section.settings.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="0.9" fill="currentColor" stroke="none"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.facebook != blank -%}
+            <a href="{{ section.settings.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1z"/></svg>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <ul class="mil-ct__links" role="list">
+        <li>
+          <a href="{{ section.settings.fit_link | default: '/pages/the-millinery-fit-guide' }}">
+            <span class="mil-ct__link-title">Not sure of your size?</span>
+            <span class="mil-meta">The fit guide &rarr;</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ section.settings.book_link | default: '/pages/book-a-fitting' }}">
+            <span class="mil-ct__link-title">Want one made for you?</span>
+            <span class="mil-meta">Book a fitting &rarr;</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+  </div>
+</div>
+
+<style>
+  #shopify-section-{{ section.id }} { --mil-pt: calc({{ section.settings.pad_top }}px * var(--mil-space, 1)); --mil-pb: calc({{ section.settings.pad_bottom }}px * var(--mil-space, 1)); }
+  .mil-ct { padding-block: var(--mil-pt) var(--mil-pb); }
+  .mil-ct__head { max-width: 720px; margin-bottom: clamp(32px, 5vw, 56px); }
+  .mil-ct__tag { color: var(--mil-accent); }
+  .mil-ct__title { margin: 16px 0 12px; font: 500 clamp(40px, 5.4vw, 76px) / 1 var(--mil-serif); letter-spacing: -0.01em; }
+  .mil-ct__intro { font-size: 19px; line-height: 1.55; color: color-mix(in srgb, var(--mil-ink) 80%, transparent); }
+  .mil-ct__intro p { margin: 0; }
+
+  .mil-ct__layout { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+  .mil-ct__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .mil-ct .mil-field { display: flex; flex-direction: column; gap: 6px; }
+  .mil-ct .mil-field--full { grid-column: 1 / -1; }
+  .mil-ct .mil-field > span { font: 400 var(--mil-small) / 1.3 var(--mil-mono); text-transform: uppercase; letter-spacing: 0.08em; }
+  .mil-ct .mil-field em { font-style: normal; color: var(--mil-faint); text-transform: none; letter-spacing: 0; }
+  .mil-ct .mil-field input,
+  .mil-ct .mil-field textarea {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid var(--mil-rule);
+    border-radius: 0;
+    background: #fff;
+    color: var(--mil-ink);
+    font: 400 16px / 1.4 var(--mil-serif);
+  }
+  .mil-ct .mil-field input:focus,
+  .mil-ct .mil-field textarea:focus { outline: 1px solid var(--mil-ink); border-color: var(--mil-ink); }
+  .mil-ct__submit { margin-top: 18px; min-width: 220px; }
+  .mil-ct__errors { margin-bottom: 14px; padding: 10px 12px; border: 1px solid var(--mil-accent); color: var(--mil-accent); }
+  .mil-ct__errors ul { margin: 0; padding-left: 16px; }
+  .mil-ct__done { padding: 28px; border: 3px double var(--mil-ink); }
+  .mil-ct__done-title { margin: 0 0 8px; font: 500 30px / 1.1 var(--mil-serif); }
+  .mil-ct__done p { margin: 0; }
+
+  .mil-ct__side { position: sticky; top: 90px; display: grid; gap: 20px; }
+  .mil-ct__card { padding: 22px 24px; border: 3px double var(--mil-ink); background: var(--mil-paper); }
+  .mil-ct__card-title { margin: 0 0 12px; font-size: 13px; }
+  .mil-ct__rows { margin: 0; }
+  .mil-ct__rows div { display: grid; gap: 2px; padding: 10px 0; border-top: 1px solid var(--mil-rule); }
+  .mil-ct__rows dt { font: 400 var(--mil-small) / 1.3 var(--mil-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--mil-faint); }
+  .mil-ct__rows dd { margin: 0; font-size: 18px; word-break: break-word; }
+  .mil-ct__rows a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .mil-ct__rows a:hover { color: var(--mil-accent); }
+  .mil-ct__social { display: flex; gap: 10px; margin-top: 14px; }
+  .mil-ct__social a { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--mil-ink); border-radius: 50%; color: inherit; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+  .mil-ct__social a:hover { background: var(--mil-accent); border-color: var(--mil-accent); color: var(--mil-paper); }
+
+  .mil-ct__links { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--mil-rule); }
+  .mil-ct__links a { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--mil-rule); color: inherit; text-decoration: none; }
+  .mil-ct__link-title { font: 500 19px / 1.2 var(--mil-serif); }
+  .mil-ct__links .mil-meta { color: var(--mil-accent); white-space: nowrap; }
+  .mil-ct__links a:hover .mil-ct__link-title { color: var(--mil-accent); }
+
+  @media (max-width: 899px) {
+    .mil-ct__layout { grid-template-columns: 1fr; }
+    .mil-ct__grid { grid-template-columns: 1fr; }
+    .mil-ct__side { position: static; }
+    .mil-ct__submit { width: 100%; }
+    .mil-ct__links a { flex-direction: column; gap: 4px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Millinery contact",
+  "settings": [
+    { "type": "text", "id": "tag", "label": "Tag", "default": "Say hello" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Get in touch" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Questions about a hat, an order or sizing? Send a note and we'll get back to you within a day or two.</p>" },
+    { "type": "text", "id": "button", "label": "Send button", "default": "Send message" },
+    { "type": "text", "id": "success_title", "label": "Thank-you headline", "default": "Thank you, your note is on its way." },
+    { "type": "text", "id": "success_text", "label": "Thank-you text", "default": "We'll reply by email soon." },
+    { "type": "header", "content": "Studio card" },
+    { "type": "text", "id": "email", "label": "Email", "default": "themillinerybycl@gmail.com" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "(732) 757-7567" },
+    { "type": "text", "id": "location", "label": "Visits line", "default": "By appointment · Keansburg, NJ" },
+    { "type": "url", "id": "instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "facebook", "label": "Facebook URL" },
+    { "type": "url", "id": "fit_link", "label": "Fit guide link", "info": "Leave empty for /pages/the-millinery-fit-guide" },
+    { "type": "url", "id": "book_link", "label": "Book a fitting link", "info": "Leave empty for /pages/book-a-fitting" },
+    { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 32 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 120 }
+  ],
+  "presets": [{ "name": "Millinery contact" }]
+}
+{% endschema %}

@@ -121,7 +121,7 @@
       </ul>
 
       <div class="mil-header__utils mil-meta">
-        <a href="{{ routes.search_url }}" class="mil-header__search">Search</a>
+        <a href="{{ routes.search_url }}" class="mil-header__search" aria-label="Search"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></a>
         <a href="{{ routes.cart_url }}">Bag (<span data-mil-cart-count>{{ cart.item_count }}</span>)</a>
       </div>
     </nav>
@@ -307,7 +307,8 @@
     transition: background 0.2s, color 0.2s;
   }
   .mil-header__book:hover { background: var(--mil-accent); color: var(--mil-paper); }
-  .mil-header__utils { grid-column: 3; grid-row: 1; justify-self: end; display: flex; gap: 18px; white-space: nowrap; }
+  .mil-header__utils { grid-column: 3; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: 18px; white-space: nowrap; }
+  .mil-header__search { display: inline-flex; line-height: 0; }
   .mil-header__utils a { color: inherit; text-decoration: none; }
   .mil-header__utils a:hover { color: var(--mil-accent); }
 
@@ -365,7 +366,6 @@
     .mil-header__panel { display: none !important; }
   }
   @media (min-width: 900px) and (max-width: 1240px) {
-    .mil-header__search { display: none; }
     .mil-header__menu { gap: 14px; }
     .mil-header__navlink { font-size: 13px; letter-spacing: 0.06em; }
     .mil-header__book { padding: 6px 10px; }
