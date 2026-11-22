@@ -69,8 +69,8 @@
         <p class="mil-pdp__subtitle">{{ section.settings.subtitle }}</p>
       {%- endif -%}
 
-      {%- form 'product', product, id: form_id, class: 'mil-pdp__form' -%}
-        <input type="hidden" name="id" value="{{ current.id }}" data-mil-variant-id>
+      {%- form 'product', product, id: form_id, class: 'mil-pdp__form product-form form', data-type: 'add-to-cart-form' -%}
+        <input type="hidden" name="id" value="{{ current.id }}" class="product-variant-id" data-mil-variant-id>
 
         {%- unless product.has_only_default_variant -%}
           {%- for option in product.options_with_values -%}
@@ -101,11 +101,12 @@
           {%- endfor -%}
         {%- endunless -%}
 
-        <div class="mil-pdp__buy">
+        <div class="mil-pdp__buy product-form__buttons">
           <button
             type="submit"
             name="add"
-            class="mil-btn mil-pdp__add"
+            id="AddToCart-{{ section.id }}"
+            class="mil-btn mil-pdp__add product-form__submit button button--full-width btn add-to-cart"
             data-mil-add
             {% unless current.available %}
               disabled
