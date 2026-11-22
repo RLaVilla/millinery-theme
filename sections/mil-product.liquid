@@ -69,7 +69,7 @@
         <p class="mil-pdp__subtitle">{{ section.settings.subtitle }}</p>
       {%- endif -%}
 
-      {%- form 'product', product, id: form_id, class: 'mil-pdp__form product-form form', data-type: 'add-to-cart-form' -%}
+      {%- form 'product', product, id: form_id, class: 'mil-pdp__form product-form form' -%}
         <input type="hidden" name="id" value="{{ current.id }}" class="product-variant-id" data-mil-variant-id>
 
         {%- unless product.has_only_default_variant -%}
