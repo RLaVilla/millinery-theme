@@ -82,7 +82,8 @@
       "color1": "#7A2E26",
       "color2": "#EAE3D5",
       "color3": "#D3C9B8"
-    }
+    },
+    "favicon": "shopify://shop_images/THEMILLINERY_NEW_BEIGE.jpg"
   },
   "presets": {
     "Default": {
