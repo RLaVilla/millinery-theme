@@ -103,25 +103,24 @@
   .mil-tag {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 5px 12px 5px 22px;
-    position: relative;
+    gap: 8px;
+    padding: 6px 13px 5px 9px;
     border: 1px solid currentColor;
     border-radius: 3px 14px 14px 3px;
-    font: 400 var(--mil-small) / 1.4 var(--mil-mono);
+    font: 400 var(--mil-small) / 1 var(--mil-mono);
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    white-space: nowrap;
   }
+  /* Punched hole: sits in the flex row so it centers with the text */
   .mil-tag::before {
     content: '';
-    position: absolute;
-    left: 8px;
-    top: 50%;
+    flex: none;
     width: 5px;
     height: 5px;
-    margin-top: -2.5px;
     border: 1px solid currentColor;
     border-radius: 50%;
+    transform: translateY(-0.5px);
   }
 
   .mil-link {
