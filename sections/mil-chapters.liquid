@@ -9,6 +9,68 @@
       {%- if section.settings.kicker != blank -%}<small>{{ section.settings.kicker }}</small>{%- endif -%}
     </h2>
   {%- endif -%}
+  {%- if section.settings.layout == 'feature' and section.blocks.size > 0 -%}
+    <div class="mil-feat" data-mil-feat data-auto="{{ section.settings.autoplay }}">
+      <div class="mil-feat__stage mil-linen">
+        {%- for block in section.blocks -%}
+          {%- assign n = forloop.index | prepend: '0' | slice: -2, 2 -%}
+          <figure
+            class="mil-feat__slide{% if forloop.first %} is-on{% endif %}"
+            data-i="{{ forloop.index0 }}"
+            id="MilFeat-{{ section.id }}-{{ forloop.index0 }}"
+            {% unless forloop.first %}aria-hidden="true"{% endunless %}
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.video != blank -%}
+              {{ block.settings.video | video_tag: autoplay: forloop.first, loop: true, muted: true, playsinline: true, controls: false, image_size: '1600x', preload: 'metadata' }}
+            {%- elsif block.settings.image != blank -%}
+              {%- liquid
+                assign load = 'lazy'
+                if forloop.first
+                  assign load = 'eager'
+                endif
+              -%}
+              {{ block.settings.image | image_url: width: 2200 | image_tag: widths: '800, 1200, 1600, 2200', sizes: '100vw', loading: load, alt: block.settings.title }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'mil-steps__ph' }}
+            {%- endif -%}
+            <figcaption class="mil-feat__card">
+              <span class="mil-tag mil-steps__tag">No. {{ n }}</span>
+              <span class="mil-feat__title">{{ block.settings.title }}</span>
+              {%- if block.settings.text != blank -%}<span class="mil-feat__text">{{ block.settings.text }}</span>{%- endif -%}
+              {%- if block.settings.link != blank -%}<a class="mil-link mil-feat__more" href="{{ block.settings.link }}">Learn more</a>{%- endif -%}
+            </figcaption>
+          </figure>
+        {%- endfor -%}
+      </div>
+
+      <div class="mil-feat__thumbs" role="tablist" aria-label="{{ section.settings.heading | escape }}">
+        {%- for block in section.blocks -%}
+          {%- assign n = forloop.index | prepend: '0' | slice: -2, 2 -%}
+          <button
+            type="button"
+            class="mil-feat__thumb{% if forloop.first %} is-on{% endif %}"
+            role="tab"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            aria-controls="MilFeat-{{ section.id }}-{{ forloop.index0 }}"
+            data-i="{{ forloop.index0 }}"
+          >
+            <span class="mil-feat__thumb-img mil-linen">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: '', sizes: '200px' }}
+              {%- elsif block.settings.video != blank -%}
+                {{ block.settings.video.preview_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: '' }}
+              {%- endif -%}
+            </span>
+            <span class="mil-feat__thumb-label">
+              <span class="mil-meta">No. {{ n }}</span>
+              <span class="mil-feat__thumb-title">{{ block.settings.title }}</span>
+            </span>
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- else -%}
   <ol class="mil-steps__list" role="list">
     {%- for block in section.blocks -%}
       {%- liquid
@@ -50,6 +112,7 @@
       </li>
     {%- endfor -%}
   </ol>
+  {%- endif -%}
 </div>
 
 <style>
@@ -91,7 +154,135 @@
     .mil-steps__list { grid-template-columns: 1fr; gap: 40px; }
     .mil-steps__media { aspect-ratio: 4 / 3; }
   }
+  /* Feature layout: big stage + numbered thumbnails */
+  .mil-feat__stage { position: relative; aspect-ratio: 16 / 9; max-height: 82vh; width: 100%; overflow: hidden; }
+  .mil-feat__slide { position: absolute; inset: 0; margin: 0; opacity: 0; visibility: hidden; transition: opacity 0.6s ease, visibility 0.6s; }
+  .mil-feat__slide.is-on { opacity: 1; visibility: visible; }
+  .mil-feat__slide > img,
+  .mil-feat__slide > video,
+  .mil-feat__slide > .mil-steps__ph { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mil-feat__slide > img { mix-blend-mode: normal; transform: scale(1.02); transition: transform 6s ease; }
+  .mil-feat__slide.is-on > img { transform: scale(1); }
+  .mil-feat__card {
+    position: absolute;
+    left: clamp(14px, 2.4vw, 32px);
+    bottom: clamp(14px, 2.4vw, 32px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    max-width: min(420px, calc(100% - 28px));
+    padding: 18px 22px 18px;
+    background: color-mix(in srgb, var(--mil-paper) 94%, transparent);
+    border: 3px double var(--mil-ink);
+    transform: translateY(8px);
+    opacity: 0;
+    transition: opacity 0.5s 0.15s ease, transform 0.5s 0.15s ease;
+  }
+  .mil-feat__slide.is-on .mil-feat__card { opacity: 1; transform: none; }
+  .mil-feat__title { font: 500 clamp(24px, 2.6vw, 34px) / 1.1 var(--mil-serif); }
+  .mil-feat__text { font-size: 16px; line-height: 1.5; color: color-mix(in srgb, var(--mil-ink) 78%, transparent); }
+  .mil-feat__more { font-size: 15px; }
+
+  .mil-feat__thumbs {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: clamp(10px, 1.6vw, 20px);
+    margin-top: 14px;
+  }
+  .mil-feat__thumb {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+    padding: 6px;
+    border: 1px solid var(--mil-rule);
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .mil-feat__thumb:hover { border-color: var(--mil-faint); }
+  .mil-feat__thumb.is-on { border-color: var(--mil-ink); background: var(--mil-tile); }
+  .mil-feat__thumb-img { display: block; aspect-ratio: 1; overflow: hidden; }
+  .mil-feat__thumb-img img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: normal; opacity: 0.55; transition: opacity 0.25s; }
+  .mil-feat__thumb.is-on .mil-feat__thumb-img img,
+  .mil-feat__thumb:hover .mil-feat__thumb-img img { opacity: 1; }
+  .mil-feat__thumb-label { display: flex; flex-direction: column; gap: 3px; }
+  .mil-feat__thumb-label .mil-meta { color: var(--mil-accent); }
+  .mil-feat__thumb-title { font: 500 18px / 1.15 var(--mil-serif); }
+  .mil-feat__thumb:focus-visible { outline: 1px solid var(--mil-ink); outline-offset: 2px; }
+
+  @media (max-width: 899px) {
+    .mil-feat { margin-inline: calc(var(--mil-gutter) * -1); }
+    .mil-feat__stage { aspect-ratio: 4 / 5; max-height: none; }
+    .mil-feat__card { left: 12px; right: 12px; bottom: 12px; max-width: none; padding: 14px 16px; }
+    .mil-feat__thumbs {
+      grid-auto-columns: 62%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      padding-inline: var(--mil-gutter);
+    }
+    .mil-feat__thumb { scroll-snap-align: start; grid-template-columns: 56px minmax(0, 1fr); }
+    .mil-feat__thumb-title { font-size: 16px; }
+  }
 </style>
+
+<script>
+  (() => {
+    const root = document.currentScript.previousElementSibling.previousElementSibling;
+    const feat = root?.querySelector?.('[data-mil-feat]');
+    if (!feat || feat.dataset.milReady) return;
+    feat.dataset.milReady = '1';
+    const slides = [...feat.querySelectorAll('.mil-feat__slide')];
+    const thumbs = [...feat.querySelectorAll('.mil-feat__thumb')];
+    let cur = 0;
+    let timer = null;
+    const show = (i, focus) => {
+      cur = (i + slides.length) % slides.length;
+      slides.forEach((s, k) => {
+        const on = k === cur;
+        s.classList.toggle('is-on', on);
+        s.toggleAttribute('aria-hidden', !on);
+        const v = s.querySelector('video');
+        if (v) on ? v.play().catch(() => {}) : v.pause();
+        if (on) s.querySelector('img')?.setAttribute('loading', 'eager');
+      });
+      thumbs.forEach((t, k) => {
+        t.classList.toggle('is-on', k === cur);
+        t.setAttribute('aria-selected', String(k === cur));
+      });
+      if (focus) thumbs[cur].focus();
+      thumbs[cur].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+    };
+    thumbs.forEach((t, k) => t.addEventListener('click', () => { show(k); restart(); }));
+    feat.addEventListener('keydown', (e) => {
+      if (!e.target.closest('.mil-feat__thumb')) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(cur + 1, true); restart(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(cur - 1, true); restart(); }
+    });
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const auto = feat.dataset.auto === 'true' && !reduce && slides.length > 1;
+    function restart() {
+      clearInterval(timer);
+      if (auto) timer = setInterval(() => show(cur + 1), 6500);
+    }
+    if (auto) {
+      feat.addEventListener('pointerenter', () => clearInterval(timer));
+      feat.addEventListener('pointerleave', restart);
+      feat.addEventListener('focusin', () => clearInterval(timer));
+      new IntersectionObserver(([e]) => (e.isIntersecting ? restart() : clearInterval(timer))).observe(feat);
+    }
+    // In the theme editor, selecting a block shows its slide
+    document.addEventListener('shopify:block:select', (e) => {
+      const i = slides.findIndex((s) => s.contains(e.target) || s === e.target);
+      if (i > -1) { clearInterval(timer); show(i); }
+    });
+  })();
+</script>
 
 {% schema %}
 {
@@ -99,6 +290,17 @@
   "max_blocks": 6,
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "How a hat is made" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "feature",
+      "options": [
+        { "value": "feature", "label": "Feature: big photo + numbered thumbnails" },
+        { "value": "grid", "label": "Grid: steps side by side" }
+      ]
+    },
+    { "type": "checkbox", "id": "autoplay", "label": "Auto-advance (feature layout)", "default": true },
     { "type": "text", "id": "kicker", "label": "Small note beside heading", "default": "By hand, in Keansburg" },
     { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 64 },
     { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 120 }
