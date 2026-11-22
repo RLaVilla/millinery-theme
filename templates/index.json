@@ -22,7 +22,7 @@
         "btn1_link": "/collections/all",
         "btn2_label": "Book a fitting",
         "btn2_link": "",
-        "pad_bottom": 80
+        "pad_bottom": 96
       }
     },
     "process": {
@@ -33,7 +33,7 @@
           "settings": {
             "title": "The fitting",
             "text": "We measure your head and talk through how you’ll wear it.",
-            "image": "shopify://shop_images/8C016386-FEAD-4D99-8F4D-D276B83A30C0.jpg",
+            "image": "shopify://shop_images/DE159E0F-2564-4088-9AF7-2AAC5009035C-modified.jpg",
             "link": ""
           }
         },
@@ -42,7 +42,7 @@
           "settings": {
             "title": "Choosing the felt",
             "text": "Pick the felt, color and weight that suit you.",
-            "image": "shopify://shop_images/A0443053-1584-48A0-9A87-15A8EF3B9DB6.jpg",
+            "image": "shopify://shop_images/A0443053-1584-48A0-9A87-15A8EF3B9DB6-modified.jpg",
             "link": ""
           }
         },
@@ -67,7 +67,7 @@
         "autoplay": true,
         "kicker": "By hand, in Keansburg",
         "pad_top": 0,
-        "pad_bottom": 96
+        "pad_bottom": 120
       }
     },
     "current": {
@@ -82,7 +82,7 @@
         "button": "Shop now",
         "align": "left",
         "pad_top": 0,
-        "pad_bottom": 96
+        "pad_bottom": 120
       }
     },
     "chopper": {
@@ -100,7 +100,7 @@
         "btn2_label": "",
         "btn2_link": "",
         "margin_top": 0,
-        "margin_bottom": 96
+        "margin_bottom": 120
       }
     },
     "collections": {
@@ -111,7 +111,7 @@
         "columns": 3,
         "limit": 3,
         "pad_top": 0,
-        "pad_bottom": 96
+        "pad_bottom": 120
       }
     },
     "fitting": {
@@ -166,7 +166,7 @@
         "cta2_link": "shopify://collections/all",
         "note": "Custom hats from $600 · Ready in 4–6 weeks",
         "pad_top": 0,
-        "pad_bottom": 96
+        "pad_bottom": 120
       }
     }
   },
