@@ -5,6 +5,9 @@
 {% endcomment %}
 {%- liquid
   assign limit = section.settings.limit
+  if template.name == 'list-collections'
+    assign limit = 100
+  endif
 -%}
 <div class="mil-cols mil-section mil-wrap" style="--mil-cc: {{ section.settings.columns }};">
   {%- if section.settings.heading != blank -%}
