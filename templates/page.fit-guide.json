@@ -1,0 +1,131 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "mil-fit-guide",
+      "blocks": {
+        "st1": {
+          "type": "step",
+          "settings": {
+            "text": "Use a soft measuring tape."
+          }
+        },
+        "st2": {
+          "type": "step",
+          "settings": {
+            "text": "Wrap it around your head where a hat would naturally sit, about 2.5 cm (1 in) above your eyebrows and ears."
+          }
+        },
+        "st3": {
+          "type": "step",
+          "settings": {
+            "text": "Keep the tape level all the way around, snug but not too tight."
+          }
+        },
+        "st4": {
+          "type": "step",
+          "settings": {
+            "text": "Note the measurement in centimeters."
+          }
+        },
+        "st5": {
+          "type": "step",
+          "settings": {
+            "text": "Find your size in the chart."
+          }
+        },
+        "sz1": {
+          "type": "size",
+          "settings": {
+            "cm": "54.0",
+            "size": "6 3/4"
+          }
+        },
+        "sz2": {
+          "type": "size",
+          "settings": {
+            "cm": "55.6",
+            "size": "6 7/8"
+          }
+        },
+        "sz3": {
+          "type": "size",
+          "settings": {
+            "cm": "55.9",
+            "size": "7"
+          }
+        },
+        "sz4": {
+          "type": "size",
+          "settings": {
+            "cm": "57.2",
+            "size": "7 1/8"
+          }
+        },
+        "sz5": {
+          "type": "size",
+          "settings": {
+            "cm": "57.8",
+            "size": "7 1/4"
+          }
+        },
+        "sz6": {
+          "type": "size",
+          "settings": {
+            "cm": "58.7",
+            "size": "7 3/8"
+          }
+        },
+        "sz7": {
+          "type": "size",
+          "settings": {
+            "cm": "59.7",
+            "size": "7 1/2"
+          }
+        },
+        "sz8": {
+          "type": "size",
+          "settings": {
+            "cm": "60.3",
+            "size": "7 5/8"
+          }
+        },
+        "sz9": {
+          "type": "size",
+          "settings": {
+            "cm": "61.0",
+            "size": "7 3/4"
+          }
+        }
+      },
+      "block_order": [
+        "st1",
+        "st2",
+        "st3",
+        "st4",
+        "st5",
+        "sz1",
+        "sz2",
+        "sz3",
+        "sz4",
+        "sz5",
+        "sz6",
+        "sz7",
+        "sz8",
+        "sz9"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
