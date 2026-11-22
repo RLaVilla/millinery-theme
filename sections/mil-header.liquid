@@ -19,6 +19,7 @@
   endcapture
 -%}
 <header class="mil-header mil-wrap" data-mil-header>
+  {%- if section.settings.show_strip -%}
   <div class="mil-header__strip mil-meta">
     <span data-mil-status data-tz="{{ section.settings.timezone }}" data-hours='{{ hours_json | strip }}'>
       {{- section.settings.city -}}
@@ -32,6 +33,7 @@
       <span></span>
     {%- endif -%}
   </div>
+  {%- endif -%}
 
   <a href="{{ routes.root_url }}" class="mil-header__logo" aria-label="{{ shop.name }}">
     {%- if section.settings.logo != blank -%}
@@ -64,6 +66,17 @@
         <span data-mil-toggle-label>Menu</span>
       </button>
 
+
+      <a href="{{ routes.root_url }}" class="mil-header__mlogo" aria-label="{{ shop.name }}">
+        {%- if section.settings.logo != blank -%}
+          {{- section.settings.logo | image_url: width: 300 | image_tag: alt: shop.name -}}
+        {%- elsif section.settings.brand_logo != 'none' -%}
+          {%- assign mlogo = 'mil-logo-' | append: section.settings.brand_logo | append: '.png' -%}
+          <img src="{{ mlogo | asset_url }}" alt="{{ shop.name | escape }}" width="860" height="624">
+        {%- else -%}
+          <span class="mil-stamp">{{ section.settings.wordmark | default: shop.name }}</span>
+        {%- endif -%}
+      </a>
       {%- if section.settings.book_label != blank -%}
         <a class="mil-header__book mil-meta" href="{{ section.settings.book_link | default: '/pages/book-a-fitting' }}">
           {{- section.settings.book_label -}}
@@ -295,6 +308,8 @@
   [aria-expanded='true'] .mil-header__burger::before { transform: translateY(5px) rotate(45deg); }
   [aria-expanded='true'] .mil-header__burger::after { transform: translateY(-5px) rotate(-45deg); }
 
+  .mil-header__mlogo { display: none; }
+
   .mil-header__panel {
     position: fixed;
     inset: var(--mil-panel-top, 120px) 0 0;
@@ -320,15 +335,25 @@
   }
 
   @media (max-width: 899px) {
-    .mil-header__strip { grid-template-columns: 1fr auto; }
-    .mil-header__note { display: none; }
-    .mil-header__logo { padding-block: 18px 22px; }
-    .mil-header__band { grid-template-columns: auto 1fr auto; gap: 12px; }
-    .mil-header__toggle { display: inline-flex; grid-column: 1; grid-row: 1; }
+    .mil-header__strip { display: none; }
+    .mil-header__logo { display: none; }
+    .mil-header__band-slot { min-height: var(--mil-band-h, 56px); }
+    .mil-header__band {
+      grid-template-columns: 1fr auto 1fr;
+      gap: 12px;
+      padding-block: 8px;
+      border-top: 0;
+      border-bottom: 1px solid var(--mil-rule);
+    }
+    .mil-header__band.is-stuck { box-shadow: none; border-bottom-color: var(--mil-rule); }
+    .mil-header__toggle { display: inline-flex; grid-column: 1; grid-row: 1; justify-self: start; }
+    .mil-header__mlogo { display: block; grid-column: 2; grid-row: 1; justify-self: center; line-height: 0; color: var(--mil-ink); text-decoration: none; }
+    .mil-header__mlogo img { height: 46px; width: auto; }
+    .mil-header__mlogo .mil-stamp { font-size: 15px; line-height: 1.2; }
     .mil-header__menu { display: none; }
-    .mil-header__book { grid-column: 2; justify-self: center; padding: 6px 10px; }
+    .mil-header__book { display: none; }
     .mil-header__search { display: none; }
-    .mil-header__utils { grid-column: 3; }
+    .mil-header__utils { grid-column: 3; grid-row: 1; justify-self: end; }
   }
 </style>
 
@@ -454,6 +479,7 @@
     { "type": "text", "id": "book_label", "label": "Booking button", "default": "Book a fitting" },
     { "type": "url", "id": "book_link", "label": "Booking button link", "info": "Leave empty to use /pages/book-a-fitting" },
     { "type": "header", "content": "Top strip" },
+    { "type": "checkbox", "id": "show_strip", "label": "Show top strip (desktop)", "default": false },
     { "type": "text", "id": "city", "label": "Location", "default": "Keansburg, NJ" },
     { "type": "text", "id": "note", "label": "Center note", "default": "Custom hats, made by hand" },
     { "type": "text", "id": "phone", "label": "Phone", "default": "(732) 757-7567" },
