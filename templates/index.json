@@ -122,15 +122,15 @@
         "heading": "How a hat is made",
         "kicker": "By hand, in Keansburg",
         "pad_top": 0,
-        "pad_bottom": 144
+        "pad_bottom": 120
       }
     }
   },
   "order": [
     "hero",
+    "process",
     "shop",
     "collections",
-    "fitting",
-    "process"
+    "fitting"
   ]
 }
