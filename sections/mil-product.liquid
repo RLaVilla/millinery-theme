@@ -116,6 +116,12 @@
         </div>
       {%- endform -%}
 
+      {%- for block in section.blocks -%}
+        {%- if block.type == '@app' -%}
+          <div class="mil-pdp__app">{% render block %}</div>
+        {%- endif -%}
+      {%- endfor -%}
+
       {%- if section.settings.custom_title != blank -%}
         <div class="mil-pdp__custom">
           <span class="mil-tag">{{ section.settings.custom_tag }}</span>
@@ -136,6 +142,7 @@
           </details>
         {%- endif -%}
         {%- for block in section.blocks -%}
+          {%- if block.type != 'accordion' -%}{%- continue -%}{%- endif -%}
           <details class="mil-faq" {{ block.shopify_attributes }} {% if block.settings.is_size_guide %}id="SizeGuide-{{ section.id }}" data-mil-guide{% endif %}>
             <summary>{{ block.settings.title }}</summary>
             <div class="mil-faq__a rte">{{ block.settings.content }}</div>
@@ -204,6 +211,7 @@
   .mil-pdp__add[disabled] { opacity: 0.45; cursor: not-allowed; }
   .mil-pdp__buy .shopify-payment-button__button { min-height: 52px; }
 
+  .mil-pdp__app { margin-top: 18px; }
   .mil-pdp__custom { margin: 28px 0; padding: 18px 20px; border: 3px double var(--mil-ink); }
   .mil-pdp__custom .mil-tag { color: var(--mil-accent); }
   .mil-pdp__custom-title { margin: 12px 0 4px; font: 500 22px / 1.2 var(--mil-serif); }
@@ -334,6 +342,7 @@
     { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 120 }
   ],
   "blocks": [
+    { "type": "@app" },
     {
       "type": "accordion",
       "name": "Details accordion",
