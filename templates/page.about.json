@@ -15,13 +15,14 @@
         "flip": true,
         "image": "shopify://shop_images/580A3703.jpg",
         "tag": "Our story",
-        "title": "Made by hand in Keansburg.",
+        "title": "Who we are",
         "text": "<p>Carly’s story goes here — how she started making hats, and what goes into every one.</p>",
         "card_title": "",
         "cta1_label": "Reserve a fitting",
         "cta2_label": "Shop hats",
         "cta2_link": "/collections/all",
-        "note": ""
+        "note": "",
+        "use_page_content": true
       },
       "blocks": {},
       "block_order": []

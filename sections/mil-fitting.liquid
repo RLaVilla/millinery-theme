@@ -26,7 +26,9 @@
       <span class="mil-tag mil-fit__tag">{{ section.settings.tag }}</span>
     {%- endif -%}
     <h1 class="mil-fit__title">{{ section.settings.title }}</h1>
-    {%- if section.settings.text != blank -%}
+    {%- if section.settings.use_page_content and page.content != blank -%}
+      <div class="mil-fit__text rte">{{ page.content }}</div>
+    {%- elsif section.settings.text != blank -%}
       <div class="mil-fit__text">{{ section.settings.text }}</div>
     {%- endif -%}
 
@@ -136,6 +138,7 @@
     { "type": "checkbox", "id": "flip", "label": "Image on the right", "default": false },
     { "type": "text", "id": "tag", "label": "Tag", "default": "Custom & made to measure" },
     { "type": "text", "id": "title", "label": "Headline", "default": "Made to your head." },
+    { "type": "checkbox", "id": "use_page_content", "label": "Use the page's own text", "default": false, "info": "On pages: shows the text written in Online Store → Pages instead of the text below." },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Every hat starts with a fitting in our Keansburg shop. We measure, pick the felt and shape it by hand — so it fits like it was always yours.</p>" },
     { "type": "text", "id": "card_title", "label": "Spec card title", "default": "Your hat" },
     { "type": "text", "id": "cta1_label", "label": "Primary button", "default": "Book a fitting" },
