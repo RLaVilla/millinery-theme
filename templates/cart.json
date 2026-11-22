@@ -11,7 +11,9 @@
   "sections": {
     "main": {
       "type": "mil-cart",
-      "settings": {}
+      "settings": {
+        "pad_top": 24
+      }
     }
   },
   "order": [

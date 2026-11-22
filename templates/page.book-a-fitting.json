@@ -37,7 +37,8 @@
         "p3"
       ],
       "settings": {
-        "image": "shopify://shop_images/IMG_2154.jpg"
+        "image": "shopify://shop_images/IMG_2154.jpg",
+        "pad_top": 24
       }
     },
     "process": {
