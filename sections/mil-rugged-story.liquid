@@ -1,0 +1,99 @@
+{% comment %}
+  Chopper Corner — story / spec block. Photo beside a big headline, short copy
+  and a stamped spec list (blocks). Image side switchable.
+{% endcomment %}
+<div class="mil-rgs mil-rg{% if section.settings.flip %} is-flipped{% endif %}">
+  <div class="mil-wrap mil-rgs__inner">
+    <div class="mil-rgs__media">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1600 | image_tag: widths: '600, 900, 1200, 1600', sizes: '(min-width: 900px) 50vw, 100vw', loading: 'lazy', alt: section.settings.heading }}
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'mil-rgs__ph' }}
+      {%- endif -%}
+    </div>
+    <div class="mil-rgs__copy">
+      {%- if section.settings.kicker != blank -%}<span class="mil-rg__kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+      <h2 class="mil-rgs__title mil-rg__display">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<div class="mil-rgs__text">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <ul class="mil-rgs__specs" role="list">
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              <span class="mil-rgs__spec-label mil-rg__display">{{ block.settings.label }}</span>
+              <span class="mil-rgs__spec-text">{{ block.settings.text }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+      {%- if section.settings.btn_label != blank -%}
+        <a class="mil-rg__btn mil-rgs__btn" href="{{ section.settings.btn_link | default: '#chopper-gear' }}">{{ section.settings.btn_label }} &rarr;</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .mil-rgs__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 88px);
+    align-items: center;
+    padding-block: {{ section.settings.pad_top }}px {{ section.settings.pad_bottom }}px;
+  }
+  .mil-rgs.is-flipped .mil-rgs__media { order: 2; }
+  .mil-rgs__media { aspect-ratio: 4 / 5; overflow: hidden; outline: 1px solid var(--rg-line); outline-offset: -1px; background: var(--rg-steel); }
+  .mil-rgs__media img,
+  .mil-rgs__ph { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(0.3) contrast(1.08) sepia(0.12); }
+  .mil-rgs__ph { fill: rgba(236, 229, 216, 0.18); }
+  .mil-rgs__title { margin: 14px 0 18px; font-size: clamp(48px, 6vw, 96px); }
+  .mil-rgs__text { font-size: 18px; line-height: 1.55; color: var(--rg-dim); max-width: 44ch; }
+  .mil-rgs__text p { margin: 0 0 12px; }
+  .mil-rgs__specs { margin: 26px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--rg-line); }
+  .mil-rgs__specs li { display: grid; grid-template-columns: minmax(110px, 0.6fr) 1fr; gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--rg-line); }
+  .mil-rgs__spec-label { font-size: 24px; color: var(--rg-brass); }
+  .mil-rgs__spec-text { font-size: 16px; color: var(--rg-ink); }
+  .mil-rgs__btn { margin-top: 28px; }
+  @media (max-width: 899px) {
+    .mil-rgs__inner { grid-template-columns: 1fr; }
+    .mil-rgs.is-flipped .mil-rgs__media { order: 0; }
+    .mil-rgs__media { aspect-ratio: 4 / 4.4; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Rugged story",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    { "type": "checkbox", "id": "flip", "label": "Photo on the right", "default": false },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Built in Keansburg" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Made for the miles" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Tell the Chopper Corner story here: who it's for, what's made, and why it holds up on the road.</p>" },
+    { "type": "text", "id": "btn_label", "label": "Button", "default": "Shop the gear" },
+    { "type": "url", "id": "btn_link", "label": "Button link", "info": "Leave empty to jump to the gear on this page." },
+    { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 96 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 96 }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Spec",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Built tough" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Describe it here." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rugged story",
+      "blocks": [
+        { "type": "spec", "settings": { "label": "Built tough", "text": "Describe it here." } },
+        { "type": "spec", "settings": { "label": "Road tested", "text": "Describe it here." } },
+        { "type": "spec", "settings": { "label": "Made here", "text": "Describe it here." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -150,12 +150,26 @@
         "pad_top": 0,
         "pad_bottom": 120
       }
+    },
+    "chopper": {
+      "type": "mil-rugged-hero",
+      "settings": {
+        "size": "banner",
+        "kicker": "New · Garage side",
+        "title": "Chopper Corner",
+        "text": "<p>Gear for the road, from the rougher side of the shop.</p>",
+        "btn1_label": "Enter Chopper Corner",
+        "shade": 40,
+        "margin_top": 0,
+        "margin_bottom": 120
+      }
     }
   },
   "order": [
     "hero",
     "process",
     "current",
+    "chopper",
     "collections",
     "fitting"
   ]

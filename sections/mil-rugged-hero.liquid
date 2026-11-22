@@ -1,0 +1,133 @@
+{% comment %}
+  Chopper Corner — rugged hero / banner. Full-bleed photo, dark grade, huge
+  condensed headline, kicker, line of text and buttons. "Banner" size for the
+  homepage, "Full" for the Chopper Corner page.
+{% endcomment %}
+<div class="mil-rgh mil-rg mil-rgh--{{ section.settings.size }}" style="margin-top: {{ section.settings.margin_top }}px; margin-bottom: {{ section.settings.margin_bottom }}px;">
+  <div class="mil-rgh__media" style="--rg-focus: {{ section.settings.focus }};">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 2400
+        | image_tag:
+          widths: '800, 1200, 1600, 2000, 2400',
+          sizes: '100vw',
+          loading: 'lazy',
+          alt: section.settings.image.alt | default: section.settings.title
+      }}
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'mil-rgh__ph' }}
+    {%- endif -%}
+  </div>
+  <div class="mil-rgh__shade" style="--rg-shade: {{ section.settings.shade | divided_by: 100.0 }};"></div>
+
+  <div class="mil-rgh__content mil-wrap">
+    {%- if section.settings.kicker != blank -%}
+      <span class="mil-rg__kicker">{{ section.settings.kicker }}</span>
+    {%- endif -%}
+    {%- if section.settings.size == 'full' -%}
+      <h1 class="mil-rgh__title mil-rg__display">{{ section.settings.title }}</h1>
+    {%- else -%}
+      <h2 class="mil-rgh__title mil-rg__display">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="mil-rgh__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+    <div class="mil-rgh__ctas">
+      {%- if section.settings.btn1_label != blank -%}
+        {%- liquid
+          assign btn1_fallback = '/pages/chopper-corner'
+          if template.suffix == 'chopper-corner'
+            assign btn1_fallback = '#chopper-gear'
+          endif
+        -%}
+        <a class="mil-rg__btn" href="{{ section.settings.btn1_link | default: btn1_fallback }}">{{ section.settings.btn1_label }} &rarr;</a>
+      {%- endif -%}
+      {%- if section.settings.btn2_label != blank -%}
+        <a class="mil-rg__btn mil-rg__btn--ghost" href="{{ section.settings.btn2_link | default: '#chopper-gear' }}">{{ section.settings.btn2_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .mil-rgh { position: relative; display: grid; overflow: hidden; isolation: isolate; }
+  .mil-rgh--full { min-height: min(92vh, 900px); }
+  .mil-rgh--banner { min-height: min(70vh, 640px); }
+  .mil-rgh__media, .mil-rgh__shade, .mil-rgh__content { grid-area: 1 / 1; }
+  .mil-rgh__media { position: relative; z-index: 0; }
+  .mil-rgh__media img,
+  .mil-rgh__ph { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--rg-focus, center); filter: grayscale(0.35) contrast(1.1) brightness(0.9) sepia(0.15); }
+  .mil-rgh__ph { fill: rgba(236, 229, 216, 0.2); background: var(--rg-steel); }
+  .mil-rgh__shade {
+    z-index: 1;
+    background:
+      linear-gradient(90deg, rgba(10, 10, 10, calc(var(--rg-shade) + 0.25)) 0%, rgba(10, 10, 10, var(--rg-shade)) 45%, rgba(10, 10, 10, 0.1) 100%),
+      linear-gradient(0deg, rgba(10, 10, 10, 0.75) 0%, transparent 45%);
+  }
+  .mil-rgh__content {
+    z-index: 2;
+    align-self: end;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    max-width: 900px;
+    padding-block: clamp(36px, 7vw, 96px);
+  }
+  .mil-rgh__title { margin: 0; font-size: clamp(64px, 12vw, 180px); color: var(--rg-ink); text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); }
+  .mil-rgh--banner .mil-rgh__title { font-size: clamp(54px, 9vw, 140px); }
+  .mil-rgh__text { max-width: 46ch; font-size: 19px; line-height: 1.5; color: var(--rg-ink); }
+  .mil-rgh__text p { margin: 0; }
+  .mil-rgh__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+  @media (max-width: 899px) {
+    .mil-rgh--full { min-height: 88vh; }
+    .mil-rgh--banner { min-height: 78vh; }
+    .mil-rgh__text { font-size: 17px; }
+    .mil-rgh__ctas { width: 100%; }
+    .mil-rgh__ctas .mil-rg__btn { flex: 1; padding-inline: 12px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Rugged hero",
+  "settings": [
+    {
+      "type": "select",
+      "id": "size",
+      "label": "Size",
+      "default": "banner",
+      "options": [
+        { "value": "banner", "label": "Banner (homepage)" },
+        { "value": "full", "label": "Full screen (page top)" }
+      ]
+    },
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    {
+      "type": "select",
+      "id": "focus",
+      "label": "Photo focus",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" },
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    },
+    { "type": "range", "id": "shade", "label": "Darken photo", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 40 },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The Millinery · Garage side" },
+    { "type": "text", "id": "title", "label": "Headline", "default": "Chopper Corner" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Gear for the road. Built tough, worn hard, made to last the miles.</p>" },
+    { "type": "text", "id": "btn1_label", "label": "Main button", "default": "Enter Chopper Corner" },
+    { "type": "url", "id": "btn1_link", "label": "Main button link", "info": "Leave empty for /pages/chopper-corner" },
+    { "type": "text", "id": "btn2_label", "label": "Second button" },
+    { "type": "url", "id": "btn2_link", "label": "Second button link", "info": "Leave empty to jump to the gear on the page." },
+    { "type": "range", "id": "margin_top", "label": "Space above", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_bottom", "label": "Space below", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 0 }
+  ],
+  "presets": [{ "name": "Rugged hero" }]
+}
+{% endschema %}

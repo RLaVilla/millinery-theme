@@ -1,0 +1,72 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "mil-rugged-hero",
+      "settings": {
+        "size": "full",
+        "kicker": "The Millinery · Garage side",
+        "title": "Chopper Corner",
+        "text": "<p>Gear for the road. Built tough, worn hard, made to last the miles.</p>",
+        "btn1_label": "Shop the gear",
+        "shade": 40
+      }
+    },
+    "gear": {
+      "type": "mil-rugged-grid",
+      "settings": {
+        "kicker": "Shop the corner",
+        "heading": "The Gear",
+        "columns": 4,
+        "limit": 8
+      }
+    },
+    "story": {
+      "type": "mil-rugged-story",
+      "blocks": {
+        "s1": {
+          "type": "spec",
+          "settings": {
+            "label": "Built tough",
+            "text": "Describe it here."
+          }
+        },
+        "s2": {
+          "type": "spec",
+          "settings": {
+            "label": "Road tested",
+            "text": "Describe it here."
+          }
+        },
+        "s3": {
+          "type": "spec",
+          "settings": {
+            "label": "Made here",
+            "text": "Describe it here."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "pad_top": 0
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "gear",
+    "story"
+  ]
+}
