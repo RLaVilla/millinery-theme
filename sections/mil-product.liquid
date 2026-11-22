@@ -53,7 +53,7 @@
     </ol>
   </div>
 
-  <div class="mil-pdp__info" id="book-form">
+  <div class="mil-pdp__info">
     <div class="mil-pdp__sticky">
       {%- if product.vendor != blank and section.settings.show_vendor -%}
         <p class="mil-meta mil-pdp__vendor">{{ product.vendor }}</p>
@@ -63,11 +63,8 @@
         {%- if current.compare_at_price > current.price -%}
           <s>{{ current.compare_at_price | money }}</s>
         {%- endif -%}
-        <span>{% if current.price == 0 and section.settings.free_label != blank %}{{ section.settings.free_label }}{% else %}{{ current.price | money }}{% endif %}</span>
+        <span>{{ current.price | money }}</span>
       </p>
-      {%- if section.settings.subtitle != blank -%}
-        <p class="mil-pdp__subtitle">{{ section.settings.subtitle }}</p>
-      {%- endif -%}
 
       {%- form 'product', product, id: form_id, class: 'mil-pdp__form' -%}
         <input type="hidden" name="id" value="{{ current.id }}" data-mil-variant-id>
@@ -131,7 +128,7 @@
           <p class="mil-pdp__custom-title">{{ section.settings.custom_title }}</p>
           <p class="mil-pdp__custom-text">{{ section.settings.custom_text }}</p>
           <p class="mil-pdp__custom-links">
-            <a class="mil-link" href="{{ section.settings.custom_link | default: '/products/private-hat-fitting' }}">Reserve a fitting</a>
+            <a class="mil-link" href="{{ section.settings.custom_link | default: '/pages/book-a-fitting' }}">Reserve a fitting</a>
             {%- if section.settings.phone != blank %} · <a class="mil-link" href="tel:{{ phone_digits }}">Call {{ section.settings.phone }}</a>{%- endif -%}
           </p>
         </div>
@@ -188,8 +185,6 @@
   .mil-pdp__vendor { margin: 0 0 8px; color: var(--mil-faint); }
   .mil-pdp__title { margin: 0 0 10px; font: 500 clamp(34px, 4vw, 54px) / 1.05 var(--mil-serif); text-transform: none; letter-spacing: -0.01em; }
   .mil-pdp__price { margin: 0 0 26px; font-size: 14px; }
-  .mil-pdp__subtitle { margin: -14px 0 24px; font-size: 18px; line-height: 1.5; color: color-mix(in srgb, var(--mil-ink) 80%, transparent); }
-  .mil-pdp__info { scroll-margin-top: 90px; }
   .mil-pdp__price s { margin-right: 10px; color: var(--mil-faint); }
 
   .mil-pdp__option { margin: 0 0 20px; padding: 0; border: 0; }
@@ -335,15 +330,13 @@
   "settings": [
     { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": false },
     { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show Buy it now / Shop Pay button", "default": true },
-    { "type": "text", "id": "free_label", "label": "Label when price is $0", "default": "Complimentary" },
-    { "type": "textarea", "id": "subtitle", "label": "Line under price", "info": "Optional, e.g. for the fitting: 'Private, one on one, about 30 minutes.'" },
     { "type": "text", "id": "description_label", "label": "Description heading", "default": "The story" },
     { "type": "text", "id": "size_guide_label", "label": "Size guide link text", "default": "Size guide", "info": "Shows next to a Size option and opens the accordion marked as size guide." },
     { "type": "header", "content": "Custom nudge" },
     { "type": "text", "id": "custom_tag", "label": "Tag", "default": "Made to measure" },
     { "type": "text", "id": "custom_title", "label": "Title", "default": "Want it made for your head?" },
     { "type": "text", "id": "custom_text", "label": "Text", "default": "Reserve a private fitting at the Keansburg studio and we'll make one to your size." },
-    { "type": "url", "id": "custom_link", "label": "Link", "info": "Leave empty to use /products/private-hat-fitting" },
+    { "type": "url", "id": "custom_link", "label": "Link", "info": "Leave empty to use /pages/book-a-fitting" },
     { "type": "text", "id": "phone", "label": "Phone", "default": "(732) 757-7567" },
     { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 16 },
     { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 240, "step": 8, "unit": "px", "default": 120 }

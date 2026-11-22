@@ -11,7 +11,7 @@
     <div class="mil-footer__cta mil-wrap">
       <p class="mil-footer__cta-title">{{ section.settings.cta_title }}</p>
       {%- if section.settings.cta_label != blank -%}
-        <a class="mil-btn" href="{{ section.settings.cta_link | default: '/products/private-hat-fitting' }}">{{ section.settings.cta_label }}</a>
+        <a class="mil-btn" href="{{ section.settings.cta_link | default: '/pages/book-a-fitting' }}">{{ section.settings.cta_label }}</a>
       {%- endif -%}
     </div>
   {%- endif -%}
@@ -230,7 +230,7 @@
     { "type": "header", "content": "Booking prompt" },
     { "type": "text", "id": "cta_title", "label": "Line", "default": "Come in for a fitting." },
     { "type": "text", "id": "cta_label", "label": "Button", "default": "Book a fitting" },
-    { "type": "url", "id": "cta_link", "label": "Button link", "info": "Leave empty to use /products/private-hat-fitting" },
+    { "type": "url", "id": "cta_link", "label": "Button link", "info": "Leave empty to use /pages/book-a-fitting" },
     { "type": "header", "content": "Newsletter" },
     { "type": "text", "id": "signup_title", "label": "Title", "default": "Letters from the shop" },
     { "type": "text", "id": "signup_text", "label": "Text", "default": "New hats, trunk shows and open fitting days. A few emails a season." },

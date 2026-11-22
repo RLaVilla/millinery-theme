@@ -33,7 +33,6 @@
 
       <ul class="mil-grid__list" role="list">
         {%- for product in source.products -%}
-          {%- if product.price_max == 0 -%}{%- continue -%}{%- endif -%}
           {%- liquid
             assign lazy = true
             if forloop.index <= columns
