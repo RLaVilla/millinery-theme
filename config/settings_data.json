@@ -79,7 +79,7 @@
     "blocks": {
       "1850493961649900144": {
         "type": "shopify://apps/apntly/blocks/main-app-embed/17a520a2-4844-483a-826a-11cb5dd0370d",
-        "disabled": false,
+        "disabled": true,
         "settings": {}
       }
     },
