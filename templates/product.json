@@ -17,28 +17,20 @@
           "settings": {
             "title": "Sizing & fit",
             "is_size_guide": true,
-            "content": "<p>Measure around your head just above the ears and eyebrows. Size chart to confirm with Carly.</p>"
+            "content": "<p>Not sure of your size? See <a href=\"/pages/the-millinery-fit-guide\">the fit guide</a>.</p>"
           }
         },
         "ship": {
           "type": "accordion",
           "settings": {
             "title": "Shipping & returns",
-            "content": "<p>Shipping and return details to confirm with Carly.</p>"
-          }
-        },
-        "care": {
-          "type": "accordion",
-          "settings": {
-            "title": "Care",
-            "content": "<p>Care instructions to confirm with Carly.</p>"
+            "content": "<p>See our <a href=\"/policies/shipping-policy\">shipping policy</a> and <a href=\"/policies/refund-policy\">refund policy</a>.</p>"
           }
         }
       },
       "block_order": [
         "size",
-        "ship",
-        "care"
+        "ship"
       ],
       "settings": {
         "pad_top": 16
