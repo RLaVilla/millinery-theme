@@ -9,7 +9,7 @@
   endif
   assign cols = section.settings.columns
 -%}
-<div class="mil-rgg mil-rg" id="chopper-gear">
+<div class="mil-rgg mil-rg mil-rgg--{{ section.settings.tile }}" id="chopper-gear">
   <div class="mil-wrap mil-rgg__inner">
     <div class="mil-rgg__head">
       <div>
@@ -72,6 +72,15 @@
     transition: outline-color 0.2s;
   }
   .mil-rgg__card:hover .mil-rgg__media { outline-color: var(--rg-brass); }
+  /* Bone tiles: white product backgrounds melt into the tile */
+  .mil-rgg--bone .mil-rgg__media {
+    background:
+      radial-gradient(ellipse at 50% 40%, #efe7d6 0%, #ddd1bb 75%, #cfc1a7 100%);
+    outline-color: rgba(0, 0, 0, 0.35);
+    box-shadow: inset 0 0 40px rgba(60, 40, 20, 0.18);
+  }
+  .mil-rgg--bone .mil-rgg__media img { mix-blend-mode: multiply; }
+  .mil-rgg--bone .mil-rgg__no { color: #7a4a22; }
   .mil-rgg__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 8%; transition: transform 0.8s ease; }
   .mil-rgg__card:hover .mil-rgg__media img { transform: scale(1.04); }
   .mil-rgg__ph { position: absolute; inset: 0; width: 100%; height: 100%; fill: rgba(236, 229, 216, 0.18); }
@@ -97,6 +106,16 @@
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "Shop the corner" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "The Gear" },
     { "type": "collection", "id": "collection", "label": "Collection", "info": "On a collection page this uses that collection automatically." },
+    {
+      "type": "select",
+      "id": "tile",
+      "label": "Product tiles",
+      "default": "bone",
+      "options": [
+        { "value": "bone", "label": "Bone (for photos on white)" },
+        { "value": "dark", "label": "Dark (for cut-out photos)" }
+      ]
+    },
     { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 4, "step": 1, "default": 4 },
     { "type": "range", "id": "limit", "label": "Products shown", "min": 2, "max": 50, "step": 1, "default": 8 },
     { "type": "text", "id": "empty_title", "label": "Empty title", "default": "Gear's on the way" },
