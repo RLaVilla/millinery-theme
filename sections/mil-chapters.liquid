@@ -256,8 +256,14 @@
         t.classList.toggle('is-on', k === cur);
         t.setAttribute('aria-selected', String(k === cur));
       });
-      if (focus) thumbs[cur].focus();
-      thumbs[cur].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+      if (focus) thumbs[cur].focus({ preventScroll: true });
+      // Keep the active thumbnail visible in its own row only; never scroll the page
+      const row = thumbs[cur].parentElement;
+      if (row && row.scrollWidth > row.clientWidth) {
+        const t = thumbs[cur];
+        const left = t.offsetLeft - (row.clientWidth - t.offsetWidth) / 2;
+        row.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
+      }
     };
     thumbs.forEach((t, k) => t.addEventListener('click', () => { show(k); restart(); }));
     feat.addEventListener('keydown', (e) => {
