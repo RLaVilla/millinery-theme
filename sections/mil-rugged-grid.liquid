@@ -4,6 +4,9 @@
 {% endcomment %}
 {%- liquid
   assign source = section.settings.collection
+  if template.name == 'collection' and collection != blank
+    assign source = collection
+  endif
   assign cols = section.settings.columns
 -%}
 <div class="mil-rgg mil-rg" id="chopper-gear">
@@ -13,7 +16,7 @@
         {%- if section.settings.kicker != blank -%}<span class="mil-rg__kicker">{{ section.settings.kicker }}</span>{%- endif -%}
         <h2 class="mil-rgg__title mil-rg__display">{{ section.settings.heading }}</h2>
       </div>
-      {%- if source != blank and source.products_count > section.settings.limit -%}
+      {%- if source != blank and source.products_count > section.settings.limit and template.name != 'collection' -%}
         <a class="mil-rgg__all" href="{{ source.url }}">View all {{ source.products_count }} &rarr;</a>
       {%- endif -%}
     </div>
@@ -93,9 +96,9 @@
   "settings": [
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "Shop the corner" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "The Gear" },
-    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "On a collection page this uses that collection automatically." },
     { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 4, "step": 1, "default": 4 },
-    { "type": "range", "id": "limit", "label": "Products shown", "min": 2, "max": 24, "step": 1, "default": 8 },
+    { "type": "range", "id": "limit", "label": "Products shown", "min": 2, "max": 50, "step": 1, "default": 8 },
     { "type": "text", "id": "empty_title", "label": "Empty title", "default": "Gear's on the way" },
     { "type": "text", "id": "empty_text", "label": "Empty text", "default": "New pieces are being made in the shop. Check back soon." },
     { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 96 },

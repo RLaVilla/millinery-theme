@@ -14,7 +14,7 @@
       "settings": {
         "size": "full",
         "kicker": "Handmade · Keansburg, NJ",
-        "title": "Vintage Leather Belts",
+        "title": "Handmade Vintage Leather Belts",
         "text": "<p>Cut, stitched and finished by hand from vintage leather. Built to break in, not break down.</p>",
         "btn1_label": "Shop the belts",
         "shade": 40
@@ -26,7 +26,7 @@
         "kicker": "Shop the belts",
         "heading": "The Belts",
         "columns": 4,
-        "limit": 12,
+        "limit": 48,
         "empty_title": "Belts on the bench",
         "empty_text": "New belts are being made in the shop. Check back soon."
       }
