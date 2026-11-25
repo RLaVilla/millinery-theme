@@ -92,7 +92,7 @@
           "type": "faq",
           "settings": {
             "question": "Is there a charge for a fitting?",
-            "answer": "<p>Answer to confirm with Carly.</p>"
+            "answer": "<p>No, fittings are complimentary.</p>"
           }
         },
         "q2": {
@@ -108,20 +108,12 @@
             "question": "What does a custom hat cost?",
             "answer": "<p>Answer to confirm with Carly.</p>"
           }
-        },
-        "q5": {
-          "type": "faq",
-          "settings": {
-            "question": "Can I book a fitting as a gift?",
-            "answer": "<p>Answer to confirm with Carly.</p>"
-          }
         }
       },
       "block_order": [
         "q1",
         "q2",
-        "q3",
-        "q5"
+        "q3"
       ],
       "settings": {
         "heading": "The studio",
