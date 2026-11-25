@@ -103,17 +103,6 @@
         "margin_bottom": 120
       }
     },
-    "collections": {
-      "type": "mil-collections",
-      "settings": {
-        "heading": "Shop by collection",
-        "intro": "",
-        "columns": 3,
-        "limit": 3,
-        "pad_top": 0,
-        "pad_bottom": 120
-      }
-    },
     "fitting": {
       "type": "mil-fitting",
       "blocks": {
@@ -175,7 +164,6 @@
     "process",
     "current",
     "chopper",
-    "collections",
     "fitting"
   ]
 }
