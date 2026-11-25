@@ -1,0 +1,48 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "mil-cause",
+      "blocks": {
+        "p1": {
+          "type": "point",
+          "settings": {
+            "title": "Point one",
+            "text": "How donations help. Confirm with Carly / the organization."
+          }
+        },
+        "p2": {
+          "type": "point",
+          "settings": {
+            "title": "Point two",
+            "text": "How donations help. Confirm with Carly / the organization."
+          }
+        },
+        "p3": {
+          "type": "point",
+          "settings": {
+            "title": "Point three",
+            "text": "How donations help. Confirm with Carly / the organization."
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

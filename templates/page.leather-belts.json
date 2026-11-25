@@ -1,0 +1,77 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "mil-rugged-hero",
+      "settings": {
+        "size": "full",
+        "kicker": "Handmade · Keansburg, NJ",
+        "title": "Vintage Leather Belts",
+        "text": "<p>Cut, stitched and finished by hand from vintage leather. Built to break in, not break down.</p>",
+        "btn1_label": "Shop the belts",
+        "shade": 40
+      }
+    },
+    "gear": {
+      "type": "mil-rugged-grid",
+      "settings": {
+        "kicker": "Shop the belts",
+        "heading": "The Belts",
+        "columns": 4,
+        "limit": 12,
+        "empty_title": "Belts on the bench",
+        "empty_text": "New belts are being made in the shop. Check back soon."
+      }
+    },
+    "story": {
+      "type": "mil-rugged-story",
+      "blocks": {
+        "s1": {
+          "type": "spec",
+          "settings": {
+            "label": "Vintage leather",
+            "text": "Describe the leather here."
+          }
+        },
+        "s2": {
+          "type": "spec",
+          "settings": {
+            "label": "Made by hand",
+            "text": "Describe how each belt is made."
+          }
+        },
+        "s3": {
+          "type": "spec",
+          "settings": {
+            "label": "Sizing",
+            "text": "How to pick a size."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "kicker": "From the bench",
+        "heading": "Made to last",
+        "btn_label": "Shop the belts",
+        "pad_top": 0
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "gear",
+    "story"
+  ]
+}

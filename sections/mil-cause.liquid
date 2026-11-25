@@ -1,0 +1,119 @@
+{% comment %}
+  The Millinery — giving back / donation page. Hero with photo + story,
+  "how your support helps" points (blocks), and a donate button that links
+  to the charity's own donation page (or a donation product).
+{% endcomment %}
+<div class="mil-cause mil-section mil-wrap">
+  <div class="mil-cause__hero">
+    <div class="mil-cause__copy">
+      {%- if section.settings.tag != blank -%}<span class="mil-tag mil-cause__tag">{{ section.settings.tag }}</span>{%- endif -%}
+      <h1 class="mil-cause__title">{{ section.settings.title | default: page.title }}</h1>
+      {%- if section.settings.text != blank -%}<div class="mil-cause__text">{{ section.settings.text }}</div>{%- endif -%}
+      <div class="mil-cause__ctas">
+        {%- if section.settings.donate_label != blank and section.settings.donate_link != blank -%}
+          <a class="mil-btn" href="{{ section.settings.donate_link }}"{% if section.settings.new_tab %} target="_blank" rel="noopener"{% endif %}>{{ section.settings.donate_label }}</a>
+        {%- elsif request.design_mode -%}
+          <span class="mil-meta" style="color: var(--mil-accent);">Add the donation link in the sidebar to show the button.</span>
+        {%- endif -%}
+        {%- if section.settings.learn_label != blank and section.settings.learn_link != blank -%}
+          <a class="mil-btn mil-btn--ghost" href="{{ section.settings.learn_link }}" target="_blank" rel="noopener">{{ section.settings.learn_label }}</a>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.note != blank -%}<p class="mil-cause__note mil-meta">{{ section.settings.note }}</p>{%- endif -%}
+    </div>
+    <div class="mil-cause__media mil-linen">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1600 | image_tag: widths: '600, 900, 1200, 1600', sizes: '(min-width: 900px) 45vw, 100vw', loading: 'eager', alt: section.settings.title }}
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'mil-cause__ph' }}
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="mil-cause__points">
+      {%- if section.settings.points_heading != blank -%}<h2 class="mil-heading">{{ section.settings.points_heading }}</h2>{%- endif -%}
+      <ol class="mil-cause__list" role="list">
+        {%- for block in section.blocks -%}
+          {%- assign n = forloop.index | prepend: '0' | slice: -2, 2 -%}
+          <li {{ block.shopify_attributes }}>
+            <span class="mil-tag mil-cause__no">No. {{ n }}</span>
+            <span class="mil-cause__pt-title">{{ block.settings.title }}</span>
+            {%- if block.settings.text != blank -%}<span class="mil-cause__pt-text">{{ block.settings.text }}</span>{%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.show_page_content and page.content != blank -%}
+    <div class="mil-cause__extra rte">{{ page.content }}</div>
+  {%- endif -%}
+
+  {%- if section.settings.help_text != blank -%}
+    <p class="mil-cause__help">{{ section.settings.help_text }}</p>
+  {%- endif -%}
+</div>
+
+<style>
+  #shopify-section-{{ section.id }} { --mil-pt: calc({{ section.settings.pad_top }}px * var(--mil-space, 1)); --mil-pb: calc({{ section.settings.pad_bottom }}px * var(--mil-space, 1)); }
+  .mil-cause { padding-block: var(--mil-pt) var(--mil-pb); }
+  .mil-cause__hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 88px); align-items: center; }
+  .mil-cause__tag { color: var(--mil-accent); }
+  .mil-cause__title { margin: 18px 0 16px; font: 500 clamp(40px, 5.2vw, 74px) / 1 var(--mil-serif); letter-spacing: -0.01em; }
+  .mil-cause__text { font-size: 18px; line-height: 1.6; color: color-mix(in srgb, var(--mil-ink) 82%, transparent); max-width: 48ch; }
+  .mil-cause__text p { margin: 0 0 12px; }
+  .mil-cause__ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .mil-cause__note { margin: 14px 0 0; color: var(--mil-faint); max-width: 52ch; line-height: 1.6; }
+  .mil-cause__media { aspect-ratio: 4 / 5; overflow: hidden; }
+  .mil-cause__media img, .mil-cause__ph { width: 100%; height: 100%; object-fit: cover; display: block; mix-blend-mode: normal; }
+  .mil-cause__ph { fill: var(--mil-faint); opacity: 0.25; }
+  .mil-cause__points { margin-top: clamp(56px, 8vw, 112px); }
+  .mil-cause__list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; margin: 0; padding: 0; list-style: none; }
+  .mil-cause__list li { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 18px; border-top: 1px solid var(--mil-rule); }
+  .mil-cause__no { color: var(--mil-accent); }
+  .mil-cause__pt-title { font: 500 24px / 1.15 var(--mil-serif); }
+  .mil-cause__pt-text { font-size: 16px; line-height: 1.55; color: var(--mil-faint); }
+  .mil-cause__extra { max-width: 760px; margin-top: 64px; font-size: 18px; line-height: 1.6; }
+  .mil-cause__help { margin: 64px 0 0; padding: 16px 20px; border: 3px double var(--mil-ink); font-size: 16px; line-height: 1.5; max-width: 760px; }
+  @media (max-width: 899px) {
+    .mil-cause__hero { grid-template-columns: 1fr; }
+    .mil-cause__media { order: -1; aspect-ratio: 4 / 3.6; }
+    .mil-cause__ctas .mil-btn { flex: 1; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Millinery giving back",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "tag", "label": "Tag", "default": "Giving back" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Hats off to mental health." },
+    { "type": "richtext", "id": "text", "label": "Story", "default": "<p>The Millinery is proud to support the Mental Health Association of Monmouth County. Carly's story about why this cause matters goes here.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "donate_label", "label": "Donate button", "default": "Donate" },
+    { "type": "url", "id": "donate_link", "label": "Donate link", "info": "The charity's own donation page (recommended), or a donation product." },
+    { "type": "checkbox", "id": "new_tab", "label": "Open donate link in a new tab", "default": true },
+    { "type": "text", "id": "learn_label", "label": "Second button", "default": "About the organization" },
+    { "type": "url", "id": "learn_link", "label": "Second button link" },
+    { "type": "textarea", "id": "note", "label": "Small note under buttons", "default": "Donations go directly to the Mental Health Association of Monmouth County." },
+    { "type": "text", "id": "points_heading", "label": "Points heading", "default": "How your support helps" },
+    { "type": "checkbox", "id": "show_page_content", "label": "Also show the page's own text", "default": false },
+    { "type": "textarea", "id": "help_text", "label": "Help line", "info": "e.g. a crisis line. Leave empty to hide.", "default": "If you or someone you know is struggling, call or text 988 to reach the 988 Suicide & Crisis Lifeline, any time." },
+    { "type": "range", "id": "pad_top", "label": "Top spacing", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 32 },
+    { "type": "range", "id": "pad_bottom", "label": "Bottom spacing", "min": 0, "max": 200, "step": 8, "unit": "px", "default": 120 }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Point",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Point title" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Millinery giving back" }]
+}
+{% endschema %}
