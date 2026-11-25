@@ -33,7 +33,8 @@
         "ship"
       ],
       "settings": {
-        "pad_top": 16
+        "pad_top": 16,
+        "description_label": "Details"
       }
     }
   },
