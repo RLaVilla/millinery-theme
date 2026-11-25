@@ -13,11 +13,18 @@
       "type": "mil-rugged-hero",
       "settings": {
         "size": "full",
+        "image": "shopify://shop_images/Chopper_Corner.jpg",
+        "focus": "center",
+        "shade": 40,
         "kicker": "Handmade · Keansburg, NJ",
         "title": "Handmade Vintage Leather Belts",
         "text": "<p>Cut, stitched and finished by hand from vintage leather. Built to break in, not break down.</p>",
         "btn1_label": "Shop the belts",
-        "shade": 40
+        "btn1_link": "",
+        "btn2_label": "",
+        "btn2_link": "",
+        "margin_top": 0,
+        "margin_bottom": 0
       }
     },
     "gear": {
@@ -25,10 +32,13 @@
       "settings": {
         "kicker": "Shop the belts",
         "heading": "The Belts",
+        "collection": "",
         "columns": 4,
         "limit": 48,
         "empty_title": "Belts on the bench",
-        "empty_text": "New belts are being made in the shop. Check back soon."
+        "empty_text": "New belts are being made in the shop. Check back soon.",
+        "pad_top": 96,
+        "pad_bottom": 96
       }
     },
     "story": {
@@ -62,10 +72,14 @@
         "s3"
       ],
       "settings": {
+        "flip": false,
         "kicker": "From the bench",
         "heading": "Made to last",
+        "text": "<p>Tell the Chopper Corner story here: who it's for, what's made, and why it holds up on the road.</p>",
         "btn_label": "Shop the belts",
-        "pad_top": 0
+        "btn_link": "",
+        "pad_top": 0,
+        "pad_bottom": 96
       }
     }
   },
