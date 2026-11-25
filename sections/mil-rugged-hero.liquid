@@ -36,7 +36,7 @@
     <div class="mil-rgh__ctas">
       {%- if section.settings.btn1_label != blank -%}
         {%- liquid
-          assign btn1_fallback = '/collections/belts'
+          assign btn1_fallback = '/collections/leather-goods'
           if template.name == 'page' or template.name == 'collection'
             assign btn1_fallback = '#chopper-gear'
           endif
@@ -123,7 +123,7 @@
     { "type": "text", "id": "title", "label": "Headline", "default": "Chopper Corner" },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Gear for the road. Built tough, worn hard, made to last the miles.</p>" },
     { "type": "text", "id": "btn1_label", "label": "Main button", "default": "Enter Chopper Corner" },
-    { "type": "url", "id": "btn1_link", "label": "Main button link", "info": "Leave empty for /collections/belts (or the products on this page)." },
+    { "type": "url", "id": "btn1_link", "label": "Main button link", "info": "Leave empty for /collections/leather-goods (or the products on this page)." },
     { "type": "text", "id": "btn2_label", "label": "Second button" },
     { "type": "url", "id": "btn2_link", "label": "Second button link", "info": "Leave empty to jump to the gear on the page." },
     { "type": "range", "id": "margin_top", "label": "Space above", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 0 },
