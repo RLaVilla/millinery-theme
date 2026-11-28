@@ -15,19 +15,19 @@
         "p1": {
           "type": "point",
           "settings": {
-            "text": "About 30 minutes, one on one"
+            "text": "Up to an hour, one on one"
           }
         },
         "p2": {
           "type": "point",
           "settings": {
-            "text": "Private, by appointment — no pressure"
+            "text": "Fittings are complimentary"
           }
         },
         "p3": {
           "type": "point",
           "settings": {
-            "text": "Custom hats from $600"
+            "text": "Custom hats from $695"
           }
         }
       },
@@ -38,7 +38,10 @@
       ],
       "settings": {
         "image": "shopify://shop_images/IMG_2154.jpg",
-        "pad_top": 24
+        "pad_top": 24,
+        "text": "<p>Come to my Keansburg studio for a one-on-one consultation. We take your measurements and choose the material, silhouette and details for a hat made to your head.</p>",
+        "fine_print": "We'll text or call to confirm your time.",
+        "success_text": "We'll reach out to confirm your fitting time and send the studio address."
       }
     },
     "process": {
@@ -47,24 +50,24 @@
         "c1": {
           "type": "chapter",
           "settings": {
-            "title": "Try on shapes",
-            "text": "Find the crown and brim that suit your face.",
+            "title": "Measurements",
+            "text": "We take your measurements so the hat is made to your head.",
             "image": "shopify://shop_images/580A3703.jpg"
           }
         },
         "c2": {
           "type": "chapter",
           "settings": {
-            "title": "Pick your felt",
-            "text": "Choose color, felt and band.",
+            "title": "Material",
+            "text": "Choose your material and color: fur felt, Milan straw, sisal or raffia.",
             "image": "shopify://shop_images/IMG_5412.jpg"
           }
         },
         "c3": {
           "type": "chapter",
           "settings": {
-            "title": "Get measured",
-            "text": "We take your size so it’s made to fit.",
+            "title": "Silhouette & details",
+            "text": "Pick the crown, brim, and finishing details like ribbon, a leather hatband, a hat chain or engraving.",
             "image": "shopify://shop_images/580A3932.jpg"
           }
         }
@@ -75,8 +78,8 @@
         "c3"
       ],
       "settings": {
-        "heading": "What happens at your fitting",
-        "kicker": "About 30 minutes",
+        "heading": "What happens at your consultation",
+        "kicker": "Up to an hour",
         "pad_top": 0,
         "pad_bottom": 120
       }
@@ -98,22 +101,46 @@
         "q2": {
           "type": "faq",
           "settings": {
-            "question": "How long does a custom hat take?",
-            "answer": "<p>Answer to confirm with Carly.</p>"
+            "question": "Will you make my hat during the appointment?",
+            "answer": "<p>No. At your consultation we take your measurements and choose everything together. After you leave, I block and shape your hat by hand in the studio, then we schedule a fitting so I can fine-tune how it sits and feels.</p>"
           }
         },
         "q3": {
           "type": "faq",
           "settings": {
+            "question": "How long is the appointment?",
+            "answer": "<p>The initial design consultation can take up to an hour. The follow-up fitting focuses on how the hat sits and feels, and I'll let you know how much time to set aside when we schedule it.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does a custom hat take?",
+            "answer": "<p>Timing depends on the design and my studio schedule. I'll confirm your expected pickup date at your fitting.</p>"
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
             "question": "What does a custom hat cost?",
-            "answer": "<p>Answer to confirm with Carly.</p>"
+            "answer": "<p>Custom hats start at $695. The final price depends on the material and finishing details we choose together.</p>"
+          }
+        },
+        "q6": {
+          "type": "faq",
+          "settings": {
+            "question": "What can I choose?",
+            "answer": "<p>The material and color, crown shape, brim width and shape, and finishing details like ribbon, a leather hatband or a hat chain. Custom hats can also be personalized with engraving.</p>"
           }
         }
       },
       "block_order": [
         "q1",
         "q2",
-        "q3"
+        "q3",
+        "q4",
+        "q5",
+        "q6"
       ],
       "settings": {
         "heading": "The studio",

@@ -11,35 +11,13 @@
   "sections": {
     "main": {
       "type": "mil-cause",
-      "blocks": {
-        "p1": {
-          "type": "point",
-          "settings": {
-            "title": "Point one",
-            "text": "How donations help. Confirm with Carly / the organization."
-          }
-        },
-        "p2": {
-          "type": "point",
-          "settings": {
-            "title": "Point two",
-            "text": "How donations help. Confirm with Carly / the organization."
-          }
-        },
-        "p3": {
-          "type": "point",
-          "settings": {
-            "title": "Point three",
-            "text": "How donations help. Confirm with Carly / the organization."
-          }
-        }
-      },
-      "block_order": [
-        "p1",
-        "p2",
-        "p3"
-      ],
-      "settings": {}
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "text": "<p>I started supporting the Mental Health Association of Monmouth County through the Del Russo Collection in honor of my friend Billy. It's personal to me, and I want to keep the conversation about men's mental health going right here in the community where I live and work.</p><p>I want more men to feel comfortable asking for help and know they have somewhere to turn.</p>",
+        "note": "This holiday season, The Millinery is donating a portion of proceeds from select events to the Mental Health Association of Monmouth County. Direct donations through our website are coming after the holidays.",
+        "points_heading": ""
+      }
     }
   },
   "order": [

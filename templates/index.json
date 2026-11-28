@@ -17,7 +17,7 @@
         "focus": "center",
         "tag": "Made by hand",
         "title": "Hats, made by hand.",
-        "text": "<p>Felt hats shaped, banded and finished in our studio, made to be worn for years.</p>",
+        "text": "<p>Vintage romance with a Western edge. Every hat is made by hand in my Keansburg studio from fur felt, Milan straw, sisal and raffia.</p>",
         "btn1_label": "Shop the collection",
         "btn1_link": "shopify://collections/western-romance-fall-winter-2026",
         "btn2_label": "Book a fitting",
@@ -31,35 +31,41 @@
         "c1": {
           "type": "chapter",
           "settings": {
-            "title": "The fitting",
-            "text": "We measure your head and talk through how you’ll wear it.",
-            "image": "shopify://shop_images/DE159E0F-2564-4088-9AF7-2AAC5009035C-modified.jpg",
-            "link": ""
+            "title": "Consultation",
+            "text": "We meet at my studio, take your measurements, and choose the material, silhouette and details together.",
+            "image": "shopify://shop_images/DE159E0F-2564-4088-9AF7-2AAC5009035C-modified.jpg"
           }
         },
         "c2": {
           "type": "chapter",
           "settings": {
-            "title": "Choosing the felt",
-            "text": "Pick the felt, color and weight that suit you.",
-            "image": "shopify://shop_images/A0443053-1584-48A0-9A87-15A8EF3B9DB6-modified.jpg",
-            "link": ""
+            "title": "Blocking & shaping",
+            "text": "After you leave, I steam and stretch the material over a hat block by hand, then shape the crown and trim the brim.",
+            "image": "shopify://shop_images/A0443053-1584-48A0-9A87-15A8EF3B9DB6-modified.jpg"
           }
         },
         "c3": {
           "type": "chapter",
           "settings": {
-            "title": "Shaping & finishing",
-            "text": "Steamed, shaped and banded by hand in the shop.",
-            "image": "shopify://shop_images/B0FD548B-C426-4E49-B981-C1468AD627E0.jpg",
-            "link": ""
+            "title": "Fitting",
+            "text": "You try on the hat so I can fine-tune how it sits and feels.",
+            "image": "shopify://shop_images/B0FD548B-C426-4E49-B981-C1468AD627E0.jpg"
+          }
+        },
+        "c4": {
+          "type": "chapter",
+          "settings": {
+            "title": "Finishing & pickup",
+            "text": "I sew in the sweatband, add your chosen trim, and make any final adjustments when you pick up your hat.",
+            "image": "shopify://shop_images/IMG_9797.jpg"
           }
         }
       },
       "block_order": [
         "c1",
         "c2",
-        "c3"
+        "c3",
+        "c4"
       ],
       "settings": {
         "heading": "How a hat is made",
@@ -78,7 +84,7 @@
         "image": "shopify://shop_images/IMG_9797.jpg",
         "kicker": "Fall / Winter",
         "title": "",
-        "text": "Warm felts and deeper colors for the colder months.",
+        "text": "Vintage romance with a Western edge, made by hand in Keansburg.",
         "button": "Shop now",
         "align": "left",
         "pad_top": 0,
@@ -94,7 +100,7 @@
         "shade": 40,
         "kicker": "Handmade · New",
         "title": "Handmade Vintage Leather Belts",
-        "text": "<p>Handmade from vintage leather, built to break in, not break down.</p>",
+        "text": "<p>Made by hand by Carly and Joe, and personalized with engraving.</p>",
         "btn1_label": "Shop the belts",
         "btn1_link": "shopify://collections/leather-goods",
         "btn2_label": "",
@@ -109,29 +115,36 @@
         "s1": {
           "type": "spec",
           "settings": {
-            "label": "Felt",
-            "value": "Beaver · rabbit · wool"
+            "label": "Material",
+            "value": "Fur felt · Milan straw · sisal · raffia"
           }
         },
         "s2": {
           "type": "spec",
           "settings": {
             "label": "Crown",
-            "value": "Teardrop · pinch · flat"
+            "value": "Your choice of shape"
           }
         },
         "s3": {
           "type": "spec",
           "settings": {
             "label": "Brim",
-            "value": "2½\" to 4\""
+            "value": "Your choice of width & shape"
           }
         },
         "s4": {
           "type": "spec",
           "settings": {
-            "label": "Band",
-            "value": "Grosgrain · leather · none"
+            "label": "Finishing",
+            "value": "Ribbon · leather hatband · hat chain"
+          }
+        },
+        "s5": {
+          "type": "spec",
+          "settings": {
+            "label": "Personalize",
+            "value": "Engraving"
           }
         }
       },
@@ -139,7 +152,8 @@
         "s1",
         "s2",
         "s3",
-        "s4"
+        "s4",
+        "s5"
       ],
       "settings": {
         "image": "shopify://shop_images/BF61F5CE-8EC9-49EF-B68B-53B2C6B74912.jpg",
@@ -147,13 +161,13 @@
         "tag": "Local · By appointment",
         "title": "Made to your head.",
         "use_page_content": false,
-        "text": "<p>Every hat starts with a private fitting at our Keansburg studio, by appointment. We measure, pick the felt and shape it by hand — so it fits like it was always yours.</p>",
+        "text": "<p>Every custom hat starts with a consultation at my Keansburg studio. We take your measurements and choose the material, silhouette and details together.</p>",
         "card_title": "Your hat",
         "cta1_label": "Book a fitting",
         "cta1_link": "",
         "cta2_label": "",
         "cta2_link": "shopify://collections/all",
-        "note": "Custom hats from $600 · Ready in 4–6 weeks",
+        "note": "Custom hats from $695 · Pickup date confirmed at your fitting",
         "pad_top": 0,
         "pad_bottom": 120
       }

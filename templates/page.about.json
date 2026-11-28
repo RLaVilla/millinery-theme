@@ -31,29 +31,41 @@
         "c1": {
           "type": "chapter",
           "settings": {
-            "title": "The fitting",
+            "title": "Consultation",
+            "text": "We meet at my studio, take your measurements, and choose the material, silhouette and details together.",
             "image": "shopify://shop_images/IMG_2154.jpg"
           }
         },
         "c2": {
           "type": "chapter",
           "settings": {
-            "title": "Choosing the felt",
+            "title": "Blocking & shaping",
+            "text": "After you leave, I steam and stretch the material over a hat block by hand, then shape the crown and trim the brim.",
             "image": "shopify://shop_images/IMG_5412.jpg"
           }
         },
         "c3": {
           "type": "chapter",
           "settings": {
-            "title": "Shaping & finishing",
+            "title": "Fitting",
+            "text": "You try on the hat so I can fine-tune how it sits and feels.",
             "image": "shopify://shop_images/580A3932.jpg"
+          }
+        },
+        "c4": {
+          "type": "chapter",
+          "settings": {
+            "title": "Finishing & pickup",
+            "text": "I sew in the sweatband, add your chosen trim, and make any final adjustments when you pick up your hat.",
+            "image": "shopify://shop_images/IMG_9797.jpg"
           }
         }
       },
       "block_order": [
         "c1",
         "c2",
-        "c3"
+        "c3",
+        "c4"
       ],
       "settings": {
         "heading": "How a hat is made",

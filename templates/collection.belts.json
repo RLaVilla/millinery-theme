@@ -18,7 +18,7 @@
         "shade": 40,
         "kicker": "Handmade · Keansburg, NJ",
         "title": "Handmade Vintage Leather Belts",
-        "text": "<p>Cut, stitched and finished by hand from vintage leather. Built to break in, not break down.</p>",
+        "text": "<p>Made by hand by Carly and Joe in Keansburg, NJ. Each belt can be personalized with engraving.</p>",
         "btn1_label": "Shop the belts",
         "btn1_link": "",
         "btn2_label": "",
@@ -47,35 +47,43 @@
         "s1": {
           "type": "spec",
           "settings": {
-            "label": "Vintage leather",
-            "text": "Describe the leather here."
+            "label": "Cut by hand",
+            "text": "Leather cut to size, edges finished, holes punched."
           }
         },
         "s2": {
           "type": "spec",
           "settings": {
-            "label": "Made by hand",
-            "text": "Describe how each belt is made."
+            "label": "The buckle",
+            "text": "Paired with a buckle that complements the leather."
           }
         },
         "s3": {
           "type": "spec",
           "settings": {
+            "label": "Engraving",
+            "text": "Belts can be personalized with engraving."
+          }
+        },
+        "s4": {
+          "type": "spec",
+          "settings": {
             "label": "Sizing",
-            "text": "How to pick a size."
+            "text": "Choose your size when you order."
           }
         }
       },
       "block_order": [
         "s1",
         "s2",
-        "s3"
+        "s3",
+        "s4"
       ],
       "settings": {
         "flip": false,
-        "kicker": "From the bench",
-        "heading": "Made to last",
-        "text": "<p>Tell the Chopper Corner story here: who it's for, what's made, and why it holds up on the road.</p>",
+        "kicker": "Carly & Joe",
+        "heading": "Made by hand",
+        "text": "<p>We make each belt by hand. We cut the leather to size, finish the edges, punch the holes, and pair it with a buckle that complements the leather.</p>",
         "btn_label": "Shop the belts",
         "btn_link": "",
         "pad_top": 0,
