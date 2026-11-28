@@ -98,6 +98,28 @@
           {%- endfor -%}
         {%- endunless -%}
 
+        {%- liquid
+          assign size_handles = product.collections | map: 'handle' | join: ','
+          assign size_handles = ',' | append: size_handles | append: ','
+          assign size_key = ',' | append: section.settings.size_collection | append: ','
+        -%}
+        {%- if section.settings.size_collection != blank and size_handles contains size_key -%}
+          <label class="mil-pdp__sizebox">
+            <span class="mil-meta">{{ section.settings.size_label }}</span>
+            <input
+              type="text"
+              name="properties[{{ section.settings.size_label | escape }}]"
+              placeholder="{{ section.settings.size_placeholder | escape }}"
+              required
+              maxlength="40"
+              autocomplete="off"
+            >
+            {%- if section.settings.size_help != blank -%}
+              <small>{{ section.settings.size_help }}</small>
+            {%- endif -%}
+          </label>
+        {%- endif -%}
+
         <div class="mil-pdp__buy">
           <button
             type="submit"
@@ -200,6 +222,10 @@
   .mil-pdp__value input:focus-visible + span { outline: 1px solid var(--mil-ink); outline-offset: 2px; }
   .mil-pdp__value.is-unavailable span { color: var(--mil-faint); text-decoration: line-through; }
 
+  .mil-pdp__sizebox { display: flex; flex-direction: column; gap: 6px; margin: 0 0 18px; }
+  .mil-pdp__sizebox input { padding: 12px 13px; border: 1px solid var(--mil-rule); border-radius: 0; background: #fff; color: var(--mil-ink); font: 400 16px / 1.3 var(--mil-serif); }
+  .mil-pdp__sizebox input:focus { outline: 1px solid var(--mil-ink); border-color: var(--mil-ink); }
+  .mil-pdp__sizebox small { color: var(--mil-faint); font-size: 14px; }
   .mil-pdp__buy { display: grid; gap: 10px; margin-top: 8px; }
   .mil-pdp__add { width: 100%; padding-block: 17px; }
   .mil-pdp__add[disabled] { opacity: 0.45; cursor: not-allowed; }
@@ -325,6 +351,11 @@
     { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show Buy it now / Shop Pay button", "default": true },
     { "type": "text", "id": "description_label", "label": "Description heading", "default": "Details" },
     { "type": "text", "id": "size_guide_label", "label": "Size guide link text", "default": "Size guide", "info": "Shows next to a Size option and opens the accordion marked as size guide." },
+    { "type": "header", "content": "Sized-to-order field" },
+    { "type": "text", "id": "size_collection", "label": "Show for products in collection (handle)", "default": "leather-goods", "info": "Products in this collection get a required size box. Leave empty to turn off." },
+    { "type": "text", "id": "size_label", "label": "Field label", "default": "Your size" },
+    { "type": "text", "id": "size_placeholder", "label": "Placeholder", "default": "e.g. 34" },
+    { "type": "text", "id": "size_help", "label": "Help text", "default": "Belts are sized to order." },
     { "type": "header", "content": "Custom nudge" },
     { "type": "text", "id": "custom_tag", "label": "Tag", "default": "Made to measure" },
     { "type": "text", "id": "custom_title", "label": "Title", "default": "Want it made for your head?" },
