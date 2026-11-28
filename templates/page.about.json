@@ -31,32 +31,32 @@
         "c1": {
           "type": "chapter",
           "settings": {
-            "title": "Consultation",
-            "text": "We meet at my studio, take your measurements, and choose the material, silhouette and details together.",
+            "title": "The material",
+            "text": "Fur felt, Milan straw, sisal or raffia, chosen for the style of the hat.",
             "image": "shopify://shop_images/IMG_2154.jpg"
           }
         },
         "c2": {
           "type": "chapter",
           "settings": {
-            "title": "Blocking & shaping",
-            "text": "After you leave, I steam and stretch the material over a hat block by hand, then shape the crown and trim the brim.",
+            "title": "Blocking",
+            "text": "I steam and stretch the material over a wooden hat block by hand.",
             "image": "shopify://shop_images/IMG_5412.jpg"
           }
         },
         "c3": {
           "type": "chapter",
           "settings": {
-            "title": "Fitting",
-            "text": "You try on the hat so I can fine-tune how it sits and feels.",
+            "title": "Shaping",
+            "text": "The crown is shaped and the brim is trimmed and set.",
             "image": "shopify://shop_images/580A3932.jpg"
           }
         },
         "c4": {
           "type": "chapter",
           "settings": {
-            "title": "Finishing & pickup",
-            "text": "I sew in the sweatband, add your chosen trim, and make any final adjustments when you pick up your hat.",
+            "title": "Finishing",
+            "text": "A leather sweatband and petersham ribbon are sewn in, with a silk lining for fur felts.",
             "image": "shopify://shop_images/IMG_9797.jpg"
           }
         }
@@ -69,7 +69,7 @@
       ],
       "settings": {
         "heading": "How a hat is made",
-        "kicker": "By hand, in Keansburg",
+        "kicker": "About three days per hat",
         "pad_top": 0,
         "pad_bottom": 144
       }
