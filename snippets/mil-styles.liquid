@@ -105,7 +105,9 @@
     margin: 0 0 32px;
     font: italic 500 clamp(26px, 3vw, 38px) / 1.1 var(--mil-serif);
   }
-  .mil-heading::after { content: ''; flex: 1; border-top: 1px solid var(--mil-rule); transform: translateY(-0.3em); }
+  .mil-heading::after { content: ''; flex: 1 1 24px; min-width: 24px; border-top: 1px solid var(--mil-rule); transform: translateY(-0.3em); }
+  /* Keep section headings on one line on wider screens; the rule fills the rest */
+  @media (min-width: 700px) { .mil-heading { white-space: nowrap; } }
   .mil-heading small { font: 400 var(--mil-small) var(--mil-mono); font-style: normal; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mil-faint); }
 
   /* Hang tag: rounded tag with a punched hole */
