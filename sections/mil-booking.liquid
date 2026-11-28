@@ -277,8 +277,9 @@
   .mil-book__or { display: flex; align-items: center; gap: 12px; margin: 18px 0 0; color: var(--mil-faint); }
   .mil-book__or::before, .mil-book__or::after { content: ''; flex: 1; border-top: 1px solid var(--mil-rule); }
 
-  .mil-book__calendly { margin: 0 -8px; }
-  .mil-book__calendly iframe { display: block; width: 100%; height: 470px; border: 0; transition: height 0.2s ease; }
+  /* Crop Calendly's empty diagnostics strip at the bottom of its frame */
+  .mil-book__calendly { margin: 0 -8px; overflow: hidden; }
+  .mil-book__calendly iframe { display: block; width: 100%; height: 560px; margin-bottom: -110px; border: 0; transition: height 0.2s ease; }
   .mil-book__cal-done { margin-top: 12px; color: var(--mil-ink); }
   .mil-book__bar { display: none; }
 
