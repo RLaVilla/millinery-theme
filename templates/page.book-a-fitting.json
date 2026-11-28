@@ -41,7 +41,8 @@
         "pad_top": 24,
         "text": "<p>Come to my Keansburg studio for a one-on-one consultation. We take your measurements and choose the material, silhouette and details for a hat made to your head.</p>",
         "fine_print": "We'll text or call to confirm your time.",
-        "success_text": "We'll reach out to confirm your fitting time and send the studio address."
+        "success_text": "We'll reach out to confirm your fitting time and send the studio address.",
+        "calendly_url": "https://calendly.com/themillinerybycl/30min"
       }
     },
     "process": {
